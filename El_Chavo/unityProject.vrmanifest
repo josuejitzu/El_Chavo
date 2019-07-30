@@ -1,0 +1,16 @@
+{
+  "source": "Unity",
+  "applications": [
+    {
+      "app_key": "application.generated.unity.el_chavo.exe",
+      "launch_type": "url",
+      "url": "steam://launch/",
+      "action_manifest_path": "D:\\Proyectos\\El_Chavo\\Unity\\El_Chavo\\El_Chavo\\actions.json",
+      "strings": {
+        "en_us": {
+          "name": "El_Chavo [Testing]"
+        }
+      }
+    }
+  ]
+}

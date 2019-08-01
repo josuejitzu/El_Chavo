@@ -47,6 +47,7 @@ public class ManoControl : MonoBehaviour
 
         if(triggerPresion >= sensibilidadTrigger)//Apretado
         {
+
             print(control.inputSource.ToString() + "presionando");
             if(sobreResortera)
             {
@@ -60,10 +61,12 @@ public class ManoControl : MonoBehaviour
             {
                 estirando = true;
                 manoContraria.GetComponent<ManoControl>().resortera.GetComponent<Resortera_Control>().MoverTirante(separacion * 2);
-             //   trigger.enabled = false;
+    
             }
 
         }
+
+
         if(triggerPresion < sensibilidadTrigger)//Soltar
         {
             print(control.inputSource.ToString() + "soltado");

@@ -94,7 +94,7 @@ public class Resortera_Control : MonoBehaviour
           }
         posMunicion.transform.position = posInicialTirante.position;
         ligaResortera_blendShape.SetBlendShapeWeight(0, 0);
-       Invoke("CargarMunicion",0.5f);
+        Invoke("CargarMunicion",0.5f);
     }
 
     public void ResorteraTomada()

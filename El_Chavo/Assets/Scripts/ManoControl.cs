@@ -60,6 +60,7 @@ public class ManoControl : MonoBehaviour
             {
                 estirando = true;
                 manoContraria.GetComponent<ManoControl>().resortera.GetComponent<Resortera_Control>().MoverTirante(separacion * 2);
+             //   trigger.enabled = false;
             }
 
         }

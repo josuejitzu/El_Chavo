@@ -8,6 +8,8 @@ TagManager:
   - FxTemporaire
   - resortera
   - tirante
+  - municion
+  - mano
   layers:
   - Default
   - TransparentFX

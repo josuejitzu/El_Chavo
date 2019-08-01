@@ -83,18 +83,18 @@ public class Resortera_Control : MonoBehaviour
     {
         fuerzaTotal = fuerza * multiplicadorFuerza;
        
-            if(municionTemp != null)
-            {
+          if(municionTemp != null)
+          {
                  municionTemp.transform.parent = null;
-            
+                
                  municionTemp.GetComponent<Rigidbody>().isKinematic = false;
                  municionTemp.GetComponent<Rigidbody>().velocity = this.transform.forward * fuerzaTotal;//multiplicar la fuerza por el vector de distancia entre los controles
                  municionTemp.GetComponent<SphereCollider>().enabled = true;
- 
-            }
+
+          }
         posMunicion.transform.position = posInicialTirante.position;
         ligaResortera_blendShape.SetBlendShapeWeight(0, 0);
-        CargarMunicion();
+       Invoke("CargarMunicion",0.5f);
     }
 
     public void ResorteraTomada()

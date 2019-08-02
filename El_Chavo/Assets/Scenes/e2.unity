@@ -327,6 +327,7 @@ MonoBehaviour:
   anguloLanzamiento: 50
   delayDisparo: 0
   rateDisparo: 6
+  disparando: 0
 --- !u!4 &95548546
 Transform:
   m_ObjectHideFlags: 0
@@ -655,6 +656,57 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2200, y: 0, z: 2097.666}
   m_Center: {x: -100, y: 0, z: 51.167023}
+--- !u!1 &518369739
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 518369741}
+  - component: {fileID: 518369740}
+  m_Layer: 0
+  m_Name: '---Master'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &518369740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518369739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6d4e7142fb701e459f7329587bd08d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lanzadores:
+  - {fileID: 1723814716}
+  - {fileID: 793404418}
+  - {fileID: 95548545}
+  rateDisparo: 0
+  minRate: 2
+  maxRate: 5
+  disparar: 0
+--- !u!4 &518369741
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518369739}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.545111, y: 1, z: 3.0965734}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &684637386
 GameObject:
   m_ObjectHideFlags: 0
@@ -3179,6 +3231,7 @@ MonoBehaviour:
   anguloLanzamiento: 45
   delayDisparo: 0
   rateDisparo: 4
+  disparando: 0
 --- !u!4 &793404419
 Transform:
   m_ObjectHideFlags: 0
@@ -4186,6 +4239,7 @@ MonoBehaviour:
   anguloLanzamiento: 50
   delayDisparo: 0
   rateDisparo: 2
+  disparando: 0
 --- !u!4 &1723814717
 Transform:
   m_ObjectHideFlags: 0

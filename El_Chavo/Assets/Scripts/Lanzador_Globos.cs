@@ -23,6 +23,8 @@ public class Lanzador_Globos : MonoBehaviour
     public float rateDisparo;
     float sigDisparo;
 
+    public bool disparando;
+
     void Start()
     {
 
@@ -43,8 +45,8 @@ public class Lanzador_Globos : MonoBehaviour
         }
         if(Time.time >= sigDisparo)
         {
-            Disparar();
-            sigDisparo = Time.time + rateDisparo;
+            //Disparar();
+            //sigDisparo = Time.time + rateDisparo;
         }
         
         if(objetivo)
@@ -124,7 +126,8 @@ public class Lanzador_Globos : MonoBehaviour
     public IEnumerator ComenzarDisparo()
     {
 
-      //reproducir animacion
+        //reproducir animacion
+        disparando = true;
         yield return new WaitForSeconds(delayDisparo);//El tiempo que esperamos para que el personaje este en posicion de disparo
         Disparar();
 
@@ -144,7 +147,7 @@ public class Lanzador_Globos : MonoBehaviour
 
         globo_temp.GetComponent<SphereCollider>().enabled = true;
         Invoke("ActivarGlobo", 0.2f);
-
+        disparando = false;
     }
 }
 //https://vilbeyli.github.io/Projectile-Motion-Tutorial-for-Arrows-and-Missiles-in-Unity3D/

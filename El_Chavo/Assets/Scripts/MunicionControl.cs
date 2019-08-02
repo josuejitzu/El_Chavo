@@ -13,6 +13,11 @@ public class MunicionControl : MonoBehaviour
 
         
     }
+
+    public void ActivarMuncion()
+    {
+        mesh.SetActive(true);
+    }
   
     private void OnCollisionEnter(Collision collision)
     {

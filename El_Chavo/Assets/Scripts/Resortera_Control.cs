@@ -22,7 +22,9 @@ public class Resortera_Control : MonoBehaviour
     public BoxCollider triggerTirante;
 
     public GameObject municionTemp;
-  
+
+
+    public Animator resortera_anim;
 
     void Start()
     {
@@ -45,6 +47,8 @@ public class Resortera_Control : MonoBehaviour
          {
             MoverTirante(0);
          }
+       
+   
     }
 
     void CrearMunicion()
@@ -74,6 +78,7 @@ public class Resortera_Control : MonoBehaviour
                 municionTemp.GetComponent<SphereCollider>().enabled = false;
                 municionTemp.transform.position = posMunicion.position;
                 municionTemp.transform.parent = posMunicion.transform;
+                municionTemp.GetComponent<MunicionControl>().ActivarMuncion();
                 break;
             }
         }
@@ -90,11 +95,14 @@ public class Resortera_Control : MonoBehaviour
                  municionTemp.GetComponent<Rigidbody>().isKinematic = false;
                  municionTemp.GetComponent<Rigidbody>().velocity = this.transform.forward * fuerzaTotal;//multiplicar la fuerza por el vector de distancia entre los controles
                  municionTemp.GetComponent<SphereCollider>().enabled = true;
+                 municionTemp.GetComponent<MunicionControl>().ActivarMuncion();
+
 
           }
+        resortera_anim.SetTrigger("soltada");
         posMunicion.transform.position = posInicialTirante.position;
-        ligaResortera_blendShape.SetBlendShapeWeight(0, 0);
-        Invoke("CargarMunicion",0.5f);
+       //ligaResortera_blendShape.SetBlendShapeWeight(0, 0);
+        Invoke("CargarMunicion",0.3f);
     }
 
     public void ResorteraTomada()
@@ -108,6 +116,7 @@ public class Resortera_Control : MonoBehaviour
     {
         estirando = true;
         posMunicion.transform.position = Vector3.Lerp(posInicialTirante.position,posFinalTirante.position, dist);
-        ligaResortera_blendShape.SetBlendShapeWeight(0,  Mathf.Clamp((dist * 99),0,100));
+      //ligaResortera_blendShape.SetBlendShapeWeight(0,  Mathf.Clamp((dist * 99),0,100));
+        resortera_anim.SetFloat("jale", dist * 100);
     }
 }

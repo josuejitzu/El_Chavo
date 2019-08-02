@@ -31,20 +31,24 @@ public class ManoControl : MonoBehaviour
     public bool sobreGlobo, conGlobo,sobreTirante;
     public GameObject resortera, globoTemp, globoEnMano;
     public Transform posResortera;
+   
 
     public bool estirando;
+
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
+
+  
     void Update()
     {
+
         triggerPresion = squeezeAction.GetAxis(control.inputSource);
 
     
-
         if(triggerPresion >= sensibilidadTrigger)//Apretado
         {
 
@@ -69,6 +73,7 @@ public class ManoControl : MonoBehaviour
 
         if(triggerPresion < sensibilidadTrigger)//Soltar
         {
+
             print(control.inputSource.ToString() + "soltado");
             if (conResortera)
             {
@@ -80,14 +85,17 @@ public class ManoControl : MonoBehaviour
             }
             else if (estirando)
             {
+
                 manoContraria.GetComponent<ManoControl>().resortera.GetComponent<Resortera_Control>().multiplicadorFuerza = separacion * 2;
-                manoContraria.GetComponent<ManoControl>().resortera.GetComponent<Resortera_Control>().Disparar();
                 manoContraria.GetComponent<ManoControl>().resortera.GetComponent<Resortera_Control>().estirando = false;
+                manoContraria.GetComponent<ManoControl>().resortera.GetComponent<Resortera_Control>().Disparar();
+               
 
                 estirando = false;
             }
                
         }
+
 
         if(estirando)
         {
@@ -99,6 +107,7 @@ public class ManoControl : MonoBehaviour
             }
 
         }
+
 
     }
 
@@ -139,6 +148,7 @@ public class ManoControl : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+
         if (other.transform.tag == "resortera")
         {
             sobreResortera = false;
@@ -153,11 +163,14 @@ public class ManoControl : MonoBehaviour
         {
             sobreTirante = false;
         }
+
     }
+
 
 
     void TomarResortera()
     {
+
         if (!sobreResortera)
             return;
 

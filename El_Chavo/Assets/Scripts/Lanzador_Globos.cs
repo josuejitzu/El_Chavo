@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.UI;
 
 public class Lanzador_Globos : MonoBehaviour
 {
@@ -11,6 +12,11 @@ public class Lanzador_Globos : MonoBehaviour
     public int cantidad;
     public List<GameObject> globos = new List<GameObject>();
     public GameObject globo_temp;
+    [Space(10)]
+    [Header("Personajes")]
+    public GameObject chavo;
+    public GameObject kiko, ñoño, poppy, doñaFlorinda, donRamon;
+    public GameObject personajeActivo;
     [Space(10)]
     [Header("Settings Disparo")]
     public float velocidad;
@@ -25,6 +31,11 @@ public class Lanzador_Globos : MonoBehaviour
 
     public bool disparando;
 
+    public float tiempoEsperaDisparo;//tiene que ser igual al maximo valor del slider
+    float esperandoDisparo;
+    public bool esperandoLanzamiento;
+    public Slider sliderDisparo;
+
     void Start()
     {
 
@@ -33,6 +44,7 @@ public class Lanzador_Globos : MonoBehaviour
 
         CalcularFuerza();
         sigDisparo = Time.time + rateDisparo;
+        sliderDisparo.value = 0.0f;
     }
 
     // Update is called once per frame
@@ -56,6 +68,20 @@ public class Lanzador_Globos : MonoBehaviour
             Vector3 dist = objetivo.transform.position - this.transform.position;
             transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dist), Time.deltaTime * velocidadRotacion);
         }
+
+
+
+        if(esperandoLanzamiento)
+        {
+            sliderDisparo.value = Mathf.Lerp(sliderDisparo.value, 3.0f, Time.deltaTime * 3.0f);
+            if(sliderDisparo.value >= 2.99f)
+            {
+                esperandoLanzamiento = false;
+                print("Se lleno la barra,lanzando");
+                //Disparar();
+            }
+        }
+
 
     }
     public void SpawnGlobo()
@@ -122,12 +148,18 @@ public class Lanzador_Globos : MonoBehaviour
 
     }
 
-
+    public void OrdenDisparo(TipoPersonaje personaje)
+    {
+        CambiarPersonaje(personaje);
+        StartCoroutine(ComenzarDisparo());
+    }
     public IEnumerator ComenzarDisparo()
     {
-
+        esperandoLanzamiento = true; // se utliza para llenar la barra como feedback para dispararte
+        disparando = true;//este setting lo reviza el manager para saber si este personaje puede lanzar
+        yield return new WaitForSeconds(tiempoEsperaDisparo);
         //reproducir animacion
-        disparando = true;
+       
         yield return new WaitForSeconds(delayDisparo);//El tiempo que esperamos para que el personaje este en posicion de disparo
         Disparar();
 
@@ -146,8 +178,58 @@ public class Lanzador_Globos : MonoBehaviour
         globo_temp.GetComponent<Rigidbody>().velocity = velocidadCalculada;
 
         globo_temp.GetComponent<SphereCollider>().enabled = true;
-        Invoke("ActivarGlobo", 0.2f);
-        disparando = false;
+        StartCoroutine( TerminoDisparo());
     }
+
+    IEnumerator TerminoDisparo()
+    {
+        //iniciar animacion de personaje escondiendose
+        yield return new WaitForSeconds(1.0f);//lo que dure la animacion de esconido + 0.2f
+        Invoke("ActivarGlobo", 0.2f);
+        sliderDisparo.value = 0.0f;
+        
+        personajeActivo.SetActive(false);
+        personajeActivo = null;
+        disparando = false;
+        this.gameObject.SetActive(false);
+    }
+
+    void CambiarPersonaje(TipoPersonaje t)
+    {
+        chavo.SetActive(false);
+        kiko.SetActive(false);
+        //ñoño.SetActive(false);
+        //poppy.SetActive(false);
+        //donRamon.SetActive(false);
+        //doñaFlorinda.SetActive(false);
+
+
+        if (t == TipoPersonaje.chavo)
+        {
+            personajeActivo = chavo;
+        }
+        else if(t == TipoPersonaje.kiko)
+        {
+            personajeActivo = kiko;
+        }
+        else if (t == TipoPersonaje.ñoño)
+        {
+            personajeActivo = ñoño;
+        }
+        else if (t == TipoPersonaje.poppy)
+        {
+            personajeActivo = poppy;
+        }
+        else if (t == TipoPersonaje.donRamon)
+        {
+            personajeActivo = donRamon;
+        }
+        else if (t == TipoPersonaje.doñaFlorinda)
+        {
+            personajeActivo = doñaFlorinda;
+        }
+        personajeActivo.SetActive(true);
+    }
+
 }
 //https://vilbeyli.github.io/Projectile-Motion-Tutorial-for-Arrows-and-Missiles-in-Unity3D/

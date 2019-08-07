@@ -14,6 +14,10 @@ public class LanzamientosControl : MonoBehaviour
     float sigDisparo;
     public bool disparar;
 
+
+    int personajeAnterior = 5;
+    public int ronda;
+
     void Start()
     {
         sigDisparo = Time.time + RandomRate();
@@ -38,20 +42,15 @@ public class LanzamientosControl : MonoBehaviour
     {
         int r = Random.Range(0, 3);
 
-        while(lanzadores[r].disparando)
+        while(lanzadores[r].disparando)//si esta disparando elige otro, debo suponer que esta activado
         {
             r = Random.Range(0, 3);
         }
-        StartCoroutine( lanzadores[r].ComenzarDisparo());
 
-        //foreach(Lanzador_Globos lg in lanzadores)
-        //{
-        //    if(!lg.disparando)
-        //    {
-        //        StartCoroutine(lg.ComenzarDisparo());
-        //        break;
-        //    }
-        //}
+        lanzadores[r].gameObject.SetActive(true);
+        lanzadores[r].OrdenDisparo(RandomPersonaje());
+        //StartCoroutine(lanzadores[r].ComenzarDisparo());
+
     }
 
     float RandomRate()
@@ -66,6 +65,34 @@ public class LanzamientosControl : MonoBehaviour
         rateDisparo = r;
 
         return r;
+    }
+    
+    TipoPersonaje RandomPersonaje()
+    {
+        int r = 0;
+        if(ronda == 1)
+        {
+            r = Random.Range(0, 2);
+
+
+            while (r == personajeAnterior)
+            {
+                r = Random.Range(0, 2);
+            }
+        }
+     
+        TipoPersonaje p = TipoPersonaje.chavo;
+
+        if (r == 0) { p = TipoPersonaje.chavo;}
+        else if( r == 1) { p = TipoPersonaje.kiko; }
+        else if( r == 2) { p = TipoPersonaje.poppy; }
+        else if( r == 3) { p = TipoPersonaje.donRamon; }
+        else if( r == 4) { p = TipoPersonaje.ñoño; }
+        else if( r == 5) { p = TipoPersonaje.doñaFlorinda; }
+
+
+        return p;
+
     }
 
 }

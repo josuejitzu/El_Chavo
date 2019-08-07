@@ -5,6 +5,6 @@ using UnityEngine;
 public enum GloboTipo
 {
     
-    normal, kiko
+    chavo, kiko
 
 }

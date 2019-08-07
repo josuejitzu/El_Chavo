@@ -6,21 +6,30 @@ public class LanzamientosControl : MonoBehaviour
 {
     // Start is called before the first frame update
     public Lanzador_Globos[] lanzadores;
-
+    public Transform[] posiciones;
+    public int posicionAnterior;
     [Space(10)]
     [Header("Tiempos")]
     public float rateDisparo;
-    public float minRate, maxRate;
+    public float minRate, maxRate;//checar el tiempo que se tarda uno en lanzar para que 
     float sigDisparo;
     public bool disparar;
 
 
-    int personajeAnterior = 5;
+
+    int personajeAnterior;
     public int ronda;
 
     void Start()
     {
         sigDisparo = Time.time + RandomRate();
+        foreach(Lanzador_Globos l in lanzadores)
+        {
+            l.SpawnGlobo();
+            l.sliderDisparo.value = 0.0f;
+            if (l.gameObject.activeInHierarchy)
+                l.gameObject.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -31,8 +40,9 @@ public class LanzamientosControl : MonoBehaviour
         {
             if(Time.time >= sigDisparo)
             {
-                SeleccionarLanzador();
                 sigDisparo = Time.time + RandomRate();
+                SeleccionarLanzador();
+                return;
             }
         }
 
@@ -40,27 +50,61 @@ public class LanzamientosControl : MonoBehaviour
 
     public void SeleccionarLanzador()
     {
-        int r = Random.Range(0, 3);
+        int r = RandomLanzador();
 
-        while(lanzadores[r].disparando)//si esta disparando elige otro, debo suponer que esta activado
+        if (lanzadores[r].disparando)
         {
-            r = Random.Range(0, 3);
+            SeleccionarLanzador();
+            return;
         }
 
-        lanzadores[r].gameObject.SetActive(true);
-        lanzadores[r].OrdenDisparo(RandomPersonaje());
+        int posSeleccionada = PosicionRandom();
+        lanzadores[r].transform.position = posiciones[posSeleccionada].position;
+        lanzadores[r].transform.rotation =  posiciones[posSeleccionada].rotation;
+        //lanzadores[r].gameObject.SetActive(true);
+        lanzadores[r].OrdenDisparo();
         //StartCoroutine(lanzadores[r].ComenzarDisparo());
 
+    }
+    int PosicionRandom()
+    {
+        
+
+        int r = Random.Range(0, posiciones.Length);
+
+        while(r == posicionAnterior)
+        {
+            r = Random.Range(0, posiciones.Length);
+        }
+
+        posicionAnterior = r;
+
+
+        return r;
+    }
+
+    int RandomLanzador()
+    {
+        int r = Random.Range(0, lanzadores.Length);
+
+        //while (r == personajeAnterior)
+        //{
+        //    r = Random.Range(0, lanzadores.Length);
+        //}
+
+
+        personajeAnterior = r;
+        return r;
     }
 
     float RandomRate()
     {
         float r = Mathf.Floor(Random.Range(minRate, maxRate));
 
-        while(r == rateDisparo)
-        {
-            r = Mathf.Floor(Random.Range(minRate, maxRate));
-        }
+        //while(r == rateDisparo)
+        //{
+        //    r = Mathf.Floor(Random.Range(minRate, maxRate));
+        //}
 
         rateDisparo = r;
 

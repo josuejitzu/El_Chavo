@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Lanzador_Globos : MonoBehaviour
 {
     // Start is called before the first frame update
+    public TipoPersonaje _tipoPersonaje;
     [Header("Globos")]
     public GameObject globo_prefab;
     public int cantidad;
@@ -36,15 +37,21 @@ public class Lanzador_Globos : MonoBehaviour
     public bool esperandoLanzamiento;
     public Slider sliderDisparo;
 
+
+    private void OnValidate()
+    {
+        CambiarPersonaje(_tipoPersonaje);
+    }
+
     void Start()
     {
 
-        SpawnGlobo();
+       // SpawnGlobo();
        // print(Physics.gravity.y);
 
-        CalcularFuerza();
+       // CalcularFuerza();
         sigDisparo = Time.time + rateDisparo;
-        sliderDisparo.value = 0.0f;
+       // sliderDisparo.value = 0.0f;
     }
 
     // Update is called once per frame
@@ -73,8 +80,8 @@ public class Lanzador_Globos : MonoBehaviour
 
         if(esperandoLanzamiento)
         {
-            sliderDisparo.value = Mathf.Lerp(sliderDisparo.value, 3.0f, Time.deltaTime * 3.0f);
-            if(sliderDisparo.value >= 2.99f)
+            sliderDisparo.value = Mathf.Lerp(sliderDisparo.value, tiempoEsperaDisparo, Time.deltaTime * 3.0f);
+            if(sliderDisparo.value >= 2.95f)
             {
                 esperandoLanzamiento = false;
                 print("Se lleno la barra,lanzando");
@@ -92,11 +99,13 @@ public class Lanzador_Globos : MonoBehaviour
             GameObject globo = Instantiate(globo_prefab, this.transform.position, Quaternion.identity) as GameObject;
             globo.transform.name =  "globo_" + this.transform.name + i;
             globo.SetActive(false);
+            globo.GetComponent<GloboControl>()._tipoPersonaje = _tipoPersonaje;
+            globo.GetComponent<GloboControl>().CambiarGlobo();
             globos.Add(globo);
 
         }
 
-        ActivarGlobo();
+       // ActivarGlobo();
 
     }
 
@@ -114,7 +123,11 @@ public class Lanzador_Globos : MonoBehaviour
                 g.GetComponent<SphereCollider>().enabled = false;
 
                 globo_temp = g;
+                //globo_temp.GetComponent<GloboControl>()._tipoPersonaje = _tipoPersonaje;
+                //globo_temp.GetComponent<GloboControl>().CambiarGlobo();
+                
                 break;
+
             }
 
         }
@@ -148,15 +161,21 @@ public class Lanzador_Globos : MonoBehaviour
 
     }
 
-    public void OrdenDisparo(TipoPersonaje personaje)
+    public void OrdenDisparo()
     {
-        CambiarPersonaje(personaje);
+        this.gameObject.SetActive(true);
+        disparando = true;
+        //  CambiarPersonaje(personaje);
+        //  ActivarGlobo(personaje);
+       // personajeActivo.SetActive(true);
+        //ActivarGlobo();
         StartCoroutine(ComenzarDisparo());
     }
     public IEnumerator ComenzarDisparo()
     {
         esperandoLanzamiento = true; // se utliza para llenar la barra como feedback para dispararte
-        disparando = true;//este setting lo reviza el manager para saber si este personaje puede lanzar
+                                     // disparando = true;//este setting lo reviza el manager para saber si este personaje puede lanzar
+        ActivarGlobo();
         yield return new WaitForSeconds(tiempoEsperaDisparo);
         //reproducir animacion
        
@@ -170,6 +189,7 @@ public class Lanzador_Globos : MonoBehaviour
         if (globo_temp == null)
             return;
 
+      
         CalcularFuerza();
 
         globo_temp.GetComponent<GloboControl>().ActivarGlobo();
@@ -184,13 +204,16 @@ public class Lanzador_Globos : MonoBehaviour
     IEnumerator TerminoDisparo()
     {
         //iniciar animacion de personaje escondiendose
+       
         yield return new WaitForSeconds(1.0f);//lo que dure la animacion de esconido + 0.2f
-        Invoke("ActivarGlobo", 0.2f);
-        sliderDisparo.value = 0.0f;
+        //ActivarGlobo
+       
         
-        personajeActivo.SetActive(false);
-        personajeActivo = null;
+       // personajeActivo.SetActive(false);
+       // personajeActivo = null;
         disparando = false;
+        sliderDisparo.value = 0.0f;
+        yield return new WaitForSeconds(0.2f);
         this.gameObject.SetActive(false);
     }
 
@@ -198,15 +221,16 @@ public class Lanzador_Globos : MonoBehaviour
     {
         chavo.SetActive(false);
         kiko.SetActive(false);
-        //ñoño.SetActive(false);
-        //poppy.SetActive(false);
-        //donRamon.SetActive(false);
-        //doñaFlorinda.SetActive(false);
+        ñoño.SetActive(false);
+        poppy.SetActive(false);
+        donRamon.SetActive(false);
+        doñaFlorinda.SetActive(false);
 
 
         if (t == TipoPersonaje.chavo)
         {
             personajeActivo = chavo;
+            
         }
         else if(t == TipoPersonaje.kiko)
         {
@@ -228,7 +252,9 @@ public class Lanzador_Globos : MonoBehaviour
         {
             personajeActivo = doñaFlorinda;
         }
+
         personajeActivo.SetActive(true);
+        this.transform.name = t.ToString();
     }
 
 }

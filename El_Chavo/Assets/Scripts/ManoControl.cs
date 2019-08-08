@@ -74,7 +74,7 @@ public class ManoControl : MonoBehaviour
         if(triggerPresion < sensibilidadTrigger)//Soltar
         {
 
-            print(control.inputSource.ToString() + "soltado");
+            //print(control.inputSource.ToString() + "soltado");
             if (conResortera)
             {
 

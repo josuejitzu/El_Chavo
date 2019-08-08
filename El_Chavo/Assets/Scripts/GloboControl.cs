@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Chronos;
 public class GloboControl : MonoBehaviour
 {
     public TipoPersonaje _tipoPersonaje;
@@ -12,6 +12,7 @@ public class GloboControl : MonoBehaviour
     public Rigidbody rigid;
     public ParticleSystem explosion_vfx;
 
+    public bool lento;
     // Start is called before the first frame update
 
     void Start()
@@ -24,11 +25,12 @@ public class GloboControl : MonoBehaviour
       
         meshGlobo.SetActive(true);
     }
-
+  
     private void OnCollisionEnter(Collision collision)
     {
         StartCoroutine(Explotar());
     }
+
     IEnumerator Explotar()
     {
         rigid.isKinematic = true;
@@ -55,6 +57,24 @@ public class GloboControl : MonoBehaviour
         else if(_tipoPersonaje == TipoPersonaje.kiko)
         {
             meshGlobo = globoKiko;
+            // rigid.angularDrag = 100.0f;
+            //slowmo.enabled = true;
+        }
+        else if (_tipoPersonaje == TipoPersonaje.poppy)
+        {
+            meshGlobo = globoPoppy;
+        }
+        else if (_tipoPersonaje == TipoPersonaje.ñoño)
+        {
+            meshGlobo = globoÑoño;
+        }
+        else if (_tipoPersonaje == TipoPersonaje.donRamon)
+        {
+            meshGlobo = globoDonRamon;
+        }
+        else if (_tipoPersonaje == TipoPersonaje.doñaFlorinda)
+        {
+            meshGlobo = globoDoñaFlorinda;
         }
     }
 }

@@ -46,7 +46,7 @@ public class Lanzador_Globos : MonoBehaviour
     void Start()
     {
 
-       // SpawnGlobo();
+        SpawnGlobo();
        // print(Physics.gravity.y);
 
        // CalcularFuerza();
@@ -60,7 +60,7 @@ public class Lanzador_Globos : MonoBehaviour
         
         if(Input.GetKeyDown(KeyCode.L))
         {
-            Disparar();
+            OrdenDisparo();
         }
         if(Time.time >= sigDisparo)
         {
@@ -150,7 +150,7 @@ public class Lanzador_Globos : MonoBehaviour
 
 
         //float vz = Mathf.Sqrt(g * r * r / (2.0f * (h - r * tanAlpha)));
-        float vz = Mathf.Sqrt(g * r * r / (velocidad * (h - r * tanAlpha)));
+        float vz = Mathf.Sqrt(g * r * r / (velocidad * (h - r * tanAlpha)));//al parecer tiene que ser 2
         float vy = tanAlpha * vz;
 
         Vector3 velocidadLocal = new Vector3(0, vy, vz);
@@ -191,7 +191,7 @@ public class Lanzador_Globos : MonoBehaviour
 
       
         CalcularFuerza();
-
+        globo_temp.GetComponent<Rigidbody>().useGravity = true;
         globo_temp.GetComponent<GloboControl>().ActivarGlobo();
         globo_temp.GetComponent<Rigidbody>().isKinematic = false;
         //globo_temp.GetComponent<Rigidbody>().velocity = this.transform.forward * velocidad;

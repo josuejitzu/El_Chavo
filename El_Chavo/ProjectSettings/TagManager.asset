@@ -10,6 +10,7 @@ TagManager:
   - tirante
   - municion
   - mano
+  - globo
   layers:
   - Default
   - TransparentFX

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LanzamientosControl : MonoBehaviour
 {
+    public static LanzamientosControl _lanzamientos;
     // Start is called before the first frame update
     public Lanzador_Globos[] lanzadores;
     public Transform[] posiciones;
@@ -12,6 +13,7 @@ public class LanzamientosControl : MonoBehaviour
     [Header("Tiempos")]
     public float rateDisparo;
     public float minRate, maxRate;//checar el tiempo que se tarda uno en lanzar para que 
+    public int maxLanzadores;
     float sigDisparo;
     public bool disparar;
 
@@ -22,6 +24,7 @@ public class LanzamientosControl : MonoBehaviour
 
     void Start()
     {
+        _lanzamientos = this;
         sigDisparo = Time.time + RandomRate();
         foreach(Lanzador_Globos l in lanzadores)
         {
@@ -46,6 +49,13 @@ public class LanzamientosControl : MonoBehaviour
             }
         }
 
+    }
+
+    public void PrepararRound()
+    {
+        minRate = MasterLevel.masterlevel.rondas[MasterLevel.masterlevel.rondaNum].minRate;
+        maxRate = MasterLevel.masterlevel.rondas[MasterLevel.masterlevel.rondaNum].maxRate;
+        maxLanzadores = MasterLevel.masterlevel.rondas[MasterLevel.masterlevel.rondaNum].personajes;
     }
 
     public void SeleccionarLanzador()
@@ -85,7 +95,7 @@ public class LanzamientosControl : MonoBehaviour
 
     int RandomLanzador()
     {
-        int r = Random.Range(0, lanzadores.Length);
+        int r = Random.Range(0, maxLanzadores);
 
         //while (r == personajeAnterior)
         //{

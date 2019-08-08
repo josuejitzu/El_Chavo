@@ -25,6 +25,7 @@ public class Lanzador_Globos : MonoBehaviour
     public float velocidadRotacion;
     public Vector3 velocidadCalculada;
     public float anguloLanzamiento;
+    public Transform posLanzamiento;
 
     public float delayDisparo;
     public float rateDisparo;
@@ -115,12 +116,12 @@ public class Lanzador_Globos : MonoBehaviour
         {
             if(!g.activeInHierarchy)
             {
-                g.transform.position = this.transform.position;
-                g.transform.rotation = this.transform.rotation;
+                g.transform.position = posLanzamiento.position;
+                g.transform.rotation = posLanzamiento.rotation;
 
                 g.SetActive(true);
-                g.GetComponent<Rigidbody>().isKinematic = true;
-                g.GetComponent<SphereCollider>().enabled = false;
+                // g.GetComponent<Rigidbody>().isKinematic = true;
+                g.GetComponent<GloboControl>().colision.enabled = false;
 
                 globo_temp = g;
                 //globo_temp.GetComponent<GloboControl>()._tipoPersonaje = _tipoPersonaje;
@@ -190,21 +191,23 @@ public class Lanzador_Globos : MonoBehaviour
             return;
 
       
-        CalcularFuerza();
-        globo_temp.GetComponent<Rigidbody>().useGravity = true;
+      //  CalcularFuerza();
+      //  globo_temp.GetComponent<Rigidbody>().useGravity = true;
         globo_temp.GetComponent<GloboControl>().ActivarGlobo();
-        globo_temp.GetComponent<Rigidbody>().isKinematic = false;
+        globo_temp.GetComponent<GloboControl>().posFinal = objetivo.transform.position;
+        globo_temp.GetComponent<GloboControl>().brincar = true;
+      //  globo_temp.GetComponent<Rigidbody>().isKinematic = false;
         //globo_temp.GetComponent<Rigidbody>().velocity = this.transform.forward * velocidad;
-        globo_temp.GetComponent<Rigidbody>().velocity = velocidadCalculada;
+      //  globo_temp.GetComponent<Rigidbody>().velocity = velocidadCalculada;
 
-        globo_temp.GetComponent<SphereCollider>().enabled = true;
+        globo_temp.GetComponent<GloboControl>().colision.enabled = true;
         StartCoroutine( TerminoDisparo());
     }
 
     IEnumerator TerminoDisparo()
     {
         //iniciar animacion de personaje escondiendose
-       
+        globo_temp = null;
         yield return new WaitForSeconds(1.0f);//lo que dure la animacion de esconido + 0.2f
         //ActivarGlobo
        

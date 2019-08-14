@@ -9,6 +9,6 @@ public class SettingLanzamiento
     public float tiempo = 2.0f;
     public int vidaGlobo;
     public float dañoGlobo = 10.0f;
-    public float valorGlobo = 10.0f;
+    public int valorGlobo = 10;
     
 }

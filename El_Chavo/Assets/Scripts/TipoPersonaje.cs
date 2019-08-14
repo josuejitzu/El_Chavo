@@ -9,5 +9,6 @@ public enum TipoPersonaje
     poppy,
     ñoño,
     donRamon,
-    doñaFlorinda
+    doñaFlorinda,
+    miniFlorinda
 }

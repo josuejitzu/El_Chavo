@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Chronos;
+//using Chronos;
 public class GloboControl_Fisica : MonoBehaviour
 {
     public TipoPersonaje _tipoPersonaje;

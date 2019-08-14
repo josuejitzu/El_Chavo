@@ -79,10 +79,6 @@ public class ManoControl : MonoBehaviour
             {
 
             }
-            else if (conGlobo)
-            {
-
-            }
             else if (estirando)
             {
 

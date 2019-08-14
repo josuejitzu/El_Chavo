@@ -11,6 +11,9 @@ TagManager:
   - municion
   - mano
   - globo
+  - personaje
+  - paredes
+  - posicionDebuff
   layers:
   - Default
   - TransparentFX

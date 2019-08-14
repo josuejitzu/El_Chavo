@@ -47,8 +47,14 @@ public class MunicionControl : MonoBehaviour
         else if (other.transform.tag == "mano" || other.transform.tag == "tirante" || other.transform.tag == "resortera")
         {
 
-        }else
-        { 
+        }
+        else if (other.transform.tag == "personaje")
+        {
+            StartCoroutine(other.GetComponent<Lanzador_Globos>().Lanzador_Golpeado());
+
+        }
+        else
+        {
             StartCoroutine(Explotar());
         }
     }

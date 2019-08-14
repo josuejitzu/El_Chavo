@@ -9,6 +9,7 @@ public class LanzamientosControl : MonoBehaviour
     public Lanzador_Globos[] lanzadores;
     public Transform[] posiciones;
     public int posicionAnterior;
+    public bool conFlorinda;//sabemos si hay un globo de doña Florinda en escena, pues solo debe haber uno
     [Space(10)]
     [Header("Tiempos")]
     public float rateDisparo;
@@ -26,13 +27,7 @@ public class LanzamientosControl : MonoBehaviour
     {
         _lanzamientos = this;
         sigDisparo = Time.time + RandomRate();
-        foreach(Lanzador_Globos l in lanzadores)
-        {
-            l.SpawnGlobo();
-            l.sliderDisparo.value = 0.0f;
-            if (l.gameObject.activeInHierarchy)
-                l.gameObject.SetActive(false);
-        }
+        PrepararLanzadores();
     }
 
     // Update is called once per frame
@@ -49,6 +44,21 @@ public class LanzamientosControl : MonoBehaviour
             }
         }
 
+    }
+    void PrepararLanzadores()
+    {
+        foreach (Lanzador_Globos l in lanzadores)
+        {
+            l.SpawnGlobo();
+            l.sliderDisparo.value = 0.0f;
+
+        }
+       
+        foreach (Lanzador_Globos lanzador in lanzadores)
+        {
+            if (lanzador.gameObject.activeInHierarchy)
+                lanzador.gameObject.SetActive(false);
+        }
     }
 
     public void PrepararRound()
@@ -67,12 +77,24 @@ public class LanzamientosControl : MonoBehaviour
             SeleccionarLanzador();
             return;
         }
+        if(lanzadores[r]._tipoPersonaje == TipoPersonaje.doñaFlorinda && conFlorinda)
+        {
+            SeleccionarLanzador();
+            return;
+        }
 
         int posSeleccionada = PosicionRandom();
         lanzadores[r].transform.position = posiciones[posSeleccionada].position;
         lanzadores[r].transform.rotation =  posiciones[posSeleccionada].rotation;
         //lanzadores[r].gameObject.SetActive(true);
         lanzadores[r].OrdenDisparo();
+
+
+        //Si spawneamos a Doña Florinda 
+        if(lanzadores[r]._tipoPersonaje == TipoPersonaje.doñaFlorinda)
+        {
+            conFlorinda = true;
+        }
         //StartCoroutine(lanzadores[r].ComenzarDisparo());
 
     }
@@ -102,6 +124,23 @@ public class LanzamientosControl : MonoBehaviour
         //    r = Random.Range(0, lanzadores.Length);
         //}
 
+
+        float probabilidad = Random.Range(0.0f, 1.0f);
+        if (probabilidad > 0.5) //%50 percent chance
+        {//code here
+            print("Probabilidad de 50%: " + probabilidad);
+        }
+
+        if (probabilidad > 0.2) //%80 percent chance (1 - 0.2 is 0.8)
+        { //code here
+            print("Probabilidad de 80%: " + probabilidad);
+        }
+
+        if (probabilidad> 0.7) //%30 percent chance (1 - 0.7 is 0.3)
+        { //code here
+            print("Probabilidad de 30%: " + probabilidad);
+        }
+       
 
         personajeAnterior = r;
         return r;
@@ -149,4 +188,14 @@ public class LanzamientosControl : MonoBehaviour
 
     }
 
+    public void DesactivarLanzadores()
+    {
+        foreach(Lanzador_Globos l in lanzadores)
+        {
+            if(l.gameObject.activeInHierarchy)
+            {
+                l.DesactivarLanzador();
+            }
+        }
+    }
 }

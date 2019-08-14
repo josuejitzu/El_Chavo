@@ -8,6 +8,10 @@ public class Lanzador_Globos : MonoBehaviour
 {
     // Start is called before the first frame update
     public TipoPersonaje _tipoPersonaje;
+
+    public Rigidbody rigid;
+    public BoxCollider colider;
+
     [Header("Globos")]
     public GameObject globo_prefab;
     public int cantidad;
@@ -37,6 +41,9 @@ public class Lanzador_Globos : MonoBehaviour
     float esperandoDisparo;
     public bool esperandoLanzamiento;
     public Slider sliderDisparo;
+    [Space(10)]
+    [Header("VFX")]
+    public ParticleSystem golpe_vfx;
 
 
     private void OnValidate()
@@ -63,11 +70,11 @@ public class Lanzador_Globos : MonoBehaviour
         {
             OrdenDisparo();
         }
-        if(Time.time >= sigDisparo)
-        {
-            //Disparar();
-            //sigDisparo = Time.time + rateDisparo;
-        }
+        //if(Time.time >= sigDisparo)
+        //{
+        //    //Disparar();
+        //    //sigDisparo = Time.time + rateDisparo;
+        //}
         
         if(objetivo)
         {
@@ -102,6 +109,7 @@ public class Lanzador_Globos : MonoBehaviour
             globo.SetActive(false);
             globo.GetComponent<GloboControl>()._tipoPersonaje = _tipoPersonaje;
             globo.GetComponent<GloboControl>().CambiarGlobo();
+            MasterLevel.masterlevel.RegistrarUpdate("globo",globo);
             globos.Add(globo);
 
         }
@@ -164,11 +172,14 @@ public class Lanzador_Globos : MonoBehaviour
 
     public void OrdenDisparo()
     {
+        sliderDisparo.value = 0.0f;
         this.gameObject.SetActive(true);
+     
+        colider.enabled = true;
         disparando = true;
-        //  CambiarPersonaje(personaje);
-        //  ActivarGlobo(personaje);
-       // personajeActivo.SetActive(true);
+        //CambiarPersonaje(personaje);
+        //ActivarGlobo(personaje);
+        //personajeActivo.SetActive(true);
         //ActivarGlobo();
         StartCoroutine(ComenzarDisparo());
     }
@@ -195,6 +206,7 @@ public class Lanzador_Globos : MonoBehaviour
       //  globo_temp.GetComponent<Rigidbody>().useGravity = true;
         globo_temp.GetComponent<GloboControl>().ActivarGlobo();
         globo_temp.GetComponent<GloboControl>().posFinal = objetivo.transform.position;
+        globo_temp.GetComponent<GloboControl>().objetivo = objetivo.transform;
         globo_temp.GetComponent<GloboControl>().brincar = true;
       //  globo_temp.GetComponent<Rigidbody>().isKinematic = false;
         //globo_temp.GetComponent<Rigidbody>().velocity = this.transform.forward * velocidad;
@@ -260,5 +272,48 @@ public class Lanzador_Globos : MonoBehaviour
         this.transform.name = t.ToString();
     }
 
+    public IEnumerator Lanzador_Golpeado()
+    {
+        StopCoroutine(ComenzarDisparo());
+        disparando = false;
+        colider.enabled = false;
+
+        if (globo_temp != null)
+        {
+
+            globo_temp.SetActive(false);
+            globo_temp = null;
+        }
+      
+        MasterLevel.masterlevel.ScoreJugador(10);
+        golpe_vfx.Play();
+        //animacion de golpe
+
+        yield return new WaitForSeconds(1.0f);
+
+
+        this.gameObject.SetActive(false);
+
+    }
+
+
+    public void DesactivarLanzador()
+    {
+        this.StopAllCoroutines();
+        disparando = false;
+        if(globo_temp != null)
+        {
+            globo_temp.SetActive(false);
+            globo_temp = null;
+        }
+        foreach(GameObject g in globos)
+        {
+            if (g.activeInHierarchy)
+                g.SetActive(false);
+        }
+
+        this.gameObject.SetActive(false);
+
+    }
 }
 //https://vilbeyli.github.io/Projectile-Motion-Tutorial-for-Arrows-and-Missiles-in-Unity3D/

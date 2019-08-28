@@ -3,7 +3,17 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - projectile
+  - FxTemporaire
+  - resortera
+  - tirante
+  - municion
+  - mano
+  - globo
+  - personaje
+  - paredes
+  - posicionDebuff
   layers:
   - Default
   - TransparentFX

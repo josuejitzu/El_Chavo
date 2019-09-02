@@ -43,6 +43,12 @@ public class MasterLevel : MonoBehaviour
     [Space(10)]
     [Header("KEY")]
     public KeyCode teclaIniciar;
+    [Space(10)]
+    [Header("UIX-Operador")]
+    public TMP_Text rondaOperador_txt;
+    public TMP_Text tiempoRonda_txt;
+    public Slider vidaSlider_operador;
+    
 
     [Space(10)]
     [Header("UpdateScripts")]
@@ -62,6 +68,8 @@ public class MasterLevel : MonoBehaviour
     {
 
         vidaSlider.value = Mathf.MoveTowards(vidaSlider.value, vidaJugador, Time.deltaTime * velocidadLlenado);
+        vidaSlider_operador.value = vidaSlider.value;
+
         if (Input.GetKey(teclaIniciar))
         {
             StartCoroutine(IniciarJuego());
@@ -91,11 +99,24 @@ public class MasterLevel : MonoBehaviour
         }
     }
 
+    public void IniciarJuegoCall()
+    {
+        StartCoroutine(IniciarJuego());
+    }
     public IEnumerator IniciarJuego()
     {
 
         LanzamientosControl._lanzamientos.PrepararRound();
         tiempoJuego = rondas[rondaNum].duracion;
+
+        ///Muestra el panel de Inicio
+        siguienteRonda_text.text = (rondaNum + 1).ToString("00");//si da 1 es 2
+        rondaOperador_txt.text = "Ronda: " + (rondaNum + 1).ToString("00");
+        canvasSiguienteRonda.SetActive(true);
+        yield return new WaitForSeconds(2.0f);
+        canvasSiguienteRonda.SetActive(false);
+        ///
+
         yield return new WaitForSeconds(0.5f);
         jugando = true;
         contando = true;
@@ -109,6 +130,7 @@ public class MasterLevel : MonoBehaviour
         LanzamientosControl._lanzamientos.disparar = false;
         LanzamientosControl._lanzamientos.DesactivarLanzadores();
         ronda_text.text = (rondaNum + 1).ToString("00");//si es 0 da 1
+       
         canvasJuego.SetActive(true);
         yield return new WaitForSeconds(3.0f);
         canvasJuego.SetActive(false);
@@ -124,12 +146,21 @@ public class MasterLevel : MonoBehaviour
         }
 
         siguienteRonda_text.text = (rondaNum + 1).ToString("00");//si da 1 es 2
+        rondaOperador_txt.text = "Ronda: " + (rondaNum + 1).ToString("00");
         canvasSiguienteRonda.SetActive(true);
         yield return new WaitForSeconds(2.0f);
         canvasSiguienteRonda.SetActive(false);
 
-        StartCoroutine(IniciarJuego());
-       
+        // StartCoroutine(IniciarJuego());
+
+        ///Lanza los parametros y comienza la siguiente Ronda
+        LanzamientosControl._lanzamientos.PrepararRound();
+        tiempoJuego = rondas[rondaNum].duracion;
+        yield return new WaitForSeconds(0.5f);
+        jugando = true;
+        contando = true;
+        LanzamientosControl._lanzamientos.disparar = true;
+
     }
 
     public IEnumerator FinJuego()
@@ -155,6 +186,7 @@ public class MasterLevel : MonoBehaviour
             StartCoroutine(FinRonda());
             
         }
+        tiempoRonda_txt.text = "00:"+ tiempoJuego.ToString("00");
     }
 
     public void DañarJugador(float cantidad)
@@ -171,6 +203,7 @@ public class MasterLevel : MonoBehaviour
         vidaJugador += cantidad;
 
     }
+
     public void ScoreJugador(int valor)
     {
         if (!jugando)

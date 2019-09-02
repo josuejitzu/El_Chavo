@@ -82,14 +82,15 @@ public class Lanzador_Globos : MonoBehaviour
         
             Vector3 dist = objetivo.transform.position - this.transform.position;
             transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dist), Time.deltaTime * velocidadRotacion);
+
         }
 
 
 
         if(esperandoLanzamiento)
         {
-            sliderDisparo.value = Mathf.Lerp(sliderDisparo.value, tiempoEsperaDisparo, Time.deltaTime * 3.0f);
-            if(sliderDisparo.value >= 2.95f)
+            sliderDisparo.value = Mathf.MoveTowards(sliderDisparo.value, tiempoEsperaDisparo, Time.deltaTime);
+            if(sliderDisparo.value >= 2.99f)
             {
                 esperandoLanzamiento = false;
                 print("Se lleno la barra,lanzando");
@@ -174,9 +175,9 @@ public class Lanzador_Globos : MonoBehaviour
     {
         sliderDisparo.value = 0.0f;
         this.gameObject.SetActive(true);
-     
+        disparando = true;//este setting lo reviza el manager para saber si este personaje puede lanzar
         colider.enabled = true;
-        disparando = true;
+     
         //CambiarPersonaje(personaje);
         //ActivarGlobo(personaje);
         //personajeActivo.SetActive(true);
@@ -186,11 +187,17 @@ public class Lanzador_Globos : MonoBehaviour
     public IEnumerator ComenzarDisparo()
     {
         esperandoLanzamiento = true; // se utliza para llenar la barra como feedback para dispararte
-                                     // disparando = true;//este setting lo reviza el manager para saber si este personaje puede lanzar
+                                    
         ActivarGlobo();
+
+        if(chavo.activeInHierarchy)
+            chavo.GetComponent<Animator>().SetTrigger("preparar");
+
         yield return new WaitForSeconds(tiempoEsperaDisparo);
-        //reproducir animacion
-       
+
+        if (chavo.activeInHierarchy)
+            chavo.GetComponent<Animator>().SetTrigger("disparar");
+
         yield return new WaitForSeconds(delayDisparo);//El tiempo que esperamos para que el personaje este en posicion de disparo
         Disparar();
 
@@ -213,12 +220,15 @@ public class Lanzador_Globos : MonoBehaviour
       //  globo_temp.GetComponent<Rigidbody>().velocity = velocidadCalculada;
 
         globo_temp.GetComponent<GloboControl>().colision.enabled = true;
-        StartCoroutine( TerminoDisparo());
+        StartCoroutine(TerminoDisparo());
     }
 
     IEnumerator TerminoDisparo()
     {
+        yield return new WaitForSeconds(0.5f);//tiempo de terminaicon de abanico
         //iniciar animacion de personaje escondiendose
+        if (chavo.activeInHierarchy)
+            chavo.GetComponent<Animator>().SetTrigger("agacharse");
         globo_temp = null;
         yield return new WaitForSeconds(1.0f);//lo que dure la animacion de esconido + 0.2f
         //ActivarGlobo
@@ -228,7 +238,7 @@ public class Lanzador_Globos : MonoBehaviour
        // personajeActivo = null;
         disparando = false;
         sliderDisparo.value = 0.0f;
-        yield return new WaitForSeconds(0.2f);
+       // yield return new WaitForSeconds(0.2f);
         this.gameObject.SetActive(false);
     }
 

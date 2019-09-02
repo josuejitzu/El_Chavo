@@ -50,6 +50,8 @@ public class GloboControl : MonoBehaviour
     [Header("Globos Donramon")]
     public GameObject[] globosRamon;
 
+
+
     void Start()
     {
         tiempoMini = Time.time + tiempoDisparoMiniGlobos;
@@ -82,6 +84,8 @@ public class GloboControl : MonoBehaviour
     }
     public void ActivarGlobo()
     {
+
+        timer = 0.0f;
         if (_tipoPersonaje == TipoPersonaje.miniFlorinda)
         {
             gameObject.transform.parent = null;
@@ -99,9 +103,7 @@ public class GloboControl : MonoBehaviour
     
         }
         else
-        {
-
-           
+        {          
             vidaSlider.gameObject.SetActive(true);
             vida = vidaInicial;
             vidaSlider.maxValue = vida;
@@ -114,7 +116,6 @@ public class GloboControl : MonoBehaviour
         if (_tipoPersonaje != TipoPersonaje.miniFlorinda)
             meshGlobo.SetActive(true);
 
-        timer = 0.0f;
 
          
         posInicial = this.transform.position;
@@ -133,6 +134,7 @@ public class GloboControl : MonoBehaviour
             //        Explotar();
             //    }
             //}
+
             if(_tipoPersonaje == TipoPersonaje.doñaFlorinda)
             {
                 this.transform.position = Vector3.Lerp(posInicial, posFlorinda, timer);
@@ -140,6 +142,7 @@ public class GloboControl : MonoBehaviour
                 colision.radius = Mathf.Lerp(1.0f, 5.5f, timer);
                 timer += Time.deltaTime / tiempoDeRecorrido;
                 Vector3 dist = posFlorinda - posInicial;
+
                 if(dist.magnitude <= 0.2f)
                 {
                     brincar = false;
@@ -152,7 +155,8 @@ public class GloboControl : MonoBehaviour
                 float altura = Mathf.Sin(Mathf.PI * timer) * alturaArco;
                 transform.position = Vector3.Lerp(posInicial, posFinal, timer) + Vector3.up * altura;
                 timer += Time.deltaTime / tiempoDeRecorrido;
-           }
+
+            }
 
 
 
@@ -175,7 +179,7 @@ public class GloboControl : MonoBehaviour
 
     }
 
-    public void ComenzarBombardeo()
+    public void ComenzarBombardeo()///Mini globod DoñaFlorinda
     {
 
         if(cantMiniGlobos < globosFlorinda.Length)
@@ -275,10 +279,9 @@ public class GloboControl : MonoBehaviour
 
             }
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.5f);
       
 
-        yield return new WaitForSeconds(1.0f);
 
         if(_tipoPersonaje == TipoPersonaje.doñaFlorinda)
         {

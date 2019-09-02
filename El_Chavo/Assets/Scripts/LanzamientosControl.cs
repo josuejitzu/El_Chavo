@@ -74,7 +74,8 @@ public class LanzamientosControl : MonoBehaviour
 
         if (lanzadores[r].disparando)
         {
-            SeleccionarLanzador();
+            sigDisparo = Time.time + RandomRate();
+            Invoke("SeleccionarLanzador", 1.0f);//Al parece aqui tenemos un problema cuando mandamos a llamar tan rapido a la misma funcion, por eso le puse un delay
             return;
         }
         if(lanzadores[r]._tipoPersonaje == TipoPersonaje.doñaFlorinda && conFlorinda)
@@ -119,10 +120,10 @@ public class LanzamientosControl : MonoBehaviour
     {
         int r = Random.Range(0, maxLanzadores);
 
-        //while (r == personajeAnterior)
-        //{
-        //    r = Random.Range(0, lanzadores.Length);
-        //}
+        while (r == personajeAnterior)
+        {
+            r = Random.Range(0, maxLanzadores);
+        }
 
 
         float probabilidad = Random.Range(0.0f, 1.0f);
@@ -183,10 +184,11 @@ public class LanzamientosControl : MonoBehaviour
         else if( r == 4) { p = TipoPersonaje.ñoño; }
         else if( r == 5) { p = TipoPersonaje.doñaFlorinda; }
 
+        personajeAnterior = r;
 
         return p;
 
-    }
+    } ///NO SE ESTA UTLIZANDO
 
     public void DesactivarLanzadores()
     {

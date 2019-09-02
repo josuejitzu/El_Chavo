@@ -11,7 +11,7 @@ public class Lanzador_Globos : MonoBehaviour
 
     public Rigidbody rigid;
     public BoxCollider colider;
-
+  
     [Header("Globos")]
     public GameObject globo_prefab;
     public int cantidad;
@@ -93,7 +93,7 @@ public class Lanzador_Globos : MonoBehaviour
             if(sliderDisparo.value >= 2.99f)
             {
                 esperandoLanzamiento = false;
-                print("Se lleno la barra,lanzando");
+                //print("Se lleno la barra,lanzando");
                 //Disparar();
             }
         }

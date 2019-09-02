@@ -129,17 +129,17 @@ public class LanzamientosControl : MonoBehaviour
         float probabilidad = Random.Range(0.0f, 1.0f);
         if (probabilidad > 0.5) //%50 percent chance
         {//code here
-            print("Probabilidad de 50%: " + probabilidad);
+           // print("Probabilidad de 50%: " + probabilidad);
         }
 
         if (probabilidad > 0.2) //%80 percent chance (1 - 0.2 is 0.8)
         { //code here
-            print("Probabilidad de 80%: " + probabilidad);
+            //print("Probabilidad de 80%: " + probabilidad);
         }
 
         if (probabilidad> 0.7) //%30 percent chance (1 - 0.7 is 0.3)
         { //code here
-            print("Probabilidad de 30%: " + probabilidad);
+           // print("Probabilidad de 30%: " + probabilidad);
         }
        
 

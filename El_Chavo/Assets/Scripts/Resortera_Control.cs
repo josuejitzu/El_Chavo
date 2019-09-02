@@ -20,11 +20,12 @@ public class Resortera_Control : MonoBehaviour
     [Space(10)]
     public BoxCollider trigger;
     public BoxCollider triggerTirante;
-
     public GameObject municionTemp;
-
-
     public Animator resortera_anim;
+
+    [Header("PowerUps")]
+    public bool explosivo_PU;
+    public bool autonoma_PU;
 
     void Start()
     {
@@ -47,8 +48,21 @@ public class Resortera_Control : MonoBehaviour
          {
             MoverTirante(0);
          }
-       
-   
+       if(Input.GetKeyDown(KeyCode.C))
+       {
+            ActivarPowerUp(MunicionTipo.Explosiva);
+       }
+       if(Input.GetKeyDown(KeyCode.V))
+        {
+            ActivarPowerUp(MunicionTipo.Autonoma);
+
+        }
+       if(Input.GetKeyDown(KeyCode.N))
+        {
+            //  ActivarPowerUp(MunicionTipo.Normal);
+            InputPowerUp();
+        }
+
     }
 
     void CrearMunicion()
@@ -68,24 +82,43 @@ public class Resortera_Control : MonoBehaviour
 
     public void CargarMunicion()
     {
+        
         foreach (GameObject m in municiones)
         {
             if (!m.activeInHierarchy)
             {
                 municionTemp = m;
+
+                //En caso de activar un PowerUp//nota debe haber un conteo de municion
+                if (explosivo_PU)
+                    municionTemp.GetComponent<MunicionControl>()._tipoMunicion = MunicionTipo.Explosiva;
+                else if (autonoma_PU)
+                    municionTemp.GetComponent<MunicionControl>()._tipoMunicion = MunicionTipo.Autonoma;
+                else
+                    municionTemp.GetComponent<MunicionControl>()._tipoMunicion = MunicionTipo.Normal;
+                //
+
                 municionTemp.SetActive(true);
                 municionTemp.GetComponent<Rigidbody>().isKinematic = true;
                 municionTemp.GetComponent<SphereCollider>().enabled = false;
                 municionTemp.transform.position = posMunicion.position;
                 municionTemp.transform.parent = posMunicion.transform;
                 municionTemp.GetComponent<MunicionControl>().ActivarMuncion();
+               
+
                 break;
             }
         }
     }
+ 
 
     public void Disparar()
     {
+        if (autonoma_PU)
+        {
+            DispararAutomatica();
+            return;
+        }
         fuerzaTotal = fuerza * multiplicadorFuerza;
        
           if(municionTemp != null)
@@ -102,7 +135,24 @@ public class Resortera_Control : MonoBehaviour
         resortera_anim.SetTrigger("soltada");
         posMunicion.transform.position = posInicialTirante.position;
         //ligaResortera_blendShape.SetBlendShapeWeight(0, 0);
-        Invoke("CargarMunicion",0.3f);
+        municionTemp = null;
+        Invoke("CargarMunicion",0.2f);
+    }
+
+    public void DispararAutomatica()
+    {
+
+        if (municionTemp == null)
+            return;
+
+
+
+        StartCoroutine(municionTemp.GetComponent<MunicionControl>().DisparoAutonomo());
+
+        resortera_anim.SetTrigger("soltada");
+        posMunicion.transform.position = posInicialTirante.position;
+        municionTemp = null;
+        Invoke("CargarMunicion", 0.2f);
     }
 
     public void ResorteraTomada()
@@ -118,5 +168,48 @@ public class Resortera_Control : MonoBehaviour
         posMunicion.transform.position = Vector3.Lerp(posInicialTirante.position,posFinalTirante.position, dist);
       //ligaResortera_blendShape.SetBlendShapeWeight(0,  Mathf.Clamp((dist * 99),0,100));
         resortera_anim.SetFloat("jale", dist * 100);
+    }
+
+
+    void InputPowerUp()
+    {
+        if(!explosivo_PU && !autonoma_PU)
+        {
+            ActivarPowerUp(MunicionTipo.Explosiva);
+        }
+        else if(explosivo_PU)
+        {
+            ActivarPowerUp(MunicionTipo.Autonoma);
+        }
+        else if(autonoma_PU)
+        {
+            ActivarPowerUp(MunicionTipo.Normal);
+        }
+    }
+    public void ActivarPowerUp(MunicionTipo tipoMunicion)
+    {
+        explosivo_PU = false;
+        autonoma_PU = false;
+
+        if (tipoMunicion == MunicionTipo.Normal)
+        {
+           
+        }
+        else if(tipoMunicion == MunicionTipo.Explosiva)
+        {
+            explosivo_PU = true;
+        }
+        else if (tipoMunicion == MunicionTipo.Autonoma)
+        {
+            autonoma_PU = true;
+        }
+
+        if(municionTemp != null)
+        {
+            municionTemp.SetActive(false);
+            municionTemp = null;
+            CargarMunicion();
+
+        }
     }
 }

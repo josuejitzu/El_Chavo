@@ -50,7 +50,8 @@ public class GloboControl : MonoBehaviour
     [Header("Globos Donramon")]
     public GameObject[] globosRamon;
 
-
+    public bool enMira;
+    public Image lockedImg;
 
     void Start()
     {
@@ -156,6 +157,14 @@ public class GloboControl : MonoBehaviour
                 transform.position = Vector3.Lerp(posInicial, posFinal, timer) + Vector3.up * altura;
                 timer += Time.deltaTime / tiempoDeRecorrido;
 
+                if (_tipoPersonaje == TipoPersonaje.kiko)
+                {
+                    Vector3 dist = posFinal - transform.position;
+                    if (dist.magnitude <= 0.3f)
+                    {
+                        Explotar();
+                    }
+                }
             }
 
 
@@ -236,6 +245,8 @@ public class GloboControl : MonoBehaviour
         if(sliderFlorinda != null)
             sliderFlorinda.value = vida;
 
+        QuitarMira();
+
         if(vida <= 0)
         {
             StartCoroutine(Destruir());
@@ -287,7 +298,8 @@ public class GloboControl : MonoBehaviour
         {
             LanzamientosControl._lanzamientos.conFlorinda = false;
         }
-
+        lockedImg.gameObject.SetActive(false);
+        enMira = false;
         this.gameObject.SetActive(false);
 
     }
@@ -306,13 +318,15 @@ public class GloboControl : MonoBehaviour
 
         explosion_vfx.Play();
         colision.enabled = false;
+        
         yield return new WaitForSeconds(1.0f);
 
         if (_tipoPersonaje == TipoPersonaje.doñaFlorinda)
         {
             LanzamientosControl._lanzamientos.conFlorinda = false;
         }
-
+        lockedImg.gameObject.SetActive(false);
+        enMira = false;
         this.gameObject.SetActive(false);
 
     }
@@ -391,5 +405,20 @@ public class GloboControl : MonoBehaviour
 
         }
         vidaInicial = vida;
+    }
+
+    public void GloboEnMira()
+    {
+        if (enMira)
+            return;
+
+        enMira = true;
+        lockedImg.gameObject.SetActive(true);
+        //Aqui se activarian los efectos de que esta lockedo
+    }
+    public void QuitarMira()
+    {
+        enMira = false;
+        lockedImg.gameObject.SetActive(false);
     }
 }

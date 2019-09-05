@@ -6,7 +6,8 @@ using UnityEngine.Networking;
 public class WebRequest : MonoBehaviour
 {
     // Where to send our request
-    const string DEFAULT_URL = "https://jsonplaceholder.typicode.com/todos/1";
+    //const string DEFAULT_URL = "https://jsonplaceholder.typicode.com/todos/1";
+    const string DEFAULT_URL = "https://200.80.220.110/login";
     string targetUrl = DEFAULT_URL;
 
     // Keep track of what we got back

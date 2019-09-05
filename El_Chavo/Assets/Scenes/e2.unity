@@ -4375,7 +4375,6 @@ GameObject:
   - component: {fileID: 518369742}
   - component: {fileID: 518369740}
   - component: {fileID: 518369743}
-  - component: {fileID: 518369744}
   m_Layer: 0
   m_Name: '---Master'
   m_TagString: Untagged
@@ -4506,30 +4505,57 @@ MonoBehaviour:
   usuario:
     user: 
     pass: 
-    computerId: 
-  url_login: ' https://200.80.220.110:33001/login'
-  url_tickets: ' https:\\200.80.220.110:33001\'
+    computerId: 0
+  usuario_logeado:
+    statusCode: 0
+    body:
+      authorized: 0
+      errorCode: 0
+      empId: 0
+      token: 
+  tarjeta_balance:
+    posId: 0
+    empId: 0
+    cardNumber: 0
+    token: 
+    extEmpId: 0
+  tarjeta_datos:
+    statusCode: 0
+    body:
+      card: 
+      credits: 
+      bonus: 
+      courtesy: 
+      status: 
+      minutes: 0
+      tickets: 
+      oldPassports: 
+      ticketType: 
+  tarjetaAgregar:
+    posId: 0
+    empId: 0
+    cardNumber: 0
+    token: 
+    ticketAmount: 0
+    extEmpId: 0
+  tarjetaVerificacion:
+    statusCode: 0
+    body:
+      tickets: 
+      cardNumber: 
+      status: 
+  url_login: https://200.80.220.110:33001/login
+  url_ticketsAgregar: 'https://200.80.220.110:33001/redemption/ticketsadd '
+  url_cardBalance: https://200.80.220.110:33001/card/balance
   user: jitzu
   pass: '@@jitzu'
-  computerID: jitzu_0001
-  posID: 
+  computerID: 11
+  posID: 1
   empID: 
-  cardNumber: 0
+  cardNumber: 300000
   token: 
-  extEmpID: 
+  extEmpID: 1
   jsonStr: 
---- !u!114 &518369744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 518369739}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20d479455c0a8c740b20e73f2d0acbff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &522135536
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16644,7 +16670,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh21500
+  m_Name: pb_Mesh21530
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

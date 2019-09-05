@@ -6,14 +6,35 @@ using System.Text;
 using System.IO;
 using System;
 
+#region Area de Clases para Logeo
 [System.Serializable]
 public class UsuarioLogin
 {
     public string user;
     public string pass;
-    public string computerId;
-   
+    public int computerId;
+
 }
+[Serializable]
+public class UsuarioLoggeado//Esto se llenara para cuando recibamos ok
+{
+    //{"statusCode":200,"body":{"authorized":true,"errorCode":0,"empId":1017,"token":"c22bfa45e383cf3c536d1dc4edd775f0c737371ecd9488a0f3e14322a8ececc34b10de370e898cc06715d862bc7a94c6"}}
+    public int statusCode;
+    public Body body;
+
+}
+[Serializable]
+public class Body
+{
+    public bool authorized;
+    public int errorCode;
+    public int empId;
+    public string token;
+}
+#endregion
+
+#region Area Balance de Tarjeta
+[Serializable]
 public class CardBalanceRequest  //http://www.devindia.biz/how-to-post-and-get-json-data-to-a-service-in-unity-2/
 {
     public int posId;
@@ -22,10 +43,39 @@ public class CardBalanceRequest  //http://www.devindia.biz/how-to-post-and-get-j
     public string token;
     public int extEmpId;
 }
+[Serializable]
 public class CardBalanceResponse
 {
-
+    
+    public int statusCode;
+    public CardBalanceBody body;///importante no se pasan los datos si la variable no se llama body
 }
+[Serializable]
+public class CardBalanceBody
+{
+    public string card;
+    public string credits;
+    public string bonus;
+    public string courtesy;
+    public string status;
+    public int minutes;
+    public string tickets;
+    public string oldPassports;
+    public string ticketType;
+    //public List<HpList> hpList;
+}
+[Serializable]
+public class HpList
+{
+    public string id;
+    public string name;
+    public string qty;
+}
+
+#endregion
+
+#region Area Agregar Tickets Tarjeta
+[Serializable]
 public class TicketsAddRequest
 {
     public int posId;
@@ -35,17 +85,64 @@ public class TicketsAddRequest
     public int ticketAmount;
     public int extEmpId;
 }
+[Serializable]
+public class TicketsAddResponse
+{
+    public int statusCode;
+    public TicketsResponseBody body;
+}
+[Serializable]
+public class TicketsResponseBody
+{
+    //    este body es temporal PREGUNTAR CUAL ES LA RESPONSE CORRECTA
+    public string tickets;
+    public string cardNumber;
+    public string status;
+
+    //public int card;
+    //public int credits;
+    //public int bonus;
+    //public int courtesy;
+    //public int status;
+    //public int tickets;
+    //public int oldPassports;
+    //public string ticketType;
+}
+#endregion
+
+/////IMPORTANTISIMO POR EL PROTOCOLO HTTPS
+[System.Serializable]
+public class ForceAcceptAll : CertificateHandler
+{
+    protected override bool ValidateCertificate(byte[] certificateData)
+    {
+        return true;
+    }
+}
 
 public class Tickets_Control : MonoBehaviour
 {
     public UsuarioLogin usuario;
-    [Space(10)]
-    public string url_login;
-    public string url_tickets;
+    public UsuarioLoggeado usuario_logeado;
 
+    public CardBalanceRequest tarjeta_balance;
+    public CardBalanceResponse tarjeta_datos;
+
+    public TicketsAddRequest tarjetaAgregar;
+    public TicketsAddResponse tarjetaVerificacion;//recibe los datos para saber si se agregaron correctamente los puntos
+
+
+    [Space(10)]
+    [Header("URLS")]
+    public string url_login;
+    public string url_ticketsAgregar;
+    public string url_cardBalance;
+    
+
+    [Space(10)]
     public string user;
     public string pass;
-    public string computerID;
+    public int computerID;
     public string posID;
     public string empID;
     public int cardNumber;
@@ -54,140 +151,219 @@ public class Tickets_Control : MonoBehaviour
     //tipo de ticket
     public string jsonStr;
     // Start is called before the first frame update
-    
 
-    string recentData = "";
+    #region Ejemplo de hardcoding la liga de JSON
+    //private string json = @"{
+    //	'hello':'world', 
+    //	'foo':'bar', 
+    //	'count':25
+    //}";
+
+    //private string ultJson = "{'user':'jitzu','pass':'@@jitzu','computerId': 0001 }";
+    #endregion
+
+
     void Start()
     {
-        jsonStr = "user:" + user + "," + "pass:" + pass + "," + "computerId:" + computerID;
-        print(jsonStr);
-        ConvertirJson();
+       //  jsonStr = "user:" + user + "," + "pass:" + pass + "," + "computerId:" + computerID;
+       // print(jsonStr);
+        LoggeoSacoa();
+       
     }
 
-    
-    //public UnityWebRequest POST()
-    //{
-    //    UnityWebRequest www = UnityWebRequest.Put(url_login, jsonStr);
-    //    www.SetRequestHeader("Content-Type", "application/json");
+ 
 
-
-    //    WWW web;
-    //    Hashtable postHeader = new Hashtable();
-    //    postHeader.Add("Content-Type", "application/json");
-
-    //    convert json string to byte
-    //   var formData = System.Text.Encoding.UTF8.GetBytes(jsonStr);
-
-    //    web = new WWW(url_login, formData, postHeader);
-    //    StartCoroutine(WaitForRequest(www));
-    //    return www;
-    //}
-
-    //IEnumerator Login(string url, string bodyJson)
-    //{
-    //    jsonStr = "{ user:admin, pass:admin, computerId:11 }";
-    //    UnityWebRequest request = new UnityWebRequest(url, "POST");
-
-    //}
-
-    public void ConvertirJson()
+    public void LoggeoSacoa()
     {
         usuario.user = user;
         usuario.pass = pass;
         usuario.computerId = computerID;
 
-        string jsonString = JsonUtility.ToJson(usuario);
-        //JsonUtility.FromJson
+        string jsonString = JsonUtility.ToJson(usuario) ?? "";
         print(jsonString);
         File.WriteAllText("D:\\Proyectos\\El_Chavo\\Unity\\datosenviados.txt", jsonString); //https://www.youtube.com/watch?v=ngX7-6jKIr8
-            
+
         StartCoroutine(Post(url_login, jsonString));
-      
-        //StartCoroutine(PostRequestCoroutine(url_login, jsonString));
-        //StartCoroutine(RequestRoutine(url_login, jsonString, ResponseCallback));
+       
+
     }
-
-
-    //IEnumerator Postear()
-    //{
-    //    WWWForm from = new WWWForm();
-    //}
-
 
     //https://forum.unity.com/threads/unitywebrequest-post-url-jsondata-sending-broken-json.414708/
     IEnumerator Post(string url, string bodyJsonString)
     {
-        var request = new UnityWebRequest(url, "POST");
+        var request = new UnityWebRequest(url, "POST");//url a enviar y metodo en este caso solo dejan POST
         byte[] bodyRaw = Encoding.UTF8.GetBytes(bodyJsonString);
-        print(bodyRaw);
+      //  print(bodyRaw.ToString());//Esto solo se establece
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
-        yield return request.SendWebRequest();
-        File.WriteAllText("D:\\Proyectos\\El_Chavo\\Unity\\datosRecibidos.txt", request.responseCode.ToString());
-        // yield return request.Send();
-        // string deJson = JsonUtility.FromJson(request.downloadHandler);
-        Debug.Log("Status Code: " + request.responseCode);
-        //string d = JsonUtility.FromJson(request.ToString(),);
- 
-        Debug.Log("Status text: " + request.GetResponseHeaders());
-        Debug.Log("Status text: " + request.downloadHandler.text);
-
-       // string deJason = File.ReadAllText(request.url);
-        //print(deJason);
-        Debug.Log("Status text: " + request.downloadHandler.text.ToString());
-        Debug.Log(string.Format("Respuesta: ", request.downloadHandler.text));
-  
-        
-    }
-
-
-    private IEnumerator RequestRoutine(string url,string bodyJsonString, Action<string> callback = null)
-    {
-        var request = UnityWebRequest.Post(url,bodyJsonString);
+        var cert = new ForceAcceptAll();////SUPER IMPORTANTE para los certificados HTTPS
+        request.certificateHandler = cert;
 
         yield return request.SendWebRequest();
-        var data = request.downloadHandler.text;
 
-        if (callback != null)
-            callback(data);
+        if (request.responseCode == 200)
+        {
 
+            Debug.Log("Status Code: " + request.responseCode);
+          //  Debug.Log("Errorc Code: " + request.error);
+            cert?.Dispose();
+            string m = System.Text.Encoding.UTF8.GetString(request.downloadHandler.data);
+            Debug.Log("Mensaje Reicibido: " + m);
+            File.WriteAllText("D:\\Proyectos\\El_Chavo\\Unity\\datosRecibidos.txt", m);
+            usuario_logeado = JsonUtility.FromJson<UsuarioLoggeado>(m);
+            print("Exito!...Inicio de sesion aceptado con token:" + usuario_logeado.body.token);
 
-    }
-    private void ResponseCallback(string data)
-    {
-        Debug.Log(data);
-        File.WriteAllText("D:\\Proyectos\\El_Chavo\\Unity\\datosRecibidos.txt", data);
-        recentData = data;
-    }
+            CardBalance_aJson();
+        }
+        else if(request.responseCode == 401)
+        {
+            //Esto es para cuando se vence el TOKEN hay que pedir otro
+            Debug.Log("Error: " + request.responseCode);
+            Debug.Log("El Token vencio o no esta autorizado...Solicitando nuevo Token...");
+            yield return new WaitForSeconds(2.0f);//simulamos una espera
+            LoggeoSacoa();
 
-    private IEnumerator PostRequestCoroutine(string url, string json)
-    {
-        var jsonBinary = System.Text.Encoding.UTF8.GetBytes(json);
-
-        DownloadHandlerBuffer downloadHandlerBuffer = new DownloadHandlerBuffer();
-
-        UploadHandlerRaw uploadHandlerRaw = new UploadHandlerRaw(jsonBinary);
-        uploadHandlerRaw.contentType = "application/json";
-        
-        UnityWebRequest www =
-            new UnityWebRequest(url, "POST", downloadHandlerBuffer, uploadHandlerRaw);
-
-        yield return www.SendWebRequest();
-
-        if (www.isNetworkError)
-            Debug.LogError(string.Format("{0}: {1}", www.url, www.error));
+        }
         else
-            Debug.Log(string.Format("Response: {0}", www.downloadHandler.text));
+        {
+            Debug.Log("Error...algo salio mal en la conexion");
+            Debug.Log("Status Code: " + request.responseCode);
+            Debug.Log("Errorc Code: " + request.error);
+            cert?.Dispose();
+        }
+
+
+       
+
+    }
+     //Funciona pero no esta guardando los datos donde corresponde
+    public void CardBalance_aJson()
+    {
+        print("Solicitando Balance de Tarjeta...");
+        tarjeta_balance.posId = int.Parse(posID);
+        tarjeta_balance.empId = usuario_logeado.body.empId;
+        tarjeta_balance.cardNumber = cardNumber;
+        tarjeta_balance.token = usuario_logeado.body.token;
+        tarjeta_balance.extEmpId = int.Parse(extEmpID);
+
+        string aJson = JsonUtility.ToJson(tarjeta_balance) ?? "";
+        print("Tarjeta convertida a: " + aJson);
+
+        StartCoroutine(PostCardBalance(url_cardBalance, aJson));
+
+    }
+    IEnumerator PostCardBalance(string url,string bodyJsonString)
+    {
+        var request = new UnityWebRequest(url, "POST");//url a enviar y metodo en este caso solo dejan POST
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(bodyJsonString);
+      //  print(bodyRaw.ToString());//Esto solo se establece
+        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+        var cert = new ForceAcceptAll();////SUPER IMPORTANTE para los certificados HTTPS
+        request.certificateHandler = cert;
+
+        yield return request.SendWebRequest();
+
+        if (request.responseCode == 200)
+        {
+
+            Debug.Log("Status Code: " + request.responseCode);
+          //  Debug.Log("Errorc Code: " + request.error);
+            cert?.Dispose();
+            string m = System.Text.Encoding.UTF8.GetString(request.downloadHandler.data);
+            Debug.Log("Mensaje Reicibido: " + m);
+          //  File.WriteAllText("D:\\Proyectos\\El_Chavo\\Unity\\datosRecibidos.txt", m);
+            tarjeta_datos = JsonUtility.FromJson<CardBalanceResponse>(m);
+            print("Exito!... Balance de Tarjeta:" + tarjeta_datos.body.card+"| Credito: "+tarjeta_datos.body.credits+"|Tickets: "+tarjeta_datos.body.tickets);
+
+            AgregarPuntos_aJson();
+        }
+        else if (request.responseCode == 401)
+        {
+            //Esto es para cuando se vence el TOKEN hay que pedir otro
+            Debug.Log("Error: " + request.responseCode);
+            Debug.Log("El Token vencio o no esta autorizado...Solicitando nuevo Token...");
+            yield return new WaitForSeconds(2.0f);//simulamos una espera
+            LoggeoSacoa();
+
+        }
+        else
+        {
+            Debug.Log("Error...algo salio mal en la conexion");
+            Debug.Log("Status Code: " + request.responseCode);
+            Debug.Log("Errorc Code: " + request.error);
+            cert?.Dispose();
+        }
+
+    }
+
+
+
+    public void AgregarPuntos_aJson()
+    {
+        print("Agregando puntos a Tarjeta...");
+        tarjetaAgregar.posId = 1;
+        tarjetaAgregar.empId = usuario_logeado.body.empId;
+        tarjetaAgregar.cardNumber = cardNumber;
+        tarjetaAgregar.token = usuario_logeado.body.token;
+        tarjetaAgregar.ticketAmount = 10;
+        tarjetaAgregar.extEmpId = 1;
+
+        string aJson = JsonUtility.ToJson(tarjetaAgregar);
+        print("Enviando puntos a: " + aJson);
+        StartCoroutine(PostTickets(url_ticketsAgregar, aJson));
+    }
+    IEnumerator PostTickets(string url,string bodyJsonString)
+    {
+        var request = new UnityWebRequest(url, "POST");//url a enviar y metodo en este caso solo dejan POST
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(bodyJsonString);
+       // print(bodyRaw.ToString());//Esto solo se establece
+        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+        var cert = new ForceAcceptAll();////SUPER IMPORTANTE para los certificados HTTPS
+        request.certificateHandler = cert;
+
+        yield return request.SendWebRequest();
+
+        if (request.responseCode == 200)
+        {
+
+            Debug.Log("Status Code: " + request.responseCode);
+          //  Debug.Log("Errorc Code: " + request.error);
+            cert?.Dispose();
+            string m = System.Text.Encoding.UTF8.GetString(request.downloadHandler.data);
+            Debug.Log("Mensaje Reicibido: " + m);
+            //  File.WriteAllText("D:\\Proyectos\\El_Chavo\\Unity\\datosRecibidos.txt", m);
+            tarjetaVerificacion = JsonUtility.FromJson<TicketsAddResponse>(m);
+            print("Exito!...Tickets en Tarjeta:" + tarjetaVerificacion.body.tickets);
+
+          //  AgregarPuntos_aJson();
+        }
+        else if (request.responseCode == 401)
+        {
+            //Esto es para cuando se vence el TOKEN hay que pedir otro
+            Debug.Log("Error: " + request.responseCode);
+            Debug.Log("El Token vencio o no esta autorizado...Solicitando nuevo Token...");
+            yield return new WaitForSeconds(2.0f);//simulamos una espera
+            LoggeoSacoa();
+
+        }
+        else
+        {
+            Debug.Log("Error...algo salio mal en la conexion");
+            Debug.Log("Status Code: " + request.responseCode);
+            Debug.Log("Errorc Code: " + request.error);
+            cert?.Dispose();
+        }
     }
 }
 
 
 /*
- https:\\200.80.220.110:33001
-
+https:\\200.80.220.110:33001
 user: jitzu
-
-pass: @@jitzu
-    
- */
+pass: @@jitzu    
+*/

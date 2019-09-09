@@ -102,6 +102,7 @@ public class Resortera_Control : MonoBehaviour
                 municionTemp.GetComponent<Rigidbody>().isKinematic = true;
                 municionTemp.GetComponent<SphereCollider>().enabled = false;
                 municionTemp.transform.position = posMunicion.position;
+                municionTemp.transform.rotation = posMunicion.rotation;
                 municionTemp.transform.parent = posMunicion.transform;
                 municionTemp.GetComponent<MunicionControl>().ActivarMuncion();
                
@@ -119,6 +120,7 @@ public class Resortera_Control : MonoBehaviour
             DispararAutomatica();
             return;
         }
+
         fuerzaTotal = fuerza * multiplicadorFuerza;
        
           if(municionTemp != null)
@@ -132,8 +134,11 @@ public class Resortera_Control : MonoBehaviour
 
 
           }
+
+
         resortera_anim.SetTrigger("soltada");
         posMunicion.transform.position = posInicialTirante.position;
+        fuerzaTotal = 0f;
         //ligaResortera_blendShape.SetBlendShapeWeight(0, 0);
         municionTemp = null;
         Invoke("CargarMunicion",0.2f);
@@ -171,7 +176,7 @@ public class Resortera_Control : MonoBehaviour
     }
 
 
-    void InputPowerUp()
+    void InputPowerUp()//TEMP DEBUG
     {
         if(!explosivo_PU && !autonoma_PU)
         {

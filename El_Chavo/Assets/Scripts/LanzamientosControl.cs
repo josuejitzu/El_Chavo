@@ -72,10 +72,11 @@ public class LanzamientosControl : MonoBehaviour
     {
         int r = RandomLanzador();
 
-        if (lanzadores[r].disparando)
+        if (lanzadores[r].disparando || lanzadores[r].gameObject.activeInHierarchy)//Hay que checar si no conviene mejor saber si esta activo
         {
             sigDisparo = Time.time + RandomRate();
-            Invoke("SeleccionarLanzador", 1.0f);//Al parece aqui tenemos un problema cuando mandamos a llamar tan rapido a la misma funcion, por eso le puse un delay
+            Invoke("SeleccionarLanzador", 0.5f);//Al parece aqui tenemos un problema cuando mandamos a llamar tan rapido a la misma funcion, por eso le puse un delay
+            print("No se encontro lanzador libre...buscando otro...");
             return;
         }
         if(lanzadores[r]._tipoPersonaje == TipoPersonaje.doñaFlorinda && conFlorinda)

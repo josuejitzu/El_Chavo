@@ -85,15 +85,15 @@ public class ManoControl : MonoBehaviour
                 manoContraria.GetComponent<ManoControl>().resortera.GetComponent<Resortera_Control>().multiplicadorFuerza = separacion * 2;
                 manoContraria.GetComponent<ManoControl>().resortera.GetComponent<Resortera_Control>().estirando = false;
                 manoContraria.GetComponent<ManoControl>().resortera.GetComponent<Resortera_Control>().Disparar();
-               
 
+                separacion = 0.0f;
                 estirando = false;
             }
                
         }
 
 
-        if(estirando)
+        if (estirando)
         {
             // manoContraria.GetComponent<ManoControl>().resortera.GetComponent<Resortera_Control>().Disparar();
             if (manoContraria != null)
@@ -101,8 +101,10 @@ public class ManoControl : MonoBehaviour
                 Vector3 dist = manoContraria.position - this.transform.position;
                 separacion = dist.magnitude;
             }
-
+            else
+                separacion = 0.0f;
         }
+       
 
 
     }

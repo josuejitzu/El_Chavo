@@ -83,7 +83,7 @@ public class MunicionAutonoma : MonoBehaviour
            
             return;
         }
-        objetivo.GetComponent<GloboControl>().QuitarMira();
+     //   objetivo.GetComponent<GloboControl>().QuitarMira();
         mesh.SetActive(true);
         GetComponent<SphereCollider>().enabled = true;
         disparar = true;

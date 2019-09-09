@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 4459811298629332963}
   - component: {fileID: 2369071640043717738}
   - component: {fileID: 6796457761038616657}
+  - component: {fileID: 2518665648059633000}
   m_Layer: 0
   m_Name: municionAutonoma
-  m_TagString: municion
+  m_TagString: municionAutonoma
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,7 +45,7 @@ SphereCollider:
   m_GameObject: {fileID: 4655348403595889242}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 3
   m_Center: {x: 0, y: 0, z: 0}
@@ -77,6 +78,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _padre: {fileID: 0}
+  trigger: {fileID: 4459811298629332963}
+  zonaBusqueda: {fileID: 2518665648059633000}
+  buscando: 1
   conObjetivo: 0
   layerIgnorar:
     serializedVersion: 2
@@ -87,6 +91,19 @@ MonoBehaviour:
   "da\xF1o": 1
   explosion_vfx: {fileID: 5412226434212084467}
   mesh: {fileID: 4792630402801160830}
+--- !u!135 &2518665648059633000
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4655348403595889242}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 300
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &3576767276042161015
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using System.IO;
 
 public class Resortera_Control : MonoBehaviour
 {
+    public static Resortera_Control _resortera;
     // Start is called before the first frame update
     public GameObject municion_prefab;
     public List<GameObject> municiones = new List<GameObject>();
@@ -29,6 +30,7 @@ public class Resortera_Control : MonoBehaviour
 
     void Start()
     {
+        _resortera = this;
         CrearMunicion();
     }
 
@@ -172,7 +174,7 @@ public class Resortera_Control : MonoBehaviour
         estirando = true;
         posMunicion.transform.position = Vector3.Lerp(posInicialTirante.position,posFinalTirante.position, dist);
       //ligaResortera_blendShape.SetBlendShapeWeight(0,  Mathf.Clamp((dist * 99),0,100));
-        resortera_anim.SetFloat("jale", dist * 100);
+        resortera_anim.SetFloat("jale", dist * 100.0f);
     }
 
 

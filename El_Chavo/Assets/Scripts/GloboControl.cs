@@ -220,7 +220,8 @@ public class GloboControl : MonoBehaviour
    
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.tag == "municion" || other.transform.tag == "personaje" || other.transform.tag == "globo")
+        if (other.transform.tag == "municion" || other.transform.tag == "personaje" || other.transform.tag == "globo" 
+            || other.transform.tag == "municionAutonoma" || other.transform.tag == "paredes")
         {
 
         }else if(other.transform.tag == "MainCamera")
@@ -413,6 +414,7 @@ public class GloboControl : MonoBehaviour
         if (enMira)
             return;
 
+       
         enMira = true;
         lockedImg.gameObject.SetActive(true);
         //Aqui se activarian los efectos de que esta lockedo

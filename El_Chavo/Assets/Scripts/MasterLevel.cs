@@ -40,6 +40,10 @@ public class MasterLevel : MonoBehaviour
     public GameObject canvasSiguienteRonda;
     public GameObject canvasFinJuego;
 
+    public bool contarCombo;
+    public int numCombo;
+    public TMP_Text numCombo_text;
+
     [Space(10)]
     [Header("KEY")]
     public KeyCode teclaIniciar;
@@ -88,6 +92,7 @@ public class MasterLevel : MonoBehaviour
 
     
     }
+
     private void FixedUpdate()
     {
         if (canvasJuego.activeInHierarchy)
@@ -113,6 +118,9 @@ public class MasterLevel : MonoBehaviour
         siguienteRonda_text.text = (rondaNum + 1).ToString("00");//si da 1 es 2
         rondaOperador_txt.text = "Ronda: " + (rondaNum + 1).ToString("00");
         canvasSiguienteRonda.SetActive(true);
+        numCombo = 0;
+        numCombo_text.text = "x" + numCombo.ToString("00");
+
         yield return new WaitForSeconds(2.0f);
         canvasSiguienteRonda.SetActive(false);
         ///
@@ -150,7 +158,8 @@ public class MasterLevel : MonoBehaviour
         canvasSiguienteRonda.SetActive(true);
         yield return new WaitForSeconds(2.0f);
         canvasSiguienteRonda.SetActive(false);
-
+        numCombo = 0;
+        numCombo_text.text = "x" + numCombo.ToString("00");
         // StartCoroutine(IniciarJuego());
 
         ///Lanza los parametros y comienza la siguiente Ronda
@@ -199,8 +208,10 @@ public class MasterLevel : MonoBehaviour
             return;
         }
 
-
+        numCombo = 0;
         vidaJugador += cantidad;
+        numCombo_text.text = "x" + numCombo.ToString("00");
+
 
     }
 
@@ -210,6 +221,21 @@ public class MasterLevel : MonoBehaviour
             return;
 
         scoreJugador += valor;
+
+        if (contarCombo)
+        {
+            numCombo += 1;
+            if (numCombo == 5)
+            {
+                contarCombo = false;
+
+                PowerUp_Control._powerUps.ActivarPowerUp();
+            }
+            numCombo_text.text = "x" + numCombo.ToString("00");
+
+        }
+
+
         //scoreEnRonda_text.text = scoreJugador.ToString("0000");
 
     }
@@ -230,4 +256,6 @@ public class MasterLevel : MonoBehaviour
         }
        // globosUpdate.Sort();
     }
+
+  
 }

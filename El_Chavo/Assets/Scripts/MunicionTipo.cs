@@ -6,5 +6,6 @@ public enum MunicionTipo
 {
    Normal,
    Explosiva,
-   Autonoma
+   Autonoma,
+   Automatica
 }

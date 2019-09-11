@@ -62,7 +62,9 @@ public class MunicionControl : MonoBehaviour
         }
         else if (other.transform.tag == "personaje")
         {
-            StartCoroutine(other.GetComponent<Lanzador_Globos>().Lanzador_Golpeado());
+            //Por alguna extraña razon trababa el reinicio del Personaje atorando la Courutine peor no daba error
+            //StartCoroutine(other.GetComponent<Lanzador_Globos>().Lanzador_Golpeado());
+            StartCoroutine(Explotar());
 
         }
         else
@@ -74,6 +76,7 @@ public class MunicionControl : MonoBehaviour
     IEnumerator Explotar()
     {
         explosion_vfx.Play();
+
         mesh.SetActive(false);
         yield return new WaitForSeconds(1.0f);
         this.gameObject.SetActive(false);
@@ -105,7 +108,7 @@ public class MunicionControl : MonoBehaviour
         mesh.SetActive(true);
     }
 
-    public void ActivarMunicionAutonoma()
+    public void ActivarMunicionAutonoma()//La llama CambiarMunicion()
     {
         foreach (MunicionAutonoma ma in municionesAutonomas)
         {
@@ -113,11 +116,12 @@ public class MunicionControl : MonoBehaviour
             ma.transform.position = mesh.transform.position;
             ma.Reiniciar();
             ma.gameObject.SetActive(true);
-            ma.EscanearZona();
+          //  ma.EscanearZona();
 
         }
+
     }
-    public IEnumerator DisparoAutonomo()
+    public IEnumerator DisparoAutonomo()//Lamada en ResorteraControl().DispararAutomatica()
     {
         foreach (MunicionAutonoma ma in municionesAutonomas)
         {
@@ -125,13 +129,15 @@ public class MunicionControl : MonoBehaviour
             ma.Lanzar();
         }
         mesh.SetActive(false);
+       // this.gameObject.SetActive(false);
         //Esperamos un poco para que sus proyectiles den en el blanco y se puedan reiniciar, 
         //de lo contrario va a estar el error de que se desactivan
-        yield return new WaitForSeconds(4.0f);
+        yield return new WaitForSeconds(3.0f);
         foreach (MunicionAutonoma ma in municionesAutonomas)
         {
             if(ma.objetivo != null)
               ma.objetivo.GetComponent<GloboControl>().QuitarMira();
+
             ma.gameObject.SetActive(false);
         }
         this.gameObject.SetActive(false);

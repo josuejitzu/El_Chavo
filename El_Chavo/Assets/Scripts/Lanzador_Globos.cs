@@ -45,6 +45,8 @@ public class Lanzador_Globos : MonoBehaviour
     [Header("VFX")]
     public ParticleSystem golpe_vfx;
 
+    public bool enMira;
+    public GameObject mira_ui;
 
     private void OnValidate()
     {
@@ -90,7 +92,7 @@ public class Lanzador_Globos : MonoBehaviour
         if(esperandoLanzamiento)
         {
             sliderDisparo.value = Mathf.MoveTowards(sliderDisparo.value, tiempoEsperaDisparo, Time.deltaTime);
-            if(sliderDisparo.value >= 2.99f)
+            if(sliderDisparo.value >= tiempoEsperaDisparo)
             {
                 esperandoLanzamiento = false;
                 //print("Se lleno la barra,lanzando");
@@ -100,6 +102,25 @@ public class Lanzador_Globos : MonoBehaviour
 
 
     }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.transform.tag == "municion" ) 
+        {
+            StartCoroutine(Lanzador_Golpeado());
+        }
+        if(other.transform.tag == "municionAutonoma")
+        {
+            if (other.GetComponent<MunicionAutonoma>().buscando)
+                return;
+            else
+            {
+                StartCoroutine(Lanzador_Golpeado());
+            }
+        }
+    }
+
     public void SpawnGlobo()
     {
 
@@ -143,6 +164,20 @@ public class Lanzador_Globos : MonoBehaviour
         }
     }
 
+    public void DesactivarGlobo()
+    {
+
+        if (globo_temp != null)
+        {
+
+            globo_temp.SetActive(false);
+            globo_temp.GetComponent<GloboControl>().DesactivarGlobo();
+
+            globo_temp = null;
+        }
+        print("Lanzador " + this.transform.name + " Se desactivo su globo en Mano");
+    }
+
     public void CalcularFuerza()
     {
         Vector3 proyectilPosXZ = new Vector3(transform.position.x, 0.0f, transform.position.z);
@@ -173,7 +208,9 @@ public class Lanzador_Globos : MonoBehaviour
 
     public void OrdenDisparo()
     {
+        print("Lanzador " + this.transform.name + " recibio orden de disparo");
         sliderDisparo.value = 0.0f;
+        sliderDisparo.gameObject.SetActive(true);
         this.gameObject.SetActive(true);
         disparando = true;//este setting lo reviza el manager para saber si este personaje puede lanzar
         colider.enabled = true;
@@ -184,6 +221,7 @@ public class Lanzador_Globos : MonoBehaviour
         //ActivarGlobo();
         StartCoroutine(ComenzarDisparo());
     }
+
     public IEnumerator ComenzarDisparo()
     {
         esperandoLanzamiento = true; // se utliza para llenar la barra como feedback para dispararte
@@ -208,9 +246,10 @@ public class Lanzador_Globos : MonoBehaviour
         if (globo_temp == null)
             return;
 
-      
-      //  CalcularFuerza();
-      //  globo_temp.GetComponent<Rigidbody>().useGravity = true;
+        colider.enabled = false;
+        //  CalcularFuerza();
+        //  globo_temp.GetComponent<Rigidbody>().useGravity = true;
+        sliderDisparo.gameObject.SetActive(false);
         globo_temp.GetComponent<GloboControl>().ActivarGlobo();
         globo_temp.GetComponent<GloboControl>().posFinal = objetivo.transform.position;
         globo_temp.GetComponent<GloboControl>().objetivo = objetivo.transform;
@@ -225,20 +264,17 @@ public class Lanzador_Globos : MonoBehaviour
 
     IEnumerator TerminoDisparo()
     {
+        print("Lanzador " + this.transform.name + " termino disparo...Desactivando...");
+        sliderDisparo.gameObject.SetActive(false);
         yield return new WaitForSeconds(0.5f);//tiempo de terminaicon de abanico
         //iniciar animacion de personaje escondiendose
         if (chavo.activeInHierarchy)
             chavo.GetComponent<Animator>().SetTrigger("agacharse");
         globo_temp = null;
         yield return new WaitForSeconds(1.0f);//lo que dure la animacion de esconido + 0.2f
-        //ActivarGlobo
-       
-        
-       // personajeActivo.SetActive(false);
-       // personajeActivo = null;
         disparando = false;
         sliderDisparo.value = 0.0f;
-       // yield return new WaitForSeconds(0.2f);
+        print("Lanzador " + this.transform.name + " Desactivado...");
         this.gameObject.SetActive(false);
     }
 
@@ -284,46 +320,64 @@ public class Lanzador_Globos : MonoBehaviour
 
     public IEnumerator Lanzador_Golpeado()
     {
-        StopCoroutine(ComenzarDisparo());
-        disparando = false;
+        print("Lanzador "+this.transform.name+" Golepado...Desactivando...");
+      //  StopCoroutine(ComenzarDisparo());
+        sliderDisparo.gameObject.SetActive(false);
+        esperandoLanzamiento = false;
         colider.enabled = false;
 
-        if (globo_temp != null)
-        {
-
-            globo_temp.SetActive(false);
-            globo_temp = null;
-        }
-      
+        DesactivarGlobo();
+       
         MasterLevel.masterlevel.ScoreJugador(10);
         golpe_vfx.Play();
+
+        yield return new WaitForSeconds(0.5f);
+
         //animacion de golpe
+        if (chavo.activeInHierarchy)
+            chavo.GetComponent<Animator>().SetTrigger("agacharse");
 
-        yield return new WaitForSeconds(1.0f);
+        print("Lanzador " + this.transform.name + " Termino animacon de agachado...");
 
+        yield return new WaitForSeconds(1.5f);
+
+        disparando = false;
+        print("Lanzador "+this.transform.name + " Desactivado...");
 
         this.gameObject.SetActive(false);
 
     }
 
 
-    public void DesactivarLanzador()
+    public void DesactivarLanzador()//Para terminar el nivel
     {
+        print("Lanzador " + this.transform.name + " Desactivando por cambio de nivel...");
         this.StopAllCoroutines();
-        disparando = false;
-        if(globo_temp != null)
-        {
-            globo_temp.SetActive(false);
-            globo_temp = null;
-        }
+        colider.enabled = false;
+
+        DesactivarGlobo();
         foreach(GameObject g in globos)
         {
             if (g.activeInHierarchy)
                 g.SetActive(false);
         }
-
+        disparando = false;
+        sliderDisparo.value = 0.0f;
+        print("Lanzador " + this.transform.name + " Desactivado...");
         this.gameObject.SetActive(false);
 
     }
+
+    public void ActivarMira()
+    {
+        enMira = true;
+        mira_ui.SetActive(true);
+    }
+    public void QuitarMira()
+    {
+        enMira = false;
+        mira_ui.SetActive(false);
+    }
+
 }
 //https://vilbeyli.github.io/Projectile-Motion-Tutorial-for-Arrows-and-Missiles-in-Unity3D/

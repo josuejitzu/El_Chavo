@@ -734,7 +734,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3637368095342252486
 Transform:
   m_ObjectHideFlags: 0
@@ -772,7 +772,7 @@ SphereCollider:
   m_GameObject: {fileID: 6460438437991827949}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -829,25 +829,25 @@ MonoBehaviour:
   posFlorinda: {x: 1.67, y: 5.09, z: -1.45}
   chavo_s:
     arco: 3
-    tiempo: 2
+    tiempo: 5
     vidaGlobo: 1
     "da\xF1oGlobo": 10
     valorGlobo: 10
   kiko_s:
     arco: 1
-    tiempo: 3.4
+    tiempo: 4.5
     vidaGlobo: 2
     "da\xF1oGlobo": 20
     valorGlobo: 20
   poppy_s:
     arco: 3
-    tiempo: 3.4
+    tiempo: 5
     vidaGlobo: 1
     "da\xF1oGlobo": 5
     valorGlobo: 10
   "\xF1o\xF1o_s":
     arco: 3
-    tiempo: 4.1
+    tiempo: 8
     vidaGlobo: 3
     "da\xF1oGlobo": 20
     valorGlobo: 10

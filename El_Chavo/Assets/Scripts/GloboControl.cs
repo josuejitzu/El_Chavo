@@ -87,6 +87,7 @@ public class GloboControl : MonoBehaviour
     {
 
         timer = 0.0f;
+
         if (_tipoPersonaje == TipoPersonaje.miniFlorinda)
         {
             gameObject.transform.parent = null;
@@ -122,19 +123,18 @@ public class GloboControl : MonoBehaviour
         posInicial = this.transform.position;
 
     }
+
+    public void DesactivarGlobo()
+    {
+        brincar = false;
+        colision.enabled = false;
+    }
+
     void Lanzando()
     {
         if (timer <= 1.0f)
         {
-            //if(_tipoPersonaje == TipoPersonaje.kiko)
-            //{
-            //    this.transform.position = Vector3.MoveTowards(this.transform.position, posFinal, Time.deltaTime * 2.0f);
-            //    Vector3 dist = posFinal - transform.position;
-            //    if(dist.magnitude <= 0.3f)
-            //    {
-            //        Explotar();
-            //    }
-            //}
+         
 
             if(_tipoPersonaje == TipoPersonaje.doñaFlorinda)
             {
@@ -144,7 +144,7 @@ public class GloboControl : MonoBehaviour
                 timer += Time.deltaTime / tiempoDeRecorrido;
                 Vector3 dist = posFlorinda - posInicial;
 
-                if(dist.magnitude <= 0.2f)
+                if(dist.magnitude <= 0.1f)
                 {
                     brincar = false;
                    // bombardeo = true;
@@ -160,7 +160,7 @@ public class GloboControl : MonoBehaviour
                 if (_tipoPersonaje == TipoPersonaje.kiko)
                 {
                     Vector3 dist = posFinal - transform.position;
-                    if (dist.magnitude <= 0.3f)
+                    if (dist.magnitude <= 0.1f)
                     {
                         Explotar();
                     }
@@ -220,7 +220,8 @@ public class GloboControl : MonoBehaviour
    
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.tag == "municion" || other.transform.tag == "personaje" || other.transform.tag == "globo")
+        if (other.transform.tag == "municion" || other.transform.tag == "personaje" || other.transform.tag == "globo" 
+            || other.transform.tag == "municionAutonoma" || other.transform.tag == "paredes")
         {
 
         }else if(other.transform.tag == "MainCamera")
@@ -247,8 +248,9 @@ public class GloboControl : MonoBehaviour
 
         QuitarMira();
 
-        if(vida <= 0)
+        if (vida <= 0)
         {
+
             StartCoroutine(Destruir());
         }
     }
@@ -412,6 +414,7 @@ public class GloboControl : MonoBehaviour
         if (enMira)
             return;
 
+       
         enMira = true;
         lockedImg.gameObject.SetActive(true);
         //Aqui se activarian los efectos de que esta lockedo

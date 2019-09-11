@@ -15,6 +15,7 @@ public class ManoControl : MonoBehaviour
     public BoxCollider trigger;
     public Transform manoContraria;
     public float separacion;
+
     [Space(5)]
     public SteamVR_Behaviour_Pose control;
     public SteamVR_Action_Single squeezeAction;
@@ -25,6 +26,7 @@ public class ManoControl : MonoBehaviour
     public SteamVR_Action_Vibration vibracion;
     float triggerPresion;
     public float sensibilidadTrigger;
+
     [Space(10)]
     public bool sobreResortera;
     public bool conResortera;
@@ -35,10 +37,15 @@ public class ManoControl : MonoBehaviour
 
     public bool estirando;
 
+    public float delayDisparo = 0.7f;
+    public bool puedeDisparar;
 
     void Start()
     {
-        
+
+        puedeDisparar = true;
+
+
     }
 
 
@@ -53,19 +60,15 @@ public class ManoControl : MonoBehaviour
         {
 
             print(control.inputSource.ToString() + "presionando");
-            if(sobreResortera)
+            if (sobreResortera)
             {
                 TomarResortera();
             }
-            else if(sobreGlobo)
-            {
-
-            }
-            else if(sobreTirante)
+            if (sobreTirante)
             {
                 estirando = true;
-                manoContraria.GetComponent<ManoControl>().resortera.GetComponent<Resortera_Control>().MoverTirante(separacion * 2);
-    
+                manoContraria.GetComponent<ManoControl>().resortera.GetComponent<Resortera_Control>().MoverTirante(separacion * 1.3f);
+
             }
 
         }
@@ -79,21 +82,25 @@ public class ManoControl : MonoBehaviour
             {
 
             }
-            else if (estirando)
+            else if (estirando)//Si estaba estirando significa que solto la liga
             {
+                if (!puedeDisparar)
+                    return;
 
-                manoContraria.GetComponent<ManoControl>().resortera.GetComponent<Resortera_Control>().multiplicadorFuerza = separacion * 2;
+                manoContraria.GetComponent<ManoControl>().resortera.GetComponent<Resortera_Control>().multiplicadorFuerza = separacion;// * 2.0f;
                 manoContraria.GetComponent<ManoControl>().resortera.GetComponent<Resortera_Control>().estirando = false;
                 manoContraria.GetComponent<ManoControl>().resortera.GetComponent<Resortera_Control>().Disparar();
-               
-
+                sobreTirante = false;
+                separacion = 0.0f;
                 estirando = false;
+                puedeDisparar = false;
+                Invoke("ActivarDisparo", delayDisparo);
             }
                
         }
 
 
-        if(estirando)
+        if (estirando)
         {
             // manoContraria.GetComponent<ManoControl>().resortera.GetComponent<Resortera_Control>().Disparar();
             if (manoContraria != null)
@@ -101,9 +108,12 @@ public class ManoControl : MonoBehaviour
                 Vector3 dist = manoContraria.position - this.transform.position;
                 separacion = dist.magnitude;
             }
-
+            else
+                separacion = 0.0f;
         }
 
+        Vector3 dist2 = manoContraria.position - this.transform.position;
+        separacion = dist2.magnitude;
 
     }
 
@@ -129,12 +139,8 @@ public class ManoControl : MonoBehaviour
             sobreResortera = true;
             resortera = other.gameObject;
         }
-        else if(other.transform.tag == "globo")
-        {
-            sobreGlobo = true;
-            globoTemp = other.gameObject;
-        }
-        else if(other.transform.tag == "tirante" && !conResortera)
+   
+        if(other.transform.tag == "tirante" && !conResortera)
         {
             sobreTirante = true;
         }
@@ -150,20 +156,20 @@ public class ManoControl : MonoBehaviour
             sobreResortera = false;
             resortera = null;
         }
-        else if (other.transform.tag == "globo")
+        
+        if(other.transform.tag == "tirante")
         {
-            sobreGlobo = false;
-            globoTemp = null;
-        }
-        else if(other.transform.tag == "tirante")
-        {
-            sobreTirante = false;
+           // sobreTirante = false;
         }
 
     }
 
 
+    public void ActivarDisparo()
 
+    {
+        puedeDisparar = true;
+    }
     void TomarResortera()
     {
 

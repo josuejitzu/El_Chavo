@@ -22,6 +22,10 @@ public class Lanzador_Globos : MonoBehaviour
     public GameObject chavo;
     public GameObject kiko, ñoño, poppy, doñaFlorinda, donRamon;
     public GameObject personajeActivo;
+    [Header("Globos dummy")]
+    public GameObject globoChavoDummy;
+    public GameObject globokiko_dummy,globoñoño_dummy,globopoppy_dummy,globoramon_dummy,globoflorinda_dummy;
+    public GameObject globoDummyActivo;
     [Space(10)]
     [Header("Settings Disparo")]
     public float velocidad;
@@ -151,7 +155,7 @@ public class Lanzador_Globos : MonoBehaviour
 
                 g.SetActive(true);
                 // g.GetComponent<Rigidbody>().isKinematic = true;
-                g.GetComponent<GloboControl>().colision.enabled = false;
+                g.GetComponent<GloboControl>().trigger.enabled = false;
 
                 globo_temp = g;
                 //globo_temp.GetComponent<GloboControl>()._tipoPersonaje = _tipoPersonaje;
@@ -214,7 +218,7 @@ public class Lanzador_Globos : MonoBehaviour
         this.gameObject.SetActive(true);
         disparando = true;//este setting lo reviza el manager para saber si este personaje puede lanzar
         colider.enabled = true;
-     
+        globoDummyActivo.SetActive(true);
         //CambiarPersonaje(personaje);
         //ActivarGlobo(personaje);
         //personajeActivo.SetActive(true);
@@ -231,12 +235,24 @@ public class Lanzador_Globos : MonoBehaviour
         if(chavo.activeInHierarchy)
             chavo.GetComponent<Animator>().SetTrigger("preparar");
 
+        if(personajeActivo.GetComponent<Animator>())
+        {
+            personajeActivo.GetComponent<Animator>().SetTrigger("preparar");
+        }
+
         yield return new WaitForSeconds(tiempoEsperaDisparo);
 
         if (chavo.activeInHierarchy)
             chavo.GetComponent<Animator>().SetTrigger("disparar");
 
+        if (personajeActivo.GetComponent<Animator>())
+        {
+            personajeActivo.GetComponent<Animator>().SetTrigger("disparar");
+        }
+
         yield return new WaitForSeconds(delayDisparo);//El tiempo que esperamos para que el personaje este en posicion de disparo
+        globoDummyActivo.SetActive(false);
+
         Disparar();
 
     }
@@ -258,7 +274,7 @@ public class Lanzador_Globos : MonoBehaviour
         //globo_temp.GetComponent<Rigidbody>().velocity = this.transform.forward * velocidad;
       //  globo_temp.GetComponent<Rigidbody>().velocity = velocidadCalculada;
 
-        globo_temp.GetComponent<GloboControl>().colision.enabled = true;
+        globo_temp.GetComponent<GloboControl>().trigger.enabled = true;
         StartCoroutine(TerminoDisparo());
     }
 
@@ -270,8 +286,12 @@ public class Lanzador_Globos : MonoBehaviour
         //iniciar animacion de personaje escondiendose
         if (chavo.activeInHierarchy)
             chavo.GetComponent<Animator>().SetTrigger("agacharse");
+        if (personajeActivo.GetComponent<Animator>())
+        {
+            personajeActivo.GetComponent<Animator>().SetTrigger("agacharse");
+        }
         globo_temp = null;
-        yield return new WaitForSeconds(1.0f);//lo que dure la animacion de esconido + 0.2f
+        yield return new WaitForSeconds(2.0f);//lo que dure la animacion de esconido + 0.2f
         disparando = false;
         sliderDisparo.value = 0.0f;
         print("Lanzador " + this.transform.name + " Desactivado...");
@@ -291,27 +311,41 @@ public class Lanzador_Globos : MonoBehaviour
         if (t == TipoPersonaje.chavo)
         {
             personajeActivo = chavo;
+            globoDummyActivo = globoChavoDummy;
             
         }
         else if(t == TipoPersonaje.kiko)
         {
             personajeActivo = kiko;
+            globoDummyActivo = globokiko_dummy;
+
         }
         else if (t == TipoPersonaje.ñoño)
         {
             personajeActivo = ñoño;
+            globoDummyActivo = globoñoño_dummy;
+
         }
         else if (t == TipoPersonaje.poppy)
         {
             personajeActivo = poppy;
+            globoDummyActivo = globopoppy_dummy;
+
         }
         else if (t == TipoPersonaje.donRamon)
         {
             personajeActivo = donRamon;
+            globoDummyActivo = globoramon_dummy;
+
         }
         else if (t == TipoPersonaje.doñaFlorinda)
         {
             personajeActivo = doñaFlorinda;
+            globoDummyActivo = globoflorinda_dummy;
+
+        }else
+        {
+            print("ATENCION: No se encontro el personaje solicitado...");
         }
 
         personajeActivo.SetActive(true);
@@ -325,7 +359,12 @@ public class Lanzador_Globos : MonoBehaviour
         sliderDisparo.gameObject.SetActive(false);
         esperandoLanzamiento = false;
         colider.enabled = false;
-
+        if (chavo.activeInHierarchy)
+            chavo.GetComponent<Animator>().SetTrigger("golpeado");
+        if (personajeActivo.GetComponent<Animator>())
+        {
+            personajeActivo.GetComponent<Animator>().SetTrigger("golpeado");
+        }
         DesactivarGlobo();
        
         MasterLevel.masterlevel.ScoreJugador(10);
@@ -336,6 +375,10 @@ public class Lanzador_Globos : MonoBehaviour
         //animacion de golpe
         if (chavo.activeInHierarchy)
             chavo.GetComponent<Animator>().SetTrigger("agacharse");
+           if(personajeActivo.GetComponent<Animator>())
+        {
+            personajeActivo.GetComponent<Animator>().SetTrigger("agacharse");
+        }
 
         print("Lanzador " + this.transform.name + " Termino animacon de agachado...");
 
@@ -352,6 +395,7 @@ public class Lanzador_Globos : MonoBehaviour
     public void DesactivarLanzador()//Para terminar el nivel
     {
         print("Lanzador " + this.transform.name + " Desactivando por cambio de nivel...");
+        disparando = false;
         this.StopAllCoroutines();
         colider.enabled = false;
 
@@ -361,7 +405,7 @@ public class Lanzador_Globos : MonoBehaviour
             if (g.activeInHierarchy)
                 g.SetActive(false);
         }
-        disparando = false;
+      
         sliderDisparo.value = 0.0f;
         print("Lanzador " + this.transform.name + " Desactivado...");
         this.gameObject.SetActive(false);
@@ -378,6 +422,7 @@ public class Lanzador_Globos : MonoBehaviour
         enMira = false;
         mira_ui.SetActive(false);
     }
-
+    
+    //public void 
 }
 //https://vilbeyli.github.io/Projectile-Motion-Tutorial-for-Arrows-and-Missiles-in-Unity3D/

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.UI;
 
 public class Resortera_Control : MonoBehaviour
 {
@@ -27,7 +28,13 @@ public class Resortera_Control : MonoBehaviour
     [Header("PowerUps")]
     public bool explosivo_PU;
     public bool autonoma_PU;
+    public bool automatica_PU;
+    public GameObject meshNormal, meshAutomatica;
+    public Animator automatica_anim;
+    public Transform posMunicionAutomatica;
+    
 
+    public bool enMano;
     void Start()
     {
         _resortera = this;
@@ -103,9 +110,19 @@ public class Resortera_Control : MonoBehaviour
                 municionTemp.SetActive(true);
                 municionTemp.GetComponent<Rigidbody>().isKinematic = true;
                 municionTemp.GetComponent<SphereCollider>().enabled = false;
-                municionTemp.transform.position = posMunicion.position;
-                municionTemp.transform.rotation = posMunicion.rotation;
-                municionTemp.transform.parent = posMunicion.transform;
+                
+                if (automatica_PU)
+                {
+                    municionTemp.transform.position = posMunicionAutomatica.position;
+                    municionTemp.transform.rotation = posMunicionAutomatica.rotation;
+                    municionTemp.transform.parent = posMunicionAutomatica.transform;
+                }
+                else
+                {
+                    municionTemp.transform.position = posMunicion.position;
+                    municionTemp.transform.rotation = posMunicion.rotation;
+                    municionTemp.transform.parent = posMunicion.transform;
+                }
                 municionTemp.GetComponent<MunicionControl>().ActivarMuncion();
                
 
@@ -133,12 +150,20 @@ public class Resortera_Control : MonoBehaviour
                  municionTemp.GetComponent<Rigidbody>().velocity = this.transform.forward * fuerzaTotal;//multiplicar la fuerza por el vector de distancia entre los controles
                  municionTemp.GetComponent<SphereCollider>().enabled = true;
                  municionTemp.GetComponent<MunicionControl>().ActivarMuncion();
+                 municionTemp.GetComponent<MunicionControl>().ActivarTrail(true);
 
 
           }
 
-
-        resortera_anim.SetTrigger("soltada");
+        if (automatica_PU)
+        {
+            //animacione resortera automatica
+            automatica_anim.SetTrigger("disparar");
+        }
+        else
+        {
+            resortera_anim.SetTrigger("soltada");
+        }
         posMunicion.transform.position = posInicialTirante.position;
         fuerzaTotal = 0f;
         //ligaResortera_blendShape.SetBlendShapeWeight(0, 0);
@@ -146,7 +171,7 @@ public class Resortera_Control : MonoBehaviour
         Invoke("CargarMunicion",0.2f);
     }
 
-    public void DispararAutomatica()
+    public void DispararAutomatica()//Autonoma
     {
 
         if (municionTemp == null)
@@ -164,6 +189,7 @@ public class Resortera_Control : MonoBehaviour
 
     public void ResorteraTomada()
     {
+        enMano = true;
         this.GetComponent<Rigidbody>().isKinematic = true;
         trigger.enabled = false;
         triggerTirante.enabled = true;
@@ -180,7 +206,7 @@ public class Resortera_Control : MonoBehaviour
 
     void InputPowerUp()//TEMP DEBUG
     {
-        if(!explosivo_PU && !autonoma_PU)
+        if(!explosivo_PU && !autonoma_PU && !automatica_PU)
         {
             ActivarPowerUp(MunicionTipo.Explosiva);
         }
@@ -190,17 +216,26 @@ public class Resortera_Control : MonoBehaviour
         }
         else if(autonoma_PU)
         {
+            ActivarPowerUp(MunicionTipo.Automatica);
+        }
+        else if(automatica_PU)
+        {
             ActivarPowerUp(MunicionTipo.Normal);
         }
     }
     public void ActivarPowerUp(MunicionTipo tipoMunicion)
     {
+        print("Cambiando municion....");
         explosivo_PU = false;
         autonoma_PU = false;
+        automatica_PU = false;
+        mano.disparoAutomatico = false;
 
         if (tipoMunicion == MunicionTipo.Normal)
         {
-           
+            meshNormal.SetActive(true);
+            meshAutomatica.SetActive(false);
+            mano.disparoAutomatico = false;
         }
         else if(tipoMunicion == MunicionTipo.Explosiva)
         {
@@ -210,7 +245,14 @@ public class Resortera_Control : MonoBehaviour
         {
             autonoma_PU = true;
         }
-
+        else if(tipoMunicion == MunicionTipo.Automatica)
+        {
+            print("Se elegio Automatica..cambiar tipo de resortera");
+            automatica_PU = true;
+            meshNormal.SetActive(false);
+            meshAutomatica.SetActive(true);
+            mano.disparoAutomatico = true;
+        }
         if(municionTemp != null)
         {
             municionTemp.SetActive(false);
@@ -218,5 +260,8 @@ public class Resortera_Control : MonoBehaviour
             CargarMunicion();
 
         }
+
+        print("MunicionCambiada....");
+
     }
 }

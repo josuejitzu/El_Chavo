@@ -33,11 +33,12 @@ public class ManoControl : MonoBehaviour
     public bool sobreGlobo, conGlobo,sobreTirante;
     public GameObject resortera, globoTemp, globoEnMano;
     public Transform posResortera;
-   
 
+
+    public bool disparoAutomatico;
     public bool estirando;
-
     public float delayDisparo = 0.7f;
+    public float delayDisparoAutomatico = 0.4f;
     public bool puedeDisparar;
 
     void Start()
@@ -70,6 +71,17 @@ public class ManoControl : MonoBehaviour
                 manoContraria.GetComponent<ManoControl>().resortera.GetComponent<Resortera_Control>().MoverTirante(separacion * 1.3f);
 
             }
+            if (conResortera)
+            {
+                if (disparoAutomatico && puedeDisparar)
+                {
+                  //  print("Disaparando automaticamente");
+                    resortera.GetComponent<Resortera_Control>().multiplicadorFuerza = 1.5f;
+                    resortera.GetComponent<Resortera_Control>().Disparar();
+                    puedeDisparar = false;
+                    Invoke("ActivarDisparo", delayDisparoAutomatico);
+                }
+            }
 
         }
 
@@ -80,7 +92,14 @@ public class ManoControl : MonoBehaviour
             //print(control.inputSource.ToString() + "soltado");
             if (conResortera)
             {
-
+                //if(disparoAutomatico && puedeDisparar)
+                //{
+                //    print("Disaparando automaticamente");
+                //    resortera.GetComponent<Resortera_Control>().multiplicadorFuerza = 2.0f;
+                //    resortera.GetComponent<Resortera_Control>().Disparar();
+                //    puedeDisparar = false;
+                //    Invoke("ActivarDisparo", delayDisparo);
+                //}
             }
             else if (estirando)//Si estaba estirando significa que solto la liga
             {
@@ -136,6 +155,9 @@ public class ManoControl : MonoBehaviour
 
         if(other.transform.tag == "resortera")
         {
+            if (other.GetComponent<Resortera_Control>().enMano == true)
+                return;
+
             sobreResortera = true;
             resortera = other.gameObject;
         }
@@ -175,6 +197,7 @@ public class ManoControl : MonoBehaviour
 
         if (!sobreResortera)
             return;
+      
 
         resortera.GetComponent<Resortera_Control>().mano = this;
         resortera.GetComponent<Resortera_Control>().ResorteraTomada();

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class PowerUp_Control : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -11,6 +11,9 @@ public class PowerUp_Control : MonoBehaviour
     public PowerUP puSeleccionado;
     public Transform[] posicionesPU;
     int posAnterior;
+    public float tiempoDesactivacion = 10.0f;
+    public Slider slidePower;
+    public bool conteoPowerUp;
 
     private void OnDrawGizmos()
     {
@@ -45,8 +48,21 @@ public class PowerUp_Control : MonoBehaviour
             ActivarPowerUp();
 
         }
+        if(conteoPowerUp)
+        {
+            slidePower.value = Mathf.MoveTowards(slidePower.value, 0.0f, Time.deltaTime);
+            if(slidePower.value <= 0)
+            {
+                conteoPowerUp = false;
+                slidePower.gameObject.SetActive(false);
+                Resortera_Control._resortera.ActivarPowerUp(MunicionTipo.Normal);
+                print("Se pidio desactivar powerUP");
+            }
 
+        }
     }
+
+    
 
     public void ActivarPowerUp()
     {
@@ -57,6 +73,7 @@ public class PowerUp_Control : MonoBehaviour
         puSeleccionado.gameObject.SetActive(true);
         puSeleccionado.ActivarTablero();
         print("Se activo un power up...esperando a jugador para recolectarlo");
+      //  StartCoroutine(DesactivacionPowerUP());
     }
 
     void SeleccionarPU()
@@ -65,27 +82,28 @@ public class PowerUp_Control : MonoBehaviour
 
         float probabilidad = Random.Range(0.0f, 1.0f);
         int r = Random.Range(0, 3);
-        if (probabilidad > 0.5) //%50 percent chance
+
+
+        //Tiene que ser de la menor probabilidad a la mayor probabilidad para que no se repita
+        if (probabilidad > 0.7) //%30 percent chance (1 - 0.7 is 0.3)
+        {
+            print("Probabilidad de 30%: " + probabilidad + " autonoma");
+
+            puSeleccionado = autonomaPU;
+            return;
+        }
+        else if (probabilidad > 0.5) //%50 percent chance
         {
             print("Probabilidad de 50%: " + probabilidad +" automatica");
            
             puSeleccionado = automaticaPU;
             return;
         }
-
-         if (probabilidad > 0.2) //%80 percent chance (1 - 0.2 is 0.8)
+        else if (probabilidad > 0.2) //%80 percent chance (1 - 0.2 is 0.8)
         {
             print("Probabilidad de 80%: " + probabilidad + " explosiva");
          
             puSeleccionado = explosivaPU;
-            return;
-        }
-
-         if (probabilidad > 0.7) //%30 percent chance (1 - 0.7 is 0.3)
-        {
-            print("Probabilidad de 30%: " + probabilidad + " autonoma");
-           
-            puSeleccionado = autonomaPU;
             return;
         }
 
@@ -103,6 +121,22 @@ public class PowerUp_Control : MonoBehaviour
         }
         posAnterior = r;
         return r;
+    }
+
+    public IEnumerator DesactivacionPowerUP()
+    {
+
+        print("se pido activar el PowerUp");
+        slidePower.gameObject.SetActive(true);
+        slidePower.maxValue = tiempoDesactivacion;
+        slidePower.value = tiempoDesactivacion;
+        conteoPowerUp = true;
+        yield return new WaitForSeconds(tiempoDesactivacion);
+        conteoPowerUp = false;
+        slidePower.gameObject.SetActive(false);
+        Resortera_Control._resortera.ActivarPowerUp(MunicionTipo.Normal);
+        print("Se pidio desactivar powerUP");
+
     }
 
 }

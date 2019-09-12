@@ -9,7 +9,7 @@ public class GloboControl : MonoBehaviour
     public GloboTipo _tipoGoblo;
     public GameObject globoChavo,globoKiko,globoÑoño,globoDonRamon,globoPoppy,globoDoñaFlorinda,globoMini;
     public GameObject meshGlobo;
-    public SphereCollider colision;
+    public SphereCollider trigger;
     public Rigidbody rigid;
     public ParticleSystem explosion_vfx,explosionPoppy_vfx;
 
@@ -38,7 +38,9 @@ public class GloboControl : MonoBehaviour
     [Space(10)]
     [Header("MiniGlobos_Florinda")]
     public GameObject[] globosFlorinda;
-    int cantMiniGlobos;
+    public Transform globoPadre;
+    public Transform mini_posInicial;
+    public int cantMiniGlobos;
     public bool bombardeo;
     public float tiempoDisparoMiniGlobos;
     bool kamikaze;
@@ -90,18 +92,27 @@ public class GloboControl : MonoBehaviour
 
         if (_tipoPersonaje == TipoPersonaje.miniFlorinda)
         {
+            mini_posInicial = this.transform;
             gameObject.transform.parent = null;
             MasterLevel.masterlevel.RegistrarUpdate("globo", this.gameObject);
+            meshGlobo.SetActive(true);
         }
 
         if (_tipoPersonaje == TipoPersonaje.doñaFlorinda)
         {
             // vidaSlider.transform.localPosition = new Vector3(-0.5f, 1.50f, 0.0f);
+            cantMiniGlobos = 0;
             this.transform.localScale = initSize;
             sliderFlorinda.gameObject.SetActive(true);
             vida = vidaInicial;
             sliderFlorinda.maxValue = vida;
             sliderFlorinda.value = vida;
+            for (int i = 0; i < globosFlorinda.Length; i++)
+            {
+                globosFlorinda[i].GetComponent<GloboControl>().CambiarGlobo();
+              //  globosFlorinda[i].transform.parent = this.transform;
+                globosFlorinda[i].GetComponent<GloboControl>().meshGlobo.SetActive(true);
+            }
     
         }
         else
@@ -113,9 +124,9 @@ public class GloboControl : MonoBehaviour
         }
 
 
-        colision.enabled = true;
+        trigger.enabled = true;
 
-        if (_tipoPersonaje != TipoPersonaje.miniFlorinda)
+       if (_tipoPersonaje != TipoPersonaje.miniFlorinda)
             meshGlobo.SetActive(true);
 
 
@@ -127,7 +138,7 @@ public class GloboControl : MonoBehaviour
     public void DesactivarGlobo()
     {
         brincar = false;
-        colision.enabled = false;
+        trigger.enabled = false;
     }
 
     void Lanzando()
@@ -140,7 +151,7 @@ public class GloboControl : MonoBehaviour
             {
                 this.transform.position = Vector3.Lerp(posInicial, posFlorinda, timer);
                 this.transform.localScale = Vector3.Lerp(initSize, finalSize, timer);
-                colision.radius = Mathf.Lerp(1.0f, 5.5f, timer);
+                trigger.radius = Mathf.Lerp(1.0f, 5.5f, timer);
                 timer += Time.deltaTime / tiempoDeRecorrido;
                 Vector3 dist = posFlorinda - posInicial;
 
@@ -196,13 +207,17 @@ public class GloboControl : MonoBehaviour
 
         
                 globosFlorinda[cantMiniGlobos].GetComponent<GloboControl>().enabled = true;
+                globosFlorinda[cantMiniGlobos].GetComponent<GloboControl>().CambiarGlobo();
                 globosFlorinda[cantMiniGlobos].GetComponent<GloboControl>().ActivarGlobo();
+                globosFlorinda[cantMiniGlobos].GetComponent<GloboControl>().globoPadre = this.transform;
+            
+
                 globosFlorinda[cantMiniGlobos].GetComponent<GloboControl>().posFinal = objetivo.transform.position;
                //mg.GetComponent<GloboControl>().objetivo = objetivo;
                 globosFlorinda[cantMiniGlobos].GetComponent<GloboControl>().brincar = true;
                 print("Disparando mini globo");
                 cantMiniGlobos++;
-               Invoke("ComenzarBombardeo", tiempoDisparoMiniGlobos);
+                Invoke("ComenzarBombardeo", tiempoDisparoMiniGlobos);
             
 
         }else if (cantMiniGlobos >= globosFlorinda.Length)
@@ -237,6 +252,16 @@ public class GloboControl : MonoBehaviour
         }
         //print(other.transform.name);
     }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.transform.tag == "MainCamera")
+        {
+            MasterLevel.masterlevel.DañarJugador(dañoJugador);
+            StartCoroutine(Explotar());
+            print(other.transform.name);
+
+        }
+    }
 
     public void RecibirDaño(int cantidad)
     {
@@ -257,6 +282,7 @@ public class GloboControl : MonoBehaviour
 
     IEnumerator Destruir()//Cuando la destruye el Jugador
     {
+        trigger.enabled = false;
         brincar = false;
         //rigid.isKinematic = true;
         vidaSlider.gameObject.SetActive(false);
@@ -265,12 +291,18 @@ public class GloboControl : MonoBehaviour
             sliderFlorinda.gameObject.SetActive(false);
 
         MasterLevel.masterlevel.ScoreJugador(valorGlobo);
-        colision.enabled = false;
 
 
 
-        if (_tipoPersonaje != TipoPersonaje.miniFlorinda)
+
+        if (_tipoPersonaje == TipoPersonaje.miniFlorinda)
+        {
             meshGlobo.SetActive(false);
+        }
+        else
+        {
+            meshGlobo.SetActive(false);
+        }
 
         if (_tipoPersonaje == TipoPersonaje.poppy)
         {
@@ -294,7 +326,12 @@ public class GloboControl : MonoBehaviour
         }
         yield return new WaitForSeconds(1.5f);
       
-
+        if(_tipoPersonaje == TipoPersonaje.miniFlorinda)
+        {
+            this.transform.position = mini_posInicial.position;
+            this.transform.parent = globoPadre;
+            
+        }
 
         if(_tipoPersonaje == TipoPersonaje.doñaFlorinda)
         {
@@ -309,17 +346,24 @@ public class GloboControl : MonoBehaviour
     IEnumerator Explotar()//Cuando choca con algo, incluido el jugador
     {
         brincar = false;
+        trigger.enabled = false;
         //rigid.isKinematic = true;
         vidaSlider.gameObject.SetActive(false);
 
         if (sliderFlorinda != null)
             sliderFlorinda.gameObject.SetActive(false);
 
-        if (_tipoPersonaje != TipoPersonaje.miniFlorinda)
-             meshGlobo.SetActive(false);
+        if (_tipoPersonaje == TipoPersonaje.miniFlorinda)
+        {
+            meshGlobo.SetActive(false);
+        }
+        else
+        {
+            meshGlobo.SetActive(false);
+        }
 
         explosion_vfx.Play();
-        colision.enabled = false;
+
         
         yield return new WaitForSeconds(1.0f);
 

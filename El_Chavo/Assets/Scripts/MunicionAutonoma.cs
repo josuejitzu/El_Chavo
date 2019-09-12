@@ -19,7 +19,7 @@ public class MunicionAutonoma : MonoBehaviour
     public int daño;
     public ParticleSystem explosion_vfx;
     public GameObject mesh;
-
+    public ParticleSystem smokeVFX;
 
 
 
@@ -105,6 +105,7 @@ public class MunicionAutonoma : MonoBehaviour
         }
      //   objetivo.GetComponent<GloboControl>().QuitarMira();
         mesh.SetActive(true);
+        smokeVFX.Play();
         GetComponent<SphereCollider>().enabled = true;
         disparar = true;
         
@@ -179,6 +180,7 @@ public class MunicionAutonoma : MonoBehaviour
 
         explosion_vfx.Play();
         mesh.SetActive(false);
+        smokeVFX.Stop();
         trigger.enabled = false;
         zonaBusqueda.enabled = false;
         objetivo = null;
@@ -196,6 +198,7 @@ public class MunicionAutonoma : MonoBehaviour
           
 
         mesh.SetActive(false);
+        smokeVFX.Stop();
         trigger.enabled = false;
         zonaBusqueda.enabled = false;
         objetivo = null;
@@ -213,7 +216,7 @@ public class MunicionAutonoma : MonoBehaviour
 
     public void Reiniciar()
     {
-        mesh.SetActive(true);
+        mesh.SetActive(false);
         trigger.enabled = false;
         zonaBusqueda.enabled = true;
         QuitarMira();

@@ -7,4 +7,5 @@ public class Municion
 {
     public GameObject mesh;
     public int daño;
+    public TrailRenderer trail;
 }

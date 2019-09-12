@@ -70,6 +70,9 @@ public class LanzamientosControl : MonoBehaviour
 
     public void SeleccionarLanzador()
     {
+        if (!MasterLevel.masterlevel.jugando)
+            return;
+
         int r = RandomLanzador();
 
         if (lanzadores[r].disparando || lanzadores[r].gameObject.activeInHierarchy)//Hay que checar si no conviene mejor saber si esta activo

@@ -6,6 +6,7 @@ public class MunicionControl : MonoBehaviour
 {
     public MunicionTipo _tipoMunicion;
     public ParticleSystem explosion_vfx;
+    public Rigidbody rigid;
     [Header("Settings Municion")]
     public Municion normal;
     public Municion explosiva, autonoma;
@@ -52,11 +53,13 @@ public class MunicionControl : MonoBehaviour
             other.GetComponent<GloboControl>().RecibirDaño(daño);
             StartCoroutine(Explotar());
         }
-        else if (other.transform.tag == "MainCamera" || other.transform.tag == "municion")
+        else if (other.transform.tag == "MainCamera" || other.transform.tag == "municion" 
+              || other.transform.tag == "municionAutonoma")
         {
             return;
         }
-        else if (other.transform.tag == "mano" || other.transform.tag == "tirante" || other.transform.tag == "resortera")
+        else if (other.transform.tag == "mano" 
+              || other.transform.tag == "tirante" || other.transform.tag == "resortera")
         {
 
         }
@@ -76,8 +79,9 @@ public class MunicionControl : MonoBehaviour
     IEnumerator Explotar()
     {
         explosion_vfx.Play();
-
+        rigid.isKinematic = true;
         mesh.SetActive(false);
+        ActivarTrail(false);
         yield return new WaitForSeconds(1.0f);
         this.gameObject.SetActive(false);
     }
@@ -136,10 +140,21 @@ public class MunicionControl : MonoBehaviour
         foreach (MunicionAutonoma ma in municionesAutonomas)
         {
             if(ma.objetivo != null)
-              ma.objetivo.GetComponent<GloboControl>().QuitarMira();
+               ma.objetivo.GetComponent<GloboControl>().QuitarMira();
 
             ma.gameObject.SetActive(false);
         }
         this.gameObject.SetActive(false);
+    }
+    public void ActivarTrail(bool estado)
+    {
+        if(_tipoMunicion == MunicionTipo.Normal)
+        {
+            normal.trail.enabled = estado;
+        }
+        else if(_tipoMunicion == MunicionTipo.Explosiva)
+        {
+            explosiva.trail.enabled = estado;
+        }
     }
 }

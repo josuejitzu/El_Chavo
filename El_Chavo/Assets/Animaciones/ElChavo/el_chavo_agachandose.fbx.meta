@@ -6,7 +6,12 @@ ModelImporter:
   - first:
       74: -7027376525082077368
     second: agachandose
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Chavo_personaje_rig_V02_Iris
+    second: {fileID: 2100000, guid: 0ebf43b6d99e5e64ea1597a69b5bd2a7, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

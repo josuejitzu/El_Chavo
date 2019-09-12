@@ -87,6 +87,7 @@ public class Lanzador_Globos : MonoBehaviour
 
         
             Vector3 dist = objetivo.transform.position - this.transform.position;
+            dist.y = 0.0f;
             transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dist), Time.deltaTime * velocidadRotacion);
 
         }
@@ -158,6 +159,11 @@ public class Lanzador_Globos : MonoBehaviour
                 g.GetComponent<GloboControl>().trigger.enabled = false;
 
                 globo_temp = g;
+
+                if(_tipoPersonaje == TipoPersonaje.doñaFlorinda)
+                {
+                    globo_temp.GetComponent<GloboControl>().ActivarMiniGlobos();
+                }
                 //globo_temp.GetComponent<GloboControl>()._tipoPersonaje = _tipoPersonaje;
                 //globo_temp.GetComponent<GloboControl>().CambiarGlobo();
                 
@@ -392,7 +398,7 @@ public class Lanzador_Globos : MonoBehaviour
     }
 
 
-    public void DesactivarLanzador()//Para terminar el nivel
+    public IEnumerator DesactivarLanzador()//Para terminar el nivel
     {
         print("Lanzador " + this.transform.name + " Desactivando por cambio de nivel...");
         disparando = false;
@@ -408,6 +414,13 @@ public class Lanzador_Globos : MonoBehaviour
       
         sliderDisparo.value = 0.0f;
         print("Lanzador " + this.transform.name + " Desactivado...");
+
+     
+       if (personajeActivo.GetComponent<Animator>())
+       {
+             personajeActivo.GetComponent<Animator>().SetTrigger("agacharse");
+       }
+        yield return new WaitForSeconds(1.5f);
         this.gameObject.SetActive(false);
 
     }

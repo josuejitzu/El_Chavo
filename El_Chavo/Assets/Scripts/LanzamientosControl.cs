@@ -91,6 +91,7 @@ public class LanzamientosControl : MonoBehaviour
         int posSeleccionada = PosicionRandom();
         lanzadores[r].transform.position = posiciones[posSeleccionada].position;
         lanzadores[r].transform.rotation =  posiciones[posSeleccionada].rotation;
+        lanzadores[r].GetComponent<Lanzador_Globos>().posicion_elegida = posiciones[posSeleccionada].GetComponent<PosicionControl>();
         //lanzadores[r].gameObject.SetActive(true);
         lanzadores[r].OrdenDisparo();
 

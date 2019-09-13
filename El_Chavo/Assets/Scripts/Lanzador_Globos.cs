@@ -26,6 +26,7 @@ public class Lanzador_Globos : MonoBehaviour
     public GameObject globoChavoDummy;
     public GameObject globokiko_dummy,globoñoño_dummy,globopoppy_dummy,globoramon_dummy,globoflorinda_dummy;
     public GameObject globoDummyActivo;
+    public PosicionControl posicion_elegida;
     [Space(10)]
     [Header("Settings Disparo")]
     public float velocidad;
@@ -222,6 +223,7 @@ public class Lanzador_Globos : MonoBehaviour
         sliderDisparo.value = 0.0f;
         sliderDisparo.gameObject.SetActive(true);
         this.gameObject.SetActive(true);
+        StartCoroutine(posicion_elegida.Abrir());
         disparando = true;//este setting lo reviza el manager para saber si este personaje puede lanzar
         colider.enabled = true;
         globoDummyActivo.SetActive(true);
@@ -289,6 +291,8 @@ public class Lanzador_Globos : MonoBehaviour
         print("Lanzador " + this.transform.name + " termino disparo...Desactivando...");
         sliderDisparo.gameObject.SetActive(false);
         yield return new WaitForSeconds(0.5f);//tiempo de terminaicon de abanico
+        StartCoroutine(posicion_elegida.Cerrar());
+
         //iniciar animacion de personaje escondiendose
         if (chavo.activeInHierarchy)
             chavo.GetComponent<Animator>().SetTrigger("agacharse");
@@ -375,6 +379,7 @@ public class Lanzador_Globos : MonoBehaviour
        
         MasterLevel.masterlevel.ScoreJugador(10);
         golpe_vfx.Play();
+        StartCoroutine(posicion_elegida.Cerrar());
 
         yield return new WaitForSeconds(0.5f);
 
@@ -406,7 +411,9 @@ public class Lanzador_Globos : MonoBehaviour
         colider.enabled = false;
 
         DesactivarGlobo();
-        foreach(GameObject g in globos)
+        StartCoroutine(posicion_elegida.Cerrar());
+
+        foreach (GameObject g in globos)
         {
             if (g.activeInHierarchy)
                 g.SetActive(false);

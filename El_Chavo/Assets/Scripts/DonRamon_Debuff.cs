@@ -14,10 +14,16 @@ public class DonRamon_Debuff : MonoBehaviour
     public Transform padre;
     public float tiempoVida;
 
+    public GameObject meshCalavera;
+
+    Vector3 randomRotacion;
+    public float velocidadRotacion = 2.0f;
+
     void Start()
     {
-        EncontrarPosicion();
-        Invoke("Reiniciar", tiempoVida);
+        //EncontrarPosicion();
+        //Invoke("Reiniciar", tiempoVida);
+        ActivarDebuff();
     }
   
     // Update is called once per frame
@@ -29,6 +35,14 @@ public class DonRamon_Debuff : MonoBehaviour
         }
     }
 
+
+    public void ActivarDebuff()
+    {
+        randomRotacion = RandomAxis();
+        EncontrarPosicion();
+
+        Invoke("Reiniciar", tiempoVida);
+    }
     public void EncontrarPosicion()
     {
 
@@ -39,6 +53,9 @@ public class DonRamon_Debuff : MonoBehaviour
         //float y = Random.Range(posZero.y - rangoY, rangoY);
         //float z = Random.Range(posZero.z - rangoZ, rangoZ);
         //posFinal = new Vector3( x, y, z);
+        randomRotacion = RandomAxis();
+
+
         int r = Random.Range(0, Spawn_Sphere._PosicionesEsfera.puntos.Count);
         posFinal =   Spawn_Sphere._PosicionesEsfera.puntos[r].position;
         mover = true;
@@ -48,7 +65,10 @@ public class DonRamon_Debuff : MonoBehaviour
     {
         transform.position = Vector3.MoveTowards(this.transform.position, posFinal, Time.deltaTime * velocidad);
         Vector3 dis = posFinal - this.transform.position;
-        if(dis.magnitude <= 0.2f)
+        // meshCalavera.transform.Rotate(Vector3.right * (Time.deltaTime * velocidadRotacion));
+        meshCalavera.transform.Rotate(randomRotacion * (Time.deltaTime * velocidadRotacion));
+      
+        if (dis.magnitude <= 0.2f)
         {
             mover = false;
             EncontrarPosicion();
@@ -60,7 +80,7 @@ public class DonRamon_Debuff : MonoBehaviour
         {
             print(this.transform.name +" choco con pared: " + other.transform.name);
             mover = false;
-            Invoke("EncontrarPosicion", 0.3f);
+            EncontrarPosicion();
         }
     }
 
@@ -69,11 +89,32 @@ public class DonRamon_Debuff : MonoBehaviour
         if(padre != null)
            this.transform.parent = padre.transform;
 
+        mover = false;
         this.gameObject.SetActive(false);
 
     }
     public void GolpeadoPorJugador()
     {
+
+    }
+
+    Vector3 RandomAxis()
+    {
+        Vector3 v = Vector3.right;
+        int r = Random.Range(0, 3);
+        if(r == 0)
+        {
+            v = Vector3.right;
+        }
+        else if(r == 1)
+        {
+            v = Vector3.up;
+        }
+        else if(r== 2)
+        {
+            v = Vector3.back;
+        }
+        return v;
 
     }
 }

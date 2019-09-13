@@ -5,7 +5,6 @@ using UnityEngine;
 public class MunicionControl : MonoBehaviour
 {
     public MunicionTipo _tipoMunicion;
-    public ParticleSystem explosion_vfx;
     public Rigidbody rigid;
     [Header("Settings Municion")]
     public Municion normal;
@@ -18,9 +17,13 @@ public class MunicionControl : MonoBehaviour
     [Space(10)]
     [Header("Municion Autonoma")]
     public MunicionAutonoma[] municionesAutonomas;
-   
+   [Space(10)]
+   [Header("VFX")]
+    public ParticleSystem explosion_vfx;
+    public ParticleSystem explosionPesada_vfx;
 
-  
+
+
 
     public void ActivarMuncion()
     {
@@ -79,6 +82,10 @@ public class MunicionControl : MonoBehaviour
     IEnumerator Explotar()
     {
         explosion_vfx.Play();
+
+        if (_tipoMunicion == MunicionTipo.Explosiva)
+            explosionPesada_vfx.Play();
+
         rigid.isKinematic = true;
         mesh.SetActive(false);
         ActivarTrail(false);

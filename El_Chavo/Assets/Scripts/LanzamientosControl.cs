@@ -200,7 +200,7 @@ public class LanzamientosControl : MonoBehaviour
         {
             if(l.gameObject.activeInHierarchy)
             {
-                l.DesactivarLanzador();
+               StartCoroutine(l.DesactivarLanzador());
             }
         }
     }

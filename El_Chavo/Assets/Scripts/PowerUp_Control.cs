@@ -45,8 +45,9 @@ public class PowerUp_Control : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.P))
         {
-            ActivarPowerUp();
-
+            // ActivarPowerUp();
+            Resortera_Control._resortera.ActivarPowerUp(MunicionTipo.Explosiva);
+            StartCoroutine(DesactivacionPowerUP());
         }
         if(conteoPowerUp)
         {
@@ -63,7 +64,10 @@ public class PowerUp_Control : MonoBehaviour
     }
 
     
-
+    /// <summary>
+    /// Activa las tabla con un Power Up aleatorio para que el jugador pueda
+    /// darle y activar ese mismo PowerUP
+    /// </summary>
     public void ActivarPowerUp()
     {
         SeleccionarPU();//lo regresa a puSeleccionado;
@@ -123,6 +127,10 @@ public class PowerUp_Control : MonoBehaviour
         return r;
     }
 
+    /// <summary>
+    /// Desactiva el PowerUp por vencmiento de Tiempo
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator DesactivacionPowerUP()
     {
 
@@ -135,8 +143,22 @@ public class PowerUp_Control : MonoBehaviour
         conteoPowerUp = false;
         slidePower.gameObject.SetActive(false);
         Resortera_Control._resortera.ActivarPowerUp(MunicionTipo.Normal);
-        print("Se pidio desactivar powerUP");
+        print("Se pidio desactivar powerUP por Tiempo");
 
     }
+    /// <summary>
+    /// Se llama con el globo de Don Ramon o Sus Debufs para quitarle
+    /// el powerUp al Jugador
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator CancelarPowerUP()
+    {
+      
+        conteoPowerUp = false;
+        slidePower.gameObject.SetActive(false);
+        Resortera_Control._resortera.ActivarPowerUp(MunicionTipo.Normal);
+        print("Se pidio desactivar powerUP porque Don Ramon te golpeo o porque golpeaste Debuff");
+        yield break;
 
+    }
 }

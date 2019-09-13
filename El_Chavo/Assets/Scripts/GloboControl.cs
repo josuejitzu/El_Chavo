@@ -266,9 +266,10 @@ public class GloboControl : MonoBehaviour
             || other.transform.tag == "municionAutonoma" || other.transform.tag == "paredes")
         {
 
-        }else if(other.transform.tag == "MainCamera")
+        }else if(other.transform.tag == "MainCamera")//Le hace daño al Jugador y Explota
         {
             MasterLevel.masterlevel.DañarJugador(dañoJugador);
+            StartCoroutine(PowerUp_Control._powerUps.CancelarPowerUP());
             StartCoroutine(Explotar());
             print(other.transform.name);
 
@@ -290,6 +291,11 @@ public class GloboControl : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Calcula el Daño que Recibe un Globo por parte de Municion, por logica calcula 
+    /// si debe ser destruido y llama a Destuir(), debe ser invocada por MunicionControl.cs
+    /// </summary>
+    /// <param name="cantidad">cantidad de daño que descontarle a la vida</param>
     public void RecibirDaño(int cantidad)
     {
         vida -= cantidad;
@@ -311,7 +317,12 @@ public class GloboControl : MonoBehaviour
         }
     }
 
-    IEnumerator Destruir()//Cuando la destruye el Jugador
+    /// <summary>
+    /// Destruye el Globo porque su vida llego a 0, llamda por RecibirDaño, tambien activa
+    /// poderes secundarios si el TipoGlobo los tiene ej:(Poppy,DoñaFlorinda,DonRamon)
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator Destruir()
     {
         trigger.enabled = false;
         brincar = false;
@@ -350,14 +361,9 @@ public class GloboControl : MonoBehaviour
             explosion_vfx.Play();
         }
 
-        if(_tipoPersonaje == TipoPersonaje.donRamon && globosRamon.Length > 0)
+        if(_tipoPersonaje == TipoPersonaje.donRamon )
         {
-           foreach(GameObject gr in globosRamon)
-            {
-                gr.transform.parent = null;
-                gr.SetActive(true);
-
-            }
+            ActivarDebuffDonRamon();
         }
         yield return new WaitForSeconds(1.5f);
         puntos_text.gameObject.SetActive(false);
@@ -504,6 +510,22 @@ public class GloboControl : MonoBehaviour
         lockedImg.gameObject.SetActive(false);
     }
 
+
+    void ActivarDebuffDonRamon()
+    {
+        if (globosRamon.Length <= 0)
+            return;
+
+         foreach(GameObject gr in globosRamon)
+         {
+            gr.transform.position = this.transform.position;
+            gr.transform.parent = null;
+            gr.SetActive(true);
+            gr.GetComponent<DonRamon_Debuff>().ActivarDebuff();
+
+         }
+
+    }
 
     void EfectoGolpe()
     {

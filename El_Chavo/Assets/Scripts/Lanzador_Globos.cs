@@ -223,7 +223,10 @@ public class Lanzador_Globos : MonoBehaviour
         sliderDisparo.value = 0.0f;
         sliderDisparo.gameObject.SetActive(true);
         this.gameObject.SetActive(true);
-        StartCoroutine(posicion_elegida.Abrir());
+
+        if(posicion_elegida != null)
+             StartCoroutine(posicion_elegida.Abrir());
+
         disparando = true;//este setting lo reviza el manager para saber si este personaje puede lanzar
         colider.enabled = true;
         globoDummyActivo.SetActive(true);

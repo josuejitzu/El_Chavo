@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2369071640043717738}
   - component: {fileID: 6796457761038616657}
   - component: {fileID: 2518665648059633000}
+  - component: {fileID: -3336777809896028008}
   m_Layer: 0
   m_Name: municionAutonoma
   m_TagString: municionAutonoma
@@ -93,6 +94,8 @@ MonoBehaviour:
   explosion_vfx: {fileID: 5412226434212084467}
   mesh: {fileID: 4792630402801160830}
   smokeVFX: {fileID: 5936240126631163800}
+  sfxEmitter: {fileID: -3336777809896028008}
+  chiflido_sfx: event:/SFX/chiflido proyectil
 --- !u!135 &2518665648059633000
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -106,6 +109,29 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 300
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-3336777809896028008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4655348403595889242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: 
+  PlayEvent: 0
+  StopEvent: 12
+  CollisionTag: 
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: -1
+  OverrideMaxDistance: -1
 --- !u!1001 &3576767276042161015
 PrefabInstance:
   m_ObjectHideFlags: 0

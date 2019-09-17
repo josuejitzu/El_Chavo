@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using FMODUnity;
 public class MunicionAutonoma : MonoBehaviour
 {
     public Transform _padre;
@@ -21,7 +21,11 @@ public class MunicionAutonoma : MonoBehaviour
     public GameObject mesh;
     public ParticleSystem smokeVFX;
 
-
+    [Space(10)]
+    [Header("SFX")]
+    public StudioEventEmitter sfxEmitter;
+    [FMODUnity.EventRef] public string chiflido_sfx;
+  
 
     void Start()
     {
@@ -108,7 +112,8 @@ public class MunicionAutonoma : MonoBehaviour
         smokeVFX.Play();
         GetComponent<SphereCollider>().enabled = true;
         disparar = true;
-        
+        sfxEmitter.Event = chiflido_sfx;
+        sfxEmitter.Play();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -177,7 +182,8 @@ public class MunicionAutonoma : MonoBehaviour
     IEnumerator Explotar()
     {
         QuitarMira();
-
+        if (sfxEmitter.IsPlaying())
+            sfxEmitter.Stop();
         explosion_vfx.Play();
         mesh.SetActive(false);
         smokeVFX.Stop();
@@ -194,9 +200,9 @@ public class MunicionAutonoma : MonoBehaviour
     }
     IEnumerator Desactivar()
     {
-      
-          
 
+        if(sfxEmitter.IsPlaying())
+            sfxEmitter.Stop();
         mesh.SetActive(false);
         smokeVFX.Stop();
         trigger.enabled = false;

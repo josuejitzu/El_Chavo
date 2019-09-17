@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+using FMODUnity;
 public class GloboControl : MonoBehaviour
 {
     public TipoPersonaje _tipoPersonaje;
@@ -60,11 +60,30 @@ public class GloboControl : MonoBehaviour
     [Space(10)]
     [Header("VFX")]
     public ParticleSystem[] golpes_vfx;
+    [Header("SFX")]
+    public StudioEventEmitter fmod_globos;
+    public StudioEventEmitter golpeGlobo_sfx;
+    public StudioEventEmitter globoPoppis_sfx;
+    public StudioEventEmitter quico_sfx;
+    [FMODUnity.EventRef]
+    public string golpe_sfx;
+    [FMODUnity.EventRef]
+    public string explosionAgua_sfx;
+    [FMODUnity.EventRef] public string globoChavo_sfx;
+    [FMODUnity.EventRef] public string globoQuico_sfx;
+    [FMODUnity.EventRef] public string globoPopis_sfx;
+    [FMODUnity.EventRef] public string globoÑoño_sfx;
+    [FMODUnity.EventRef] public string globoDonRamon_sfx;
+    [FMODUnity.EventRef] public string globoDoñaFlorinda_sfx;
 
     void Start()
     {
         tiempoMini = Time.time + tiempoDisparoMiniGlobos;
+
+      
+       
     }
+
   
     public void MiUpdate()
     {
@@ -126,6 +145,10 @@ public class GloboControl : MonoBehaviour
             vidaSlider.value = vida;
         }
 
+        if(_tipoPersonaje == TipoPersonaje.kiko)
+        {
+            quico_sfx.Play();
+        }
 
         trigger.enabled = true;
 
@@ -306,6 +329,12 @@ public class GloboControl : MonoBehaviour
 
         QuitarMira();
 
+        if(_tipoPersonaje == TipoPersonaje.poppy)
+        {
+            globoPoppis_sfx.Play();
+        }
+
+
         if (vida <= 0)
         {
 
@@ -332,6 +361,9 @@ public class GloboControl : MonoBehaviour
 
         if (sliderFlorinda != null)
             sliderFlorinda.gameObject.SetActive(false);
+
+        fmod_globos.Event = explosionAgua_sfx;
+        fmod_globos.Play();
 
         MasterLevel.masterlevel.ScoreJugador(valorGlobo);
 
@@ -365,7 +397,9 @@ public class GloboControl : MonoBehaviour
         {
             ActivarDebuffDonRamon();
         }
-        yield return new WaitForSeconds(1.5f);
+          golpeGlobo_sfx.Play();
+
+          yield return new WaitForSeconds(1.5f);
         puntos_text.gameObject.SetActive(false);
         if (_tipoPersonaje == TipoPersonaje.miniFlorinda)
         {
@@ -402,6 +436,9 @@ public class GloboControl : MonoBehaviour
         {
             meshGlobo.SetActive(false);
         }
+
+        fmod_globos.Event = explosionAgua_sfx;
+        fmod_globos.Play();
 
         explosion_vfx.Play();
         EfectoGolpe();

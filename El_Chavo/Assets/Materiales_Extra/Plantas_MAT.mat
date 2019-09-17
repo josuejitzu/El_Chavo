@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Plantas_MAT
   m_Shader: {fileID: 4800000, guid: e66177a199d34be4799bf50c00463912, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: _NORMALINVERTONBACKFACE_ON _RENDERTYPEKEY_OPAQUE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -19,6 +19,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _AlbedoTex:
+        m_Texture: {fileID: 2800000, guid: dab1dd4717e22fb42879fe3e9fcfd50b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -40,10 +44,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: dab1dd4717e22fb42879fe3e9fcfd50b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -59,19 +67,63 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _ADSStandardLitPlant: 1
+    - _ADVANCEDD: 0
+    - _BatchingInfo: 0
     - _BumpScale: 1
+    - _CullMode: 0
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _GlobalSize: 1
+    - _GlobalTint: 1
+    - _GlobalTurbulence: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _Internal_ADS: 1
+    - _Internal_DebugMask: 1
+    - _Internal_DebugMask2: 1
+    - _Internal_DebugVariation: 1
+    - _Internal_LitStandard: 1
+    - _Internal_SetByScript: 0
+    - _Internal_TypePlant: 1
+    - _Internal_UnityToBoxophobic: 1
+    - _Internal_Version: 220
+    - _LeafMotionParameters: 0
+    - _MAINN: 0
+    - _MOTIONLEAFF: 0
+    - _MOTIONPLANTT: 0
     - _Metallic: 0
     - _Mode: 0
+    - _MotionAmplitude: 0
+    - _MotionAmplitude3: 0
+    - _MotionNoise: 1
+    - _MotionScale: 0
+    - _MotionScale3: 0
+    - _MotionSpacee: 0
+    - _MotionSpaceeEnd: 0
+    - _MotionSpaceee: 0
+    - _MotionSpaceeeEnd: 0
+    - _MotionSpeed: 0
+    - _MotionSpeed3: 0
+    - _MotionVariation: 0
+    - _MotionVertical: 0
+    - _NormalInvertOnBackface: 1
+    - _NormalScale: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _PlantMotionParameters: 0
+    - _RENDERINGG: 0
+    - _RenderFaces: 0
     - _Rigidness: 21.4
+    - _SETTINGS: 0
+    - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _Speed: 30
@@ -80,6 +132,8 @@ Material:
     - _UVSec: 0
     - _YOffset: 0.16
     - _ZWrite: 1
+    - __dirty: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _MainUVs: {r: 1, g: 1, b: 0, a: 0}

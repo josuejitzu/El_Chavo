@@ -31,24 +31,7 @@ public class MunicionControl : MonoBehaviour
         CambiarMunicion();
     }
   
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.transform.tag == "mano" || collision.transform.tag == "tirante" || collision.transform.tag == "resortera")
-    //    {
-    //        print(this.transform.name + " colisiono con " + collision.transform.name);
-    //    }else if(collision.transform.tag == "globo")
-    //    {
-            
-    //    }
-    //    else
-    //    {
-    //        print(this.transform.name + " colisiono con " + collision.transform.name);
-    //        StartCoroutine(Explotar());
-           
-    //    }
 
-
-    //}
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.tag == "globo")
@@ -64,7 +47,11 @@ public class MunicionControl : MonoBehaviour
         else if (other.transform.tag == "mano" 
               || other.transform.tag == "tirante" || other.transform.tag == "resortera")
         {
-
+            return;
+        }
+        else if(other.transform.tag == "posicionDebuff")//Si le da a los debuffs de donRamon
+        {
+            StartCoroutine(PowerUp_Control._powerUps.CancelarPowerUP());
         }
         else if (other.transform.tag == "personaje")
         {

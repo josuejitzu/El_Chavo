@@ -6,7 +6,32 @@ ModelImporter:
   - first:
       74: 2402460429937674543
     second: Popis_Agachando
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Popis_Final02_Rig_V02_Popis_Final02_Rig_V01_phong2
+    second: {fileID: 2100000, guid: dd84c14be4c022f479d5192fd31bbb1c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Popis_Final02_Rig_V02_cabeza_fina01_initialShadingGroup1
+    second: {fileID: 2100000, guid: dd84c14be4c022f479d5192fd31bbb1c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Popis_Final02_Rig_V02_cabeza_fina01_phong1SG1
+    second: {fileID: 2100000, guid: dd84c14be4c022f479d5192fd31bbb1c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Popis_Final02_Rig_V02_cabeza_fina01_phong2SG1
+    second: {fileID: 2100000, guid: dd84c14be4c022f479d5192fd31bbb1c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Popis_Final02_Rig_V02_phong2
+    second: {fileID: 2100000, guid: dd84c14be4c022f479d5192fd31bbb1c, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

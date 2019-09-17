@@ -27,6 +27,7 @@ public class Lanzador_Globos : MonoBehaviour
     public GameObject globokiko_dummy,globoñoño_dummy,globopoppy_dummy,globoramon_dummy,globoflorinda_dummy;
     public GameObject globoDummyActivo;
     public PosicionControl posicion_elegida;
+
     [Space(10)]
     [Header("Settings Disparo")]
     public float velocidad;
@@ -35,7 +36,7 @@ public class Lanzador_Globos : MonoBehaviour
     public Vector3 velocidadCalculada;
     public float anguloLanzamiento;
     public Transform posLanzamiento;
-
+    public Transform posLanzamiento_chavo, posLanzamientoPoppis, posLanzamientoQuico, posLanzamientoÑoño, posLanzamientoDonRamon, posLanzamientoFlorinda;
     public float delayDisparo;
     public float rateDisparo;
     float sigDisparo;
@@ -152,7 +153,7 @@ public class Lanzador_Globos : MonoBehaviour
         {
             if(!g.activeInHierarchy)
             {
-                g.transform.position = posLanzamiento.position;
+                g.transform.position = posLanzamiento.localPosition;
                 g.transform.rotation = posLanzamiento.rotation;
 
                 g.SetActive(true);
@@ -294,6 +295,7 @@ public class Lanzador_Globos : MonoBehaviour
         print("Lanzador " + this.transform.name + " termino disparo...Desactivando...");
         sliderDisparo.gameObject.SetActive(false);
         yield return new WaitForSeconds(0.5f);//tiempo de terminaicon de abanico
+        if(posicion_elegida != null)
         StartCoroutine(posicion_elegida.Cerrar());
 
         //iniciar animacion de personaje escondiendose
@@ -325,36 +327,43 @@ public class Lanzador_Globos : MonoBehaviour
         {
             personajeActivo = chavo;
             globoDummyActivo = globoChavoDummy;
-            
+            posLanzamiento = posLanzamiento_chavo;
         }
         else if(t == TipoPersonaje.kiko)
         {
             personajeActivo = kiko;
             globoDummyActivo = globokiko_dummy;
+            posLanzamiento = posLanzamientoQuico;
+
 
         }
         else if (t == TipoPersonaje.ñoño)
         {
             personajeActivo = ñoño;
             globoDummyActivo = globoñoño_dummy;
+            posLanzamiento = posLanzamientoÑoño;
+
 
         }
         else if (t == TipoPersonaje.poppy)
         {
             personajeActivo = poppy;
             globoDummyActivo = globopoppy_dummy;
+            posLanzamiento = posLanzamientoPoppis;
 
         }
         else if (t == TipoPersonaje.donRamon)
         {
             personajeActivo = donRamon;
             globoDummyActivo = globoramon_dummy;
+            posLanzamiento = posLanzamientoDonRamon;
 
         }
         else if (t == TipoPersonaje.doñaFlorinda)
         {
             personajeActivo = doñaFlorinda;
             globoDummyActivo = globoflorinda_dummy;
+            posLanzamiento = posLanzamientoFlorinda;
 
         }else
         {

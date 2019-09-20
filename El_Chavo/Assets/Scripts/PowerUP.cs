@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using FMODUnity;
 
 public class PowerUP : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class PowerUP : MonoBehaviour
    public bool contarTiempo;
     public TMP_Text tipo_text;
 
+   
 
     private void OnValidate()
     {

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using TMPro;
+using FMODUnity;
 
 public class MasterLevel : MonoBehaviour
 {
@@ -58,13 +59,23 @@ public class MasterLevel : MonoBehaviour
     [Header("UpdateScripts")]
     public List<GloboControl> globosUpdate = new List<GloboControl>();
 
+    [Space(10)]
+    [Header("SFX")]
+    public StudioEventEmitter jugadorGolpeado_sfx;
+    public StudioEventEmitter musicaTitulo,musicaJuego;
+    //  [FMODUnity.EventRef] public string chiflido_sfx;
+    [Header("VFX")]
+    public Animator splash_anim;
+
     private void Awake()
     {
         masterlevel = this;
     }
     void Start()
     {
-     //   masterlevel = this;  
+        //   masterlevel = this;  
+       // musicaTitulo.Play();
+        
     }
 
     // Update is called once per frame
@@ -90,15 +101,16 @@ public class MasterLevel : MonoBehaviour
                 globosUpdate[i].MiUpdate();
         }
 
-    
+        //splashImg.color = Color.Lerp(splashImg.color, alfaSplash, Time.deltaTime * 1.0f);
     }
 
     private void FixedUpdate()
     {
         if (canvasJuego.activeInHierarchy)
         {
-            if (scoreLerp < scoreJugador)
-                scoreLerp += 1;
+             if (scoreLerp < scoreJugador)
+               scoreLerp += 10;
+          
 
             scoreEnRonda_text.text = scoreLerp.ToString("0000");
         }
@@ -120,7 +132,8 @@ public class MasterLevel : MonoBehaviour
         canvasSiguienteRonda.SetActive(true);
         numCombo = 0;
         numCombo_text.text = "x" + numCombo.ToString("00");
-
+        musicaTitulo.Stop();
+        musicaJuego.Play();
         yield return new WaitForSeconds(2.0f);
         canvasSiguienteRonda.SetActive(false);
         ///
@@ -137,7 +150,7 @@ public class MasterLevel : MonoBehaviour
         jugando = false;
         LanzamientosControl._lanzamientos.disparar = false;
         LanzamientosControl._lanzamientos.DesactivarLanzadores();
-        ronda_text.text = (rondaNum + 1).ToString("00");//si es 0 da 1
+        ronda_text.text = (rondaNum + 1).ToString("00");//iniciando en 0 da 1
        
         canvasJuego.SetActive(true);
         yield return new WaitForSeconds(3.0f);
@@ -207,7 +220,8 @@ public class MasterLevel : MonoBehaviour
             StartCoroutine(FinJuego());
             return;
         }
-
+        splash_anim.SetTrigger("mojar");
+        jugadorGolpeado_sfx.Play();
         numCombo = 0;
         vidaJugador += cantidad;
         numCombo_text.text = "x" + numCombo.ToString("00");

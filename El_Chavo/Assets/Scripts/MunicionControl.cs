@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class MunicionControl : MonoBehaviour
 {
@@ -23,7 +24,9 @@ public class MunicionControl : MonoBehaviour
     public ParticleSystem explosionPesada_vfx;
 
 
-
+    [Space(10)]
+    [Header("SFX")]
+    public StudioEventEmitter woosh_sfx;
 
     public void ActivarMuncion()
     {
@@ -77,6 +80,7 @@ public class MunicionControl : MonoBehaviour
         mesh.SetActive(false);
         ActivarTrail(false);
         yield return new WaitForSeconds(1.0f);
+        woosh_sfx.Stop();
         this.gameObject.SetActive(false);
     }
 

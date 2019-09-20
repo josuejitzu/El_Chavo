@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using FMODUnity;
 public class PowerUp_Control : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -14,6 +15,13 @@ public class PowerUp_Control : MonoBehaviour
     public float tiempoDesactivacion = 10.0f;
     public Slider slidePower;
     public bool conteoPowerUp;
+
+    [Space(10)]
+    [Header("SFX")]
+    public StudioEventEmitter powerUpActivado_sfx;
+    public StudioEventEmitter powerUpCancelado_sfx;
+    public StudioEventEmitter powerUpDesactivado_sfx;
+
 
     private void OnDrawGizmos()
     {
@@ -133,13 +141,14 @@ public class PowerUp_Control : MonoBehaviour
     /// <returns></returns>
     public IEnumerator DesactivacionPowerUP()
     {
-
+        powerUpActivado_sfx.Play();
         print("se pido activar el PowerUp");
         slidePower.gameObject.SetActive(true);
         slidePower.maxValue = tiempoDesactivacion;
         slidePower.value = tiempoDesactivacion;
         conteoPowerUp = true;
         yield return new WaitForSeconds(tiempoDesactivacion);
+        powerUpDesactivado_sfx.Play();
         conteoPowerUp = false;
         slidePower.gameObject.SetActive(false);
         Resortera_Control._resortera.ActivarPowerUp(MunicionTipo.Normal);
@@ -153,11 +162,15 @@ public class PowerUp_Control : MonoBehaviour
     /// <returns></returns>
     public IEnumerator CancelarPowerUP()
     {
-      
+        if (!conteoPowerUp)
+            yield break;
+
         conteoPowerUp = false;
         slidePower.gameObject.SetActive(false);
         Resortera_Control._resortera.ActivarPowerUp(MunicionTipo.Normal);
         print("Se pidio desactivar powerUP porque Don Ramon te golpeo o porque golpeaste Debuff");
+        powerUpCancelado_sfx.Play();
+
         yield break;
 
     }

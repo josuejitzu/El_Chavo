@@ -2161,12 +2161,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: -1504981713932161579, guid: 54195bd37d0c28d4db72833fed9d2218,
+    - target: {fileID: 1554779039133842436, guid: 54195bd37d0c28d4db72833fed9d2218,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 2e27d78dbd88ece42b704d09a2ba46e9, type: 2}
-    - target: {fileID: 1554779039133842436, guid: 54195bd37d0c28d4db72833fed9d2218,
+    - target: {fileID: -1504981713932161579, guid: 54195bd37d0c28d4db72833fed9d2218,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

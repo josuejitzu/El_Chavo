@@ -53,12 +53,12 @@ public class PowerUp_Control : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.P))
-        {
-            // ActivarPowerUp();
-            Resortera_Control._resortera.ActivarPowerUp(MunicionTipo.Explosiva);
-            StartCoroutine(DesactivacionPowerUP());
-        }
+        //if (Input.GetKeyUp(KeyCode.P))
+        //{
+        //    // ActivarPowerUp();
+        //    Resortera_Control._resortera.ActivarPowerUp(MunicionTipo.Explosiva);
+        //    StartCoroutine(DesactivacionPowerUP());
+        //}
         if(conteoPowerUp)
         {
             slidePower.value = Mathf.MoveTowards(slidePower.value, 0.0f, Time.deltaTime);

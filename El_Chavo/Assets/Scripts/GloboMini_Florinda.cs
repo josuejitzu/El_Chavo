@@ -122,6 +122,7 @@ public class GloboMini_Florinda : MonoBehaviour
             StartCoroutine(Explotar());
         }
     }
+
     private void OnTriggerStay(Collider other)
     {
         if (other.transform.tag == "MainCamera")

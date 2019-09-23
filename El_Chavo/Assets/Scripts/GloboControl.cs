@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using FMODUnity;
+
 public class GloboControl : MonoBehaviour
 {
     public TipoPersonaje _tipoPersonaje;
@@ -37,6 +38,9 @@ public class GloboControl : MonoBehaviour
     public int vidaInicial;
     public float dañoJugador;
     public TMP_Text puntos_text;
+    public Image marcoVida;
+    public Image marcoVidax1,marcoVidax2,marcoVidax3,marcoVidax4;
+
     [Space(10)]
     [Header("MiniGlobos_Florinda")]
     public GameObject[] globosFlorinda;
@@ -79,9 +83,6 @@ public class GloboControl : MonoBehaviour
     void Start()
     {
         tiempoMini = Time.time + tiempoDisparoMiniGlobos;
-
-      
-       
     }
 
   
@@ -152,8 +153,11 @@ public class GloboControl : MonoBehaviour
 
         trigger.enabled = true;
 
-       if (_tipoPersonaje != TipoPersonaje.miniFlorinda)
+        if (_tipoPersonaje != TipoPersonaje.miniFlorinda)
+        {
             meshGlobo.SetActive(true);
+            marcoVida.enabled = true;
+        }
 
 
          
@@ -173,24 +177,65 @@ public class GloboControl : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Llamado para cuando termina la Ronda, por el momento es llamado de dos maneras:
+    /// MasterLevel o el LanzadorGlobos.cs correspondiente
+    /// </summary>
     public void DesactivarGlobo()
     {
-        StopAllCoroutines();
+        //StopAllCoroutines();
+        //brincar = false;
+        //trigger.enabled = false;
+        //marcoVida.enabled = false;
+        //kamikaze = false;
+
+        ////Desactivar globos de doña florinda
+        //if (_tipoPersonaje == TipoPersonaje.doñaFlorinda)
+        //{
+        //    foreach (GameObject gm in globosFlorinda)
+        //    {
+        //        if (gm.activeInHierarchy)
+        //        {
+        //            gm.GetComponent<GloboMini_Florinda>().DesactivarGlobo();
+        //        }
+        //    }
+        //}
+
+        //this.gameObject.SetActive(false);
+
+
+        //
         brincar = false;
         trigger.enabled = false;
-        
-        //Desactivar globos de doña florinda
-        if(_tipoPersonaje == TipoPersonaje.doñaFlorinda)
+        //rigid.isKinematic = true;
+        vidaSlider.gameObject.SetActive(false);
+        kamikaze = false;
+        if (sliderFlorinda != null)
+            sliderFlorinda.gameObject.SetActive(false);
+
+        if (_tipoPersonaje == TipoPersonaje.miniFlorinda)
         {
-            foreach(GameObject gm in globosFlorinda)
-            {
-                if(gm.activeInHierarchy)
-                {
-                    gm.GetComponent<GloboMini_Florinda>().DesactivarGlobo();
-                }
-            }
+            meshGlobo.SetActive(false);
+        }
+        else
+        {
+            meshGlobo.SetActive(false);
         }
 
+        fmod_globos.Event = explosionAgua_sfx;
+        fmod_globos.Play();
+        marcoVida.enabled = false;
+
+        explosion_vfx.Play();
+        EfectoGolpe();
+
+       
+
+        if (_tipoPersonaje == TipoPersonaje.doñaFlorinda)
+        {
+            LanzamientosControl._lanzamientos.conFlorinda = false;
+        }
+        QuitarMira();
         this.gameObject.SetActive(false);
     }
 
@@ -347,7 +392,7 @@ public class GloboControl : MonoBehaviour
     }
 
     /// <summary>
-    /// Destruye el Globo porque su vida llego a 0, llamda por RecibirDaño, tambien activa
+    /// Destruye el Globo porque su vida llego a 0 y fue llamada por RecibirDaño, tambien activa
     /// poderes secundarios si el TipoGlobo los tiene ej:(Poppy,DoñaFlorinda,DonRamon)
     /// </summary>
     /// <returns></returns>
@@ -364,7 +409,7 @@ public class GloboControl : MonoBehaviour
 
         fmod_globos.Event = explosionAgua_sfx;
         fmod_globos.Play();
-
+        marcoVida.enabled = false;
         MasterLevel.masterlevel.ScoreJugador(valorGlobo);
 
         puntos_text.text = "+" + valorGlobo.ToString();
@@ -385,7 +430,7 @@ public class GloboControl : MonoBehaviour
         if (_tipoPersonaje == TipoPersonaje.poppy)
         {
             explosionPoppy_vfx.Play();
-            yield return new WaitForSeconds(4.0f);
+            yield return new WaitForSeconds(6.0f);
 
         }
         else
@@ -399,7 +444,7 @@ public class GloboControl : MonoBehaviour
         }
           golpeGlobo_sfx.Play();
 
-          yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.5f);
         puntos_text.gameObject.SetActive(false);
         if (_tipoPersonaje == TipoPersonaje.miniFlorinda)
         {
@@ -439,6 +484,7 @@ public class GloboControl : MonoBehaviour
 
         fmod_globos.Event = explosionAgua_sfx;
         fmod_globos.Play();
+        marcoVida.enabled = false;
 
         explosion_vfx.Play();
         EfectoGolpe();
@@ -463,6 +509,11 @@ public class GloboControl : MonoBehaviour
         globoPoppy.SetActive(false);
         globoDoñaFlorinda.SetActive(false);
 
+        marcoVidax1.enabled = false;
+        marcoVidax2.enabled = false;
+        marcoVidax3.enabled = false;
+        marcoVidax4.enabled = false;
+
         if(_tipoPersonaje == TipoPersonaje.chavo)
         {
             meshGlobo = globoChavo;
@@ -471,6 +522,8 @@ public class GloboControl : MonoBehaviour
             vida = chavo_s.vidaGlobo;
             dañoJugador = chavo_s.dañoGlobo;
             valorGlobo = chavo_s.valorGlobo;
+            marcoVida =  marcoVidax1;
+            
         }
         else if(_tipoPersonaje == TipoPersonaje.kiko)
         {
@@ -480,6 +533,8 @@ public class GloboControl : MonoBehaviour
             vida = kiko_s.vidaGlobo;
             dañoJugador = kiko_s.dañoGlobo;
             valorGlobo = kiko_s.valorGlobo;
+            marcoVida =  marcoVidax2;
+
         }
         else if (_tipoPersonaje == TipoPersonaje.poppy)
         {
@@ -489,6 +544,8 @@ public class GloboControl : MonoBehaviour
             vida = poppy_s.vidaGlobo;
             dañoJugador = poppy_s.dañoGlobo;
             valorGlobo = poppy_s.valorGlobo;
+             marcoVida =  marcoVidax1;
+
         }
         else if (_tipoPersonaje == TipoPersonaje.ñoño)
         {
@@ -498,6 +555,8 @@ public class GloboControl : MonoBehaviour
             vida = ñoño_s.vidaGlobo;
             dañoJugador = ñoño_s.dañoGlobo;
             valorGlobo = ñoño_s.valorGlobo;
+            marcoVida =  marcoVidax3;
+
         }
         else if (_tipoPersonaje == TipoPersonaje.donRamon)
         {
@@ -507,6 +566,8 @@ public class GloboControl : MonoBehaviour
             vida = donRamon_s.vidaGlobo;
             dañoJugador = donRamon_s.dañoGlobo;
             valorGlobo = donRamon_s.valorGlobo;
+            marcoVida =  marcoVidax1;
+
         }
         else if (_tipoPersonaje == TipoPersonaje.doñaFlorinda)
         {
@@ -516,8 +577,11 @@ public class GloboControl : MonoBehaviour
             vida = doñaFlorinda_s.vidaGlobo;
             dañoJugador = doñaFlorinda_s.dañoGlobo;
             valorGlobo = doñaFlorinda_s.valorGlobo;
+            marcoVida =  marcoVidax4;
 
-        }else if(_tipoPersonaje == TipoPersonaje.miniFlorinda)
+
+        }
+        else if(_tipoPersonaje == TipoPersonaje.miniFlorinda)
         {
             meshGlobo = globoMini;
             alturaArco = miniFlorinda_s.arco;
@@ -527,6 +591,7 @@ public class GloboControl : MonoBehaviour
             valorGlobo = miniFlorinda_s.valorGlobo;
 
         }
+        marcoVida.enabled = false;
         vidaInicial = vida;
     }
 
@@ -569,4 +634,6 @@ public class GloboControl : MonoBehaviour
         int r = Random.Range(0, golpes_vfx.Length);
         golpes_vfx[r].Play();
     }
+
+
 }

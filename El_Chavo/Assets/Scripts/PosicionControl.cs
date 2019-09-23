@@ -49,6 +49,7 @@ public class PosicionControl : MonoBehaviour
         if(puerta)
         {
             puertaAbriendose_sfx.Play();
+
         }else if(!puerta)
         {
             ventanaAbriendose_sfx.Play();

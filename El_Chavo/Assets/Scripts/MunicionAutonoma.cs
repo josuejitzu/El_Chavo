@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
+
 public class MunicionAutonoma : MonoBehaviour
 {
     public Transform _padre;
@@ -62,7 +63,7 @@ public class MunicionAutonoma : MonoBehaviour
       }
 
     }
-    public void EscanearZona()
+    public void EscanearZona()//NO SE ESTA UTILIZANDO
     {
         return;
         Collider[] hitColliders = Physics.OverlapSphere(this.transform.position, 70.0f);

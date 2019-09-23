@@ -207,6 +207,13 @@ public class Resortera_Control : MonoBehaviour
         trigger.enabled = false;
         triggerTirante.enabled = true;
     }
+    public void ResorteraSoltada()
+    {
+        enMano = false;
+        this.GetComponent<Rigidbody>().isKinematic = true;
+        trigger.enabled = true;
+        triggerTirante.enabled = false;
+    }
 
     public void MoverTirante(float dist)
     {

@@ -15,6 +15,7 @@ TagManager:
   - paredes
   - posicionDebuff
   - municionAutonoma
+  - FinNubes
   layers:
   - Default
   - TransparentFX

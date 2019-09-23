@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.IO;
 using TMPro;
 using FMODUnity;
+using System;
 
 public class MasterLevel : MonoBehaviour
 {
@@ -15,7 +17,7 @@ public class MasterLevel : MonoBehaviour
     public float vidaJugador = 0.0f;
     public Slider vidaSlider;
     public float velocidadLlenado;
-
+    public bool inmortal;
     [Space(10)]
     [Header("Rondas")]
     public int rondaNum;
@@ -53,7 +55,12 @@ public class MasterLevel : MonoBehaviour
     public TMP_Text rondaOperador_txt;
     public TMP_Text tiempoRonda_txt;
     public Slider vidaSlider_operador;
-    
+    [Space(10)]
+    [Header("Manos")]
+    public ManoControl manoL;
+    public ManoControl manoR;
+    [Header("Resortera")]
+    public Resortera_Control resortera;
 
     [Space(10)]
     [Header("UpdateScripts")]
@@ -62,7 +69,7 @@ public class MasterLevel : MonoBehaviour
     [Space(10)]
     [Header("SFX")]
     public StudioEventEmitter jugadorGolpeado_sfx;
-    public StudioEventEmitter musicaTitulo,musicaJuego;
+    public StudioEventEmitter musicaTitulo, musicaJuego, siguienteRonda_sfx;
     //  [FMODUnity.EventRef] public string chiflido_sfx;
     [Header("VFX")]
     public Animator splash_anim;
@@ -73,9 +80,9 @@ public class MasterLevel : MonoBehaviour
     }
     void Start()
     {
-        //   masterlevel = this;  
-       // musicaTitulo.Play();
-        
+        //masterlevel = this;  
+        // musicaTitulo.Play();
+        contarCombo = true;
     }
 
     // Update is called once per frame
@@ -120,6 +127,12 @@ public class MasterLevel : MonoBehaviour
     {
         StartCoroutine(IniciarJuego());
     }
+
+    public void ReiniciarJuegoCall()
+    {
+        SceneManager.LoadScene(0);
+    }
+
     public IEnumerator IniciarJuego()
     {
 
@@ -137,7 +150,7 @@ public class MasterLevel : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         canvasSiguienteRonda.SetActive(false);
         ///
-
+       // siguienteRonda_sfx.Play();
         yield return new WaitForSeconds(0.5f);
         jugando = true;
         contando = true;
@@ -151,7 +164,21 @@ public class MasterLevel : MonoBehaviour
         LanzamientosControl._lanzamientos.disparar = false;
         LanzamientosControl._lanzamientos.DesactivarLanzadores();
         ronda_text.text = (rondaNum + 1).ToString("00");//iniciando en 0 da 1
-       
+
+        try
+        {
+            for (int i = 0; i < globosUpdate.Count; i++)
+            {
+
+                if (globosUpdate[i].gameObject.activeInHierarchy)
+                    globosUpdate[i].GetComponent<GloboControl>().DesactivarGlobo();
+
+            }
+        }catch
+        {
+            print("No se pudieron resolver todas las desactivaciones de globo");
+        }
+
         canvasJuego.SetActive(true);
         yield return new WaitForSeconds(3.0f);
         canvasJuego.SetActive(false);
@@ -170,6 +197,8 @@ public class MasterLevel : MonoBehaviour
         rondaOperador_txt.text = "Ronda: " + (rondaNum + 1).ToString("00");
         canvasSiguienteRonda.SetActive(true);
         yield return new WaitForSeconds(2.0f);
+       // siguienteRonda_sfx.Play();
+
         canvasSiguienteRonda.SetActive(false);
         numCombo = 0;
         numCombo_text.text = "x" + numCombo.ToString("00");
@@ -191,8 +220,11 @@ public class MasterLevel : MonoBehaviour
         contando = false;
         LanzamientosControl._lanzamientos.disparar = false;
         LanzamientosControl._lanzamientos.DesactivarLanzadores();
+
         yield return new WaitForSeconds(0.05f);
         scoreFinal_text.text = "Score: " + scoreJugador.ToString("0000") + "    " + "Ronda: " + (rondaNum + 1).ToString("00");
+        Score_Control._score.jugadorActual = new Jugador("", scoreJugador, rondaNum + 1);
+        Score_Control._score.CompararScore();
         canvasFinJuego.SetActive(true);
     }
 
@@ -215,17 +247,23 @@ public class MasterLevel : MonoBehaviour
     {
         if (!jugando)
             return;
-        if (vidaJugador >= vidaMax)
-        {
-            StartCoroutine(FinJuego());
-            return;
-        }
+       
         splash_anim.SetTrigger("mojar");
         jugadorGolpeado_sfx.Play();
-        numCombo = 0;
+
+        if (!inmortal)
+            numCombo = 0;
+
         vidaJugador += cantidad;
         numCombo_text.text = "x" + numCombo.ToString("00");
 
+        if (vidaJugador >= vidaMax)
+        {
+            if (inmortal)
+                return;
+            StartCoroutine(FinJuego());
+            return;
+        }
 
     }
 
@@ -242,14 +280,14 @@ public class MasterLevel : MonoBehaviour
             if (numCombo == 5)
             {
                 contarCombo = false;
-
-                PowerUp_Control._powerUps.ActivarPowerUp();
+                numCombo_text.gameObject.SetActive(false);
+                PowerUp_Control._powerUps.ActivarPowerUp();//Activa los letreros de powerUp
             }
             numCombo_text.text = "x" + numCombo.ToString("00");
 
         }
 
-
+        //Se quito para hacer el LERP del Score
         //scoreEnRonda_text.text = scoreJugador.ToString("0000");
 
     }
@@ -271,5 +309,25 @@ public class MasterLevel : MonoBehaviour
        // globosUpdate.Sort();
     }
 
-  
+    public void ColocarResortera(string mano)
+    {
+        if(mano == "derecha")
+        {
+            manoL.SoltarResortera();
+
+            manoR.sobreResortera = true;
+            manoR.resortera = resortera.gameObject;
+            manoR.TomarResortera();
+        }
+        else if(mano == "izquierda")
+        {
+            manoR.SoltarResortera();
+
+            manoL.sobreResortera = true;
+            manoL.resortera = resortera.gameObject;
+            manoL.TomarResortera();
+        }
+
+    }
+
 }

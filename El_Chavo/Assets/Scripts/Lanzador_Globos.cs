@@ -78,11 +78,7 @@ public class Lanzador_Globos : MonoBehaviour
         {
             OrdenDisparo();
         }
-        //if(Time.time >= sigDisparo)
-        //{
-        //    //Disparar();
-        //    //sigDisparo = Time.time + rateDisparo;
-        //}
+       
         
         if(objetivo)
         {
@@ -153,7 +149,7 @@ public class Lanzador_Globos : MonoBehaviour
         {
             if(!g.activeInHierarchy)
             {
-                g.transform.position = posLanzamiento.localPosition;
+                g.transform.position = posLanzamiento.position;
                 g.transform.rotation = posLanzamiento.rotation;
 
                 g.SetActive(true);
@@ -391,7 +387,8 @@ public class Lanzador_Globos : MonoBehaviour
        
         MasterLevel.masterlevel.ScoreJugador(10);
         golpe_vfx.Play();
-        StartCoroutine(posicion_elegida.Cerrar());
+        if(posicion_elegida != null)
+             StartCoroutine(posicion_elegida.Cerrar());
 
         yield return new WaitForSeconds(0.5f);
 
@@ -427,7 +424,7 @@ public class Lanzador_Globos : MonoBehaviour
 
         foreach (GameObject g in globos)
         {
-            if (g.activeInHierarchy)
+          //  if (g.activeInHierarchy)
                 g.SetActive(false);
         }
       

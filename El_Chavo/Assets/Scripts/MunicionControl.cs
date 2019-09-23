@@ -39,7 +39,9 @@ public class MunicionControl : MonoBehaviour
     {
         if (other.transform.tag == "globo")
         {
-            other.GetComponent<GloboControl>().RecibirDaño(daño);
+            if(other.GetComponent<GloboControl>() != null)//para los mini globos de Florinda porque no tienen este script
+                 other.GetComponent<GloboControl>().RecibirDaño(daño);
+
             StartCoroutine(Explotar());
         }
         else if (other.transform.tag == "MainCamera" || other.transform.tag == "municion" 

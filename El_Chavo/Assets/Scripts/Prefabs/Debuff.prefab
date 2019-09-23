@@ -143,7 +143,7 @@ MonoBehaviour:
   velocidad: 3
   mover: 0
   padre: {fileID: 0}
-  tiempoVida: 10
+  tiempoVida: 15
   meshCalavera: {fileID: 6223322077532529691}
   velocidadRotacion: 2
 --- !u!54 &1393807312034666133

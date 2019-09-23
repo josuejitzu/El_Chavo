@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using FMODUnity;
+
+
 public class PowerUp_Control : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -15,7 +17,7 @@ public class PowerUp_Control : MonoBehaviour
     public float tiempoDesactivacion = 10.0f;
     public Slider slidePower;
     public bool conteoPowerUp;
-
+    public GameObject comboLetrero;
     [Space(10)]
     [Header("SFX")]
     public StudioEventEmitter powerUpActivado_sfx;
@@ -84,6 +86,9 @@ public class PowerUp_Control : MonoBehaviour
         puSeleccionado.transform.rotation = posicionesPU[posElegida].rotation;
         puSeleccionado.gameObject.SetActive(true);
         puSeleccionado.ActivarTablero();
+
+        comboLetrero.SetActive(true);
+
         print("Se activo un power up...esperando a jugador para recolectarlo");
       //  StartCoroutine(DesactivacionPowerUP());
     }
@@ -136,22 +141,30 @@ public class PowerUp_Control : MonoBehaviour
     }
 
     /// <summary>
-    /// Desactiva el PowerUp por vencmiento de Tiempo
+    /// Desactiva el PowerUp por vencimiento de Tiempo
+    /// Solamente se activa si el Jugador activa un PowerUp desde PowerUP.cs >ActivarPowerUp
     /// </summary>
     /// <returns></returns>
     public IEnumerator DesactivacionPowerUP()
     {
         powerUpActivado_sfx.Play();
         print("se pido activar el PowerUp");
+        comboLetrero.SetActive(false);
+
         slidePower.gameObject.SetActive(true);
         slidePower.maxValue = tiempoDesactivacion;
         slidePower.value = tiempoDesactivacion;
+
         conteoPowerUp = true;
+
         yield return new WaitForSeconds(tiempoDesactivacion);
+
         powerUpDesactivado_sfx.Play();
         conteoPowerUp = false;
         slidePower.gameObject.SetActive(false);
         Resortera_Control._resortera.ActivarPowerUp(MunicionTipo.Normal);
+        MasterLevel.masterlevel.numCombo_text.gameObject.SetActive(true);
+
         print("Se pidio desactivar powerUP por Tiempo");
 
     }

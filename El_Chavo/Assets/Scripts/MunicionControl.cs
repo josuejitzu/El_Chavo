@@ -69,6 +69,11 @@ public class MunicionControl : MonoBehaviour
         {
             StartCoroutine(Explotar());
         }
+
+        if(other.transform.name == "letreroJugar")
+        {
+            MasterLevel.masterlevel.IniciarJuegoCall();
+        }
     }
 
     IEnumerator Explotar()

@@ -18,6 +18,10 @@ public class MasterLevel : MonoBehaviour
     public Slider vidaSlider;
     public float velocidadLlenado;
     public bool inmortal;
+
+    [Header("LetreroInicio")]
+    public GameObject letroInicio;
+
     [Space(10)]
     [Header("Rondas")]
     public int rondaNum;
@@ -74,6 +78,11 @@ public class MasterLevel : MonoBehaviour
     [Header("VFX")]
     public Animator splash_anim;
 
+    [Header("Consola")]
+    public GameObject consolaPanel;
+    public GameObject panelOperador;
+    public GameObject botonAbrir;
+
     private void Awake()
     {
         masterlevel = this;
@@ -92,10 +101,7 @@ public class MasterLevel : MonoBehaviour
         vidaSlider.value = Mathf.MoveTowards(vidaSlider.value, vidaJugador, Time.deltaTime * velocidadLlenado);
         vidaSlider_operador.value = vidaSlider.value;
 
-        if (Input.GetKey(teclaIniciar))
-        {
-            StartCoroutine(IniciarJuego());
-        }
+        
 
         if (contando)
         {
@@ -104,9 +110,16 @@ public class MasterLevel : MonoBehaviour
 
         for (int i = 0; i < globosUpdate.Count; i++)
         {
-            if(globosUpdate[i].gameObject.activeInHierarchy)
+            if(globosUpdate[i] != null && globosUpdate[i].gameObject.activeInHierarchy)
                 globosUpdate[i].MiUpdate();
         }
+
+
+        if(Input.GetKey(KeyCode.LeftControl))
+        {
+            ComandosConsola();
+        }
+      
 
         //splashImg.color = Color.Lerp(splashImg.color, alfaSplash, Time.deltaTime * 1.0f);
     }
@@ -125,6 +138,8 @@ public class MasterLevel : MonoBehaviour
 
     public void IniciarJuegoCall()
     {
+        if (jugando)//evitar duplicados de inicio
+            return;
         StartCoroutine(IniciarJuego());
     }
 
@@ -135,6 +150,9 @@ public class MasterLevel : MonoBehaviour
 
     public IEnumerator IniciarJuego()
     {
+        letroInicio.SetActive(false);
+        //animacion de letrero
+        yield return new WaitForSeconds(2.0f);
 
         LanzamientosControl._lanzamientos.PrepararRound();
         tiempoJuego = rondas[rondaNum].duracion;
@@ -330,4 +348,73 @@ public class MasterLevel : MonoBehaviour
 
     }
 
+
+
+
+    #region Consola
+    void ToggleConsola()
+    {
+        if(consolaPanel.activeInHierarchy)
+        {
+            consolaPanel.SetActive(false);
+
+        }else if(consolaPanel.activeInHierarchy == false)
+        {
+            consolaPanel.SetActive(true);
+        }
+
+    }
+
+    /// <summary>
+    /// Todos estos comandos solo se activan si se esta presionando ctrl + la tecla del comando
+    /// </summary>
+    void ComandosConsola()
+    {
+
+        if (Input.GetKeyDown(teclaIniciar))
+        {
+            IniciarJuegoCall();
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+            ToggleConsola();
+
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            // ActivarPowerUp();
+            Resortera_Control._resortera.ActivarPowerUp(MunicionTipo.Explosiva);
+            StartCoroutine(PowerUp_Control._powerUps.DesactivacionPowerUP());
+        }
+
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            //  ActivarPowerUp(MunicionTipo.Normal);
+            Resortera_Control._resortera.InputPowerUp();
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            Resortera_Control._resortera.Disparar();
+        }
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            ReiniciarJuegoCall();
+        }
+        if(Input.GetKeyDown(KeyCode.I))
+        {
+            inmortal = !inmortal;
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        { Application.Quit(); }
+
+
+    }
+
+
+    public void TogglePanelOperador()
+    {
+        panelOperador.SetActive(!panelOperador.activeInHierarchy);//el contrario de su estado
+        botonAbrir.SetActive(!botonAbrir.activeInHierarchy);
+    }
+    #endregion
 }

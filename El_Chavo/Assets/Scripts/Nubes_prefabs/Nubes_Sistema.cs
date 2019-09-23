@@ -24,6 +24,8 @@ public class Nubes_Sistema : MonoBehaviour
             ActivarNube();
             sigSpawn = Time.time + rateSpawn;
         }
+
+        ///Update para las nubes
         for (int i = 0; i < nubes.Length; i++)
         {
             if (nubes[i].activeInHierarchy)

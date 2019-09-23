@@ -73,10 +73,12 @@ public class Lanzador_Globos : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        if(Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKey(KeyCode.LeftControl))
         {
-            OrdenDisparo();
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                OrdenDisparo();
+            }
         }
        
         
@@ -261,7 +263,8 @@ public class Lanzador_Globos : MonoBehaviour
         yield return new WaitForSeconds(delayDisparo);//El tiempo que esperamos para que el personaje este en posicion de disparo
         globoDummyActivo.SetActive(false);
 
-        Disparar();
+        if (_tipoPersonaje != TipoPersonaje.doñaFlorinda)
+                Disparar();
 
     }
 

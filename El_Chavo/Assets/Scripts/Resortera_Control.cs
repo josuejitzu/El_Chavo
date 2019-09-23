@@ -52,10 +52,7 @@ public class Resortera_Control : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            Disparar();
-        }
+       
         if(mano != null)
         {
            // multiplicadorFuerza = mano.separacion * 2;//busca la separacion en ManoControl.cs de la mano que tiene agarrado esta resortera
@@ -65,20 +62,8 @@ public class Resortera_Control : MonoBehaviour
          {
             MoverTirante(0);
          }
-       if(Input.GetKeyDown(KeyCode.C))
-       {
-            ActivarPowerUp(MunicionTipo.Explosiva);
-       }
-       if(Input.GetKeyDown(KeyCode.V))
-        {
-            ActivarPowerUp(MunicionTipo.Autonoma);
-
-        }
-       if(Input.GetKeyDown(KeyCode.N))
-        {
-            //  ActivarPowerUp(MunicionTipo.Normal);
-            InputPowerUp();
-        }
+    
+  
 
     }
 
@@ -233,7 +218,7 @@ public class Resortera_Control : MonoBehaviour
     }
 
 
-    void InputPowerUp()//TEMP DEBUG
+    public void InputPowerUp()//TEMP DEBUG
     {
         if(!explosivo_PU && !autonoma_PU && !automatica_PU)
         {

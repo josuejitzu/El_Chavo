@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using FMODUnity;
 
 public class PowerUP : MonoBehaviour
 {
@@ -14,7 +15,9 @@ public class PowerUP : MonoBehaviour
     public Slider slideTiempo;
    public bool contarTiempo;
     public TMP_Text tipo_text;
-
+    [Header("SFX")]
+    public StudioEventEmitter powerActivo_sfx;
+   
 
     private void OnValidate()
     {
@@ -42,6 +45,7 @@ public class PowerUP : MonoBehaviour
     {
         //Animacion?
         this.gameObject.SetActive(true);
+        powerActivo_sfx.Play();
         trigger.enabled = true;
         contarTiempo = true;
         slideTiempo.maxValue = tiempoDesactivacion;
@@ -59,11 +63,17 @@ public class PowerUP : MonoBehaviour
         }
 
     }
+    /// <summary>
+    /// Activa el PowerUP correspondiente mandando la orden a Resortera_Control.cs
+    /// y de igual manera empieza el conteo de desactivacion de PowerUp_Control.cs
+    /// </summary>
+    /// <returns></returns>
     IEnumerator ActivarPowerUP()//Comunicarse con Resrotera_Control ActivarPowerUP
     {
         print("Se dio en el tablero, activando power UP: " + _tipoMunicion.ToString());
         contarTiempo = false;
-        
+        powerActivo_sfx.Stop();
+
         trigger.enabled = false;
         //if(_tipoMunicion == MunicionTipo.Automatica)
         //{
@@ -82,8 +92,10 @@ public class PowerUP : MonoBehaviour
 
         //animacion salida
         contarTiempo = false;
+        powerActivo_sfx.Stop();
+
         yield return new WaitForSeconds(1.0f);
-      
+        PowerUp_Control._powerUps.comboLetrero.SetActive(false);
         this.gameObject.SetActive(false);
         print("Tablero " + this.transform.name + " desactivado por tiempo");
     }

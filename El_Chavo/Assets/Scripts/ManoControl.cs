@@ -192,12 +192,14 @@ public class ManoControl : MonoBehaviour
     {
         puedeDisparar = true;
     }
-    void TomarResortera()
+    public void TomarResortera()
     {
 
         if (!sobreResortera)
             return;
-      
+
+        if (resortera.GetComponent<Resortera_Control>().enMano)
+            return;
 
         resortera.GetComponent<Resortera_Control>().mano = this;
         resortera.GetComponent<Resortera_Control>().ResorteraTomada();
@@ -209,6 +211,23 @@ public class ManoControl : MonoBehaviour
         trigger.enabled = false;
 
         conResortera = true;
+
+    }
+    public void SoltarResortera()
+    {
+        if (!conResortera)
+            return;
+
+        resortera.GetComponent<Resortera_Control>().mano = null;
+        resortera.GetComponent<Resortera_Control>().ResorteraSoltada();
+       // resortera.GetComponent<Resortera_Control>().ResorteraTomada();
+
+        
+        resortera.transform.parent = null;
+
+        trigger.enabled = true;
+
+        conResortera = false;
 
     }
 

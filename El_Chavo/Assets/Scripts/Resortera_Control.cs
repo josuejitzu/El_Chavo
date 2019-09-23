@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEngine.UI;
-
+using FMODUnity;
 public class Resortera_Control : MonoBehaviour
 {
     public static Resortera_Control _resortera;
@@ -35,6 +35,14 @@ public class Resortera_Control : MonoBehaviour
     
 
     public bool enMano;
+
+    [Space(10)]
+    [Header("SFX")]
+    
+    public  StudioEventEmitter estirandose_sfx;
+    public  StudioEventEmitter soltada_sfx;
+   
+
     void Start()
     {
         _resortera = this;
@@ -151,6 +159,8 @@ public class Resortera_Control : MonoBehaviour
                  municionTemp.GetComponent<SphereCollider>().enabled = true;
                  municionTemp.GetComponent<MunicionControl>().ActivarMuncion();
                  municionTemp.GetComponent<MunicionControl>().ActivarTrail(true);
+                 municionTemp.GetComponent<MunicionControl>().woosh_sfx.Play();
+
 
 
           }
@@ -162,12 +172,15 @@ public class Resortera_Control : MonoBehaviour
         }
         else
         {
-            resortera_anim.SetTrigger("soltada");
+
+           
         }
+        soltada_sfx.Play();
         posMunicion.transform.position = posInicialTirante.position;
         fuerzaTotal = 0f;
         //ligaResortera_blendShape.SetBlendShapeWeight(0, 0);
         municionTemp = null;
+      
         Invoke("CargarMunicion",0.2f);
     }
 
@@ -194,6 +207,13 @@ public class Resortera_Control : MonoBehaviour
         trigger.enabled = false;
         triggerTirante.enabled = true;
     }
+    public void ResorteraSoltada()
+    {
+        enMano = false;
+        this.GetComponent<Rigidbody>().isKinematic = true;
+        trigger.enabled = true;
+        triggerTirante.enabled = false;
+    }
 
     public void MoverTirante(float dist)
     {
@@ -201,6 +221,15 @@ public class Resortera_Control : MonoBehaviour
         posMunicion.transform.position = Vector3.Lerp(posInicialTirante.position,posFinalTirante.position, dist);
       //ligaResortera_blendShape.SetBlendShapeWeight(0,  Mathf.Clamp((dist * 99),0,100));
         resortera_anim.SetFloat("jale", dist * 100.0f);
+        if(!estirandose_sfx.IsPlaying())
+        {
+           // estirandose_sfx.Stop();
+            estirandose_sfx.Play();
+
+        }
+
+        
+
     }
 
 

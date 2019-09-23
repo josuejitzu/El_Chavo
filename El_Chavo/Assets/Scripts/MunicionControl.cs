@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class MunicionControl : MonoBehaviour
 {
@@ -23,7 +24,9 @@ public class MunicionControl : MonoBehaviour
     public ParticleSystem explosionPesada_vfx;
 
 
-
+    [Space(10)]
+    [Header("SFX")]
+    public StudioEventEmitter woosh_sfx;
 
     public void ActivarMuncion()
     {
@@ -36,7 +39,9 @@ public class MunicionControl : MonoBehaviour
     {
         if (other.transform.tag == "globo")
         {
-            other.GetComponent<GloboControl>().RecibirDaño(daño);
+            if(other.GetComponent<GloboControl>() != null)//para los mini globos de Florinda porque no tienen este script
+                 other.GetComponent<GloboControl>().RecibirDaño(daño);
+
             StartCoroutine(Explotar());
         }
         else if (other.transform.tag == "MainCamera" || other.transform.tag == "municion" 
@@ -77,6 +82,7 @@ public class MunicionControl : MonoBehaviour
         mesh.SetActive(false);
         ActivarTrail(false);
         yield return new WaitForSeconds(1.0f);
+        woosh_sfx.Stop();
         this.gameObject.SetActive(false);
     }
 

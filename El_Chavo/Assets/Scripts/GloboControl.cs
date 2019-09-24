@@ -396,6 +396,7 @@ public class GloboControl : MonoBehaviour
     /// poderes secundarios si el TipoGlobo los tiene ej:(Poppy,DoñaFlorinda,DonRamon)
     /// </summary>
     /// <returns></returns>
+
     IEnumerator Destruir()
     {
         trigger.enabled = false;

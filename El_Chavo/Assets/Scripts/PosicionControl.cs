@@ -26,7 +26,12 @@ public class PosicionControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        EventDispatcher.RondaTerminada += EventDispatcher_RondaTerminada;
+    }
+
+    private void EventDispatcher_RondaTerminada()
+    {
+        StartCoroutine(Cerrar());
     }
 
 
@@ -36,7 +41,7 @@ public class PosicionControl : MonoBehaviour
     /// Si no hay animacion ignora y hace break
     /// </summary>
     /// <returns></returns>
-   public IEnumerator Abrir()
+    public IEnumerator Abrir()
    {
         ocupada = true;
         if (puertaVentana_anim == null)
@@ -45,7 +50,9 @@ public class PosicionControl : MonoBehaviour
             yield break;
         }
         //animacion de apertura
+        puertaVentana_anim.ResetTrigger("cerrar");
         puertaVentana_anim.SetTrigger("abrir");
+
         if(puerta)
         {
             puertaAbriendose_sfx.Play();

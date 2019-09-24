@@ -26,9 +26,7 @@ public class MasterLevel : MonoBehaviour
     [Header("Rondas")]
     public int rondaNum;
     public Rondas[] rondas;
-    public TMP_Text ronda_text;
-    public TMP_Text siguienteRonda_text;
-    public TMP_Text rondaFinal_text;
+  
 
     [Space(10)]
     [Header("Tiempo")]
@@ -40,12 +38,7 @@ public class MasterLevel : MonoBehaviour
     [Header("Scores")]
     public int scoreJugador;
     int scoreLerp;
-    public TMP_Text scoreEnRonda_text;
-    public TMP_Text scoreFinal_text;
-    public GameObject canvasJuego;
-
-    public GameObject canvasSiguienteRonda;
-    public GameObject canvasFinJuego;
+   
 
     public bool contarCombo;
     public int numCombo;
@@ -54,11 +47,13 @@ public class MasterLevel : MonoBehaviour
     [Space(10)]
     [Header("KEY")]
     public KeyCode teclaIniciar;
+
     [Space(10)]
     [Header("UIX-Operador")]
     public TMP_Text rondaOperador_txt;
     public TMP_Text tiempoRonda_txt;
     public Slider vidaSlider_operador;
+
     [Space(10)]
     [Header("Manos")]
     public ManoControl manoL;
@@ -77,6 +72,7 @@ public class MasterLevel : MonoBehaviour
     //  [FMODUnity.EventRef] public string chiflido_sfx;
     [Header("VFX")]
     public Animator splash_anim;
+  
 
     [Header("Consola")]
     public GameObject consolaPanel;
@@ -92,6 +88,8 @@ public class MasterLevel : MonoBehaviour
         //masterlevel = this;  
         // musicaTitulo.Play();
         contarCombo = true;
+
+        letroInicio.SetActive(true);
     }
 
     // Update is called once per frame
@@ -124,17 +122,17 @@ public class MasterLevel : MonoBehaviour
         //splashImg.color = Color.Lerp(splashImg.color, alfaSplash, Time.deltaTime * 1.0f);
     }
 
-    private void FixedUpdate()
-    {
-        if (canvasJuego.activeInHierarchy)
-        {
-             if (scoreLerp < scoreJugador)
-               scoreLerp += 10;
+    //private void FixedUpdate()
+    //{
+    //    if (canvasJuego.activeInHierarchy)
+    //    {
+    //         if (scoreLerp < scoreJugador)
+    //           scoreLerp += 10;
           
 
-            scoreEnRonda_text.text = scoreLerp.ToString("0000");
-        }
-    }
+    //        scoreEnRonda_text.text = scoreLerp.ToString("0000");
+    //    }
+    //}
 
     public void IniciarJuegoCall()
     {
@@ -150,23 +148,26 @@ public class MasterLevel : MonoBehaviour
 
     public IEnumerator IniciarJuego()
     {
-        letroInicio.SetActive(false);
+        letroInicio.GetComponent<Animator>().SetTrigger("salir");
         //animacion de letrero
         yield return new WaitForSeconds(2.0f);
-
+        letroInicio.SetActive(false);
         LanzamientosControl._lanzamientos.PrepararRound();
         tiempoJuego = rondas[rondaNum].duracion;
 
         ///Muestra el panel de Inicio
-        siguienteRonda_text.text = (rondaNum + 1).ToString("00");//si da 1 es 2
-        rondaOperador_txt.text = "Ronda: " + (rondaNum + 1).ToString("00");
-        canvasSiguienteRonda.SetActive(true);
+        Score_Control._score.MostrarRondaSiguiente();
+        //siguienteRonda_text.text = (rondaNum + 1).ToString("00");//si da 1 es 2
+        //rondaOperador_txt.text = "Ronda: " + (rondaNum + 1).ToString("00");
+        //canvasSiguienteRonda.SetActive(true);
+
+
         numCombo = 0;
         numCombo_text.text = "x" + numCombo.ToString("00");
         musicaTitulo.Stop();
         musicaJuego.Play();
         yield return new WaitForSeconds(2.0f);
-        canvasSiguienteRonda.SetActive(false);
+        Score_Control._score.canvasSiguienteRonda.SetActive(false);
         ///
        // siguienteRonda_sfx.Play();
         yield return new WaitForSeconds(0.5f);
@@ -178,28 +179,17 @@ public class MasterLevel : MonoBehaviour
 
     public IEnumerator FinRonda()
     {
+
+        EventDispatcher.LlamarFinDeRonda();
+
         jugando = false;
+
         LanzamientosControl._lanzamientos.disparar = false;
-        LanzamientosControl._lanzamientos.DesactivarLanzadores();
-        ronda_text.text = (rondaNum + 1).ToString("00");//iniciando en 0 da 1
+        LanzamientosControl._lanzamientos.DesactivarLanzadores();//Se intento llamar con eventdispatcher pero la logica no funciono
 
-        try
-        {
-            for (int i = 0; i < globosUpdate.Count; i++)
-            {
-
-                if (globosUpdate[i].gameObject.activeInHierarchy)
-                    globosUpdate[i].GetComponent<GloboControl>().DesactivarGlobo();
-
-            }
-        }catch
-        {
-            print("No se pudieron resolver todas las desactivaciones de globo");
-        }
-
-        canvasJuego.SetActive(true);
+        Score_Control._score.MostrarFinRonda();
         yield return new WaitForSeconds(3.0f);
-        canvasJuego.SetActive(false);
+        Score_Control._score.canvasJuego.SetActive(false);// canvasJuego.SetActive(false);
 
         if (rondaNum < rondas.Length)
         {
@@ -211,13 +201,12 @@ public class MasterLevel : MonoBehaviour
             yield break;
         }
 
-        siguienteRonda_text.text = (rondaNum + 1).ToString("00");//si da 1 es 2
-        rondaOperador_txt.text = "Ronda: " + (rondaNum + 1).ToString("00");
-        canvasSiguienteRonda.SetActive(true);
+        Score_Control._score.MostrarRondaSiguiente();
         yield return new WaitForSeconds(2.0f);
-       // siguienteRonda_sfx.Play();
+        // siguienteRonda_sfx.Play();
 
-        canvasSiguienteRonda.SetActive(false);
+        Score_Control._score.canvasSiguienteRonda.SetActive(false);
+
         numCombo = 0;
         numCombo_text.text = "x" + numCombo.ToString("00");
         // StartCoroutine(IniciarJuego());
@@ -234,16 +223,17 @@ public class MasterLevel : MonoBehaviour
 
     public IEnumerator FinJuego()
     {
+        EventDispatcher.LlamarFinDeRonda();
+
         jugando = false;
         contando = false;
         LanzamientosControl._lanzamientos.disparar = false;
         LanzamientosControl._lanzamientos.DesactivarLanzadores();
 
         yield return new WaitForSeconds(0.05f);
-        scoreFinal_text.text = "Score: " + scoreJugador.ToString("0000") + "    " + "Ronda: " + (rondaNum + 1).ToString("00");
+        Score_Control._score.MostrarFinJuego();
         Score_Control._score.jugadorActual = new Jugador("", scoreJugador, rondaNum + 1);
         Score_Control._score.CompararScore();
-        canvasFinJuego.SetActive(true);
     }
 
     void Tiempo()
@@ -271,6 +261,9 @@ public class MasterLevel : MonoBehaviour
 
         if (!inmortal)
             numCombo = 0;
+
+        StartCoroutine(PowerUp_Control._powerUps.CancelarPowerUP());
+
 
         vidaJugador += cantidad;
         numCombo_text.text = "x" + numCombo.ToString("00");

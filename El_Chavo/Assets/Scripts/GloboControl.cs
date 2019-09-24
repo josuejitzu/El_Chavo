@@ -85,7 +85,8 @@ public class GloboControl : MonoBehaviour
         tiempoMini = Time.time + tiempoDisparoMiniGlobos;
     }
 
-  
+    
+
     public void MiUpdate()
     {
 
@@ -113,7 +114,7 @@ public class GloboControl : MonoBehaviour
     }
     public void ActivarGlobo()
     {
-
+        EventDispatcher.RondaTerminada += DesactivarGlobo;
         timer = 0.0f;
 
         if (_tipoPersonaje == TipoPersonaje.doñaFlorinda)
@@ -183,6 +184,8 @@ public class GloboControl : MonoBehaviour
     /// </summary>
     public void DesactivarGlobo()
     {
+        EventDispatcher.RondaTerminada -= DesactivarGlobo;
+
         //StopAllCoroutines();
         //brincar = false;
         //trigger.enabled = false;
@@ -210,6 +213,8 @@ public class GloboControl : MonoBehaviour
         //rigid.isKinematic = true;
         vidaSlider.gameObject.SetActive(false);
         kamikaze = false;
+        CancelInvoke("ComenzarBombardeo");
+
         if (sliderFlorinda != null)
             sliderFlorinda.gameObject.SetActive(false);
 
@@ -337,7 +342,6 @@ public class GloboControl : MonoBehaviour
         }else if(other.transform.tag == "MainCamera")//Le hace daño al Jugador y Explota
         {
             MasterLevel.masterlevel.DañarJugador(dañoJugador);
-            StartCoroutine(PowerUp_Control._powerUps.CancelarPowerUP());
             StartCoroutine(Explotar());
             print(other.transform.name);
 
@@ -399,6 +403,8 @@ public class GloboControl : MonoBehaviour
 
     IEnumerator Destruir()
     {
+        EventDispatcher.RondaTerminada -= DesactivarGlobo;
+
         trigger.enabled = false;
         brincar = false;
         kamikaze = false;
@@ -471,6 +477,8 @@ public class GloboControl : MonoBehaviour
         //rigid.isKinematic = true;
         vidaSlider.gameObject.SetActive(false);
         kamikaze = false;
+        EventDispatcher.RondaTerminada -= DesactivarGlobo;
+
         if (sliderFlorinda != null)
             sliderFlorinda.gameObject.SetActive(false);
 

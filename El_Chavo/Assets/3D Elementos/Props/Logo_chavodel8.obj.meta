@@ -3,7 +3,27 @@ guid: cfc5989b6b305cc4dab41639db62a9d5
 ModelImporter:
   serializedVersion: 25
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cartelMat
+    second: {fileID: 2100000, guid: e2e8ef78a9545ce4fb506f8e91c7dc18, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: fondoMat
+    second: {fileID: 2100000, guid: e2e8ef78a9545ce4fb506f8e91c7dc18, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: letras001Mat
+    second: {fileID: 2100000, guid: e2e8ef78a9545ce4fb506f8e91c7dc18, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: letrasMat
+    second: {fileID: 2100000, guid: e2e8ef78a9545ce4fb506f8e91c7dc18, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

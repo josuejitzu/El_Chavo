@@ -64,6 +64,10 @@ public class MunicionControl : MonoBehaviour
             //StartCoroutine(other.GetComponent<Lanzador_Globos>().Lanzador_Golpeado());
             StartCoroutine(Explotar());
 
+        }else if(other.transform.name == "letreroJoint")
+        {
+            MasterLevel.masterlevel.IniciarJuegoCall();
+            StartCoroutine(Explotar());
         }
         else
         {
@@ -130,6 +134,7 @@ public class MunicionControl : MonoBehaviour
         }
 
     }
+
     public IEnumerator DisparoAutonomo()//Lamada en ResorteraControl().DispararAutomatica()
     {
         foreach (MunicionAutonoma ma in municionesAutonomas)
@@ -151,6 +156,7 @@ public class MunicionControl : MonoBehaviour
         }
         this.gameObject.SetActive(false);
     }
+
     public void ActivarTrail(bool estado)
     {
         if(_tipoMunicion == MunicionTipo.Normal)

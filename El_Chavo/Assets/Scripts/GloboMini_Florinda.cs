@@ -85,6 +85,7 @@ public class GloboMini_Florinda : MonoBehaviour
 
     public void ActivarGlobo()
     {
+        EventDispatcher.RondaTerminada += DesactivarGlobo;
         timer = 0.0f;
        // posInicial.position = this.transform.position;//asignarla manualmente para el reinicio
         gameObject.transform.parent = null;
@@ -153,6 +154,8 @@ public class GloboMini_Florinda : MonoBehaviour
 
         
         QuitarMira();
+        EventDispatcher.RondaTerminada -= DesactivarGlobo;
+
         this.gameObject.SetActive(false);
     }
     IEnumerator Destruir()//Cuando la destruye el Jugador
@@ -177,6 +180,8 @@ public class GloboMini_Florinda : MonoBehaviour
 
 
         QuitarMira();
+        EventDispatcher.RondaTerminada -= DesactivarGlobo;
+
         this.gameObject.SetActive(false);
 
     }
@@ -210,6 +215,8 @@ public class GloboMini_Florinda : MonoBehaviour
         StopAllCoroutines();
         brincar = false;
         trigger.enabled = false;
+        EventDispatcher.RondaTerminada -= DesactivarGlobo;
+
         this.gameObject.SetActive(false);
     }
 

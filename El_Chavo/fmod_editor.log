@@ -7,7 +7,7 @@
 [LOG] OutputWASAPI::init                       : Output buffer size: 4096 samples, latency: 0.00ms, period: 10.00ms, DSP buffer: 1024 * 4
 [LOG] Thread::initThread                       : Init FMOD stream thread. Priority: 2, Stack Size: 65536, Semaphore: No, Sleep Time: 10, Looping: Yes.
 [LOG] Thread::initThread                       : Init FMOD mixer thread. Priority: 3, Stack Size: 49152, Semaphore: No, Sleep Time: 0, Looping: Yes.
-[LOG] AsyncManager::init                       : manager 0000020D9853B7A8 isAsync 0 updatePeriod 0.02
+[LOG] AsyncManager::init                       : manager 0000020DAEA2CD98 isAsync 0 updatePeriod 0.02
 [LOG] AsyncManager::init                       : done
 [LOG] PlaybackSystem::init                     : 
 [LOG] Thread::initThread                       : Init FMOD Studio sample load thread. Priority: 0, Stack Size: 65536, Semaphore: No, Sleep Time: 1, Looping: No.
@@ -16,22 +16,454 @@
 [LOG] Manager::init                            : done.
 [LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 100)
 [LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 100)
+[LOG] SystemI::createSound                     : filename = D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0000020D8AA19A38 : node = 0000020E529500A0
+[LOG] SystemI::createSound                     : add node to async list : head = 0000020E0A7A5858.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000020D8AA19A38
+[LOG] SystemI::createSoundInternal             :     Create name='D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 2237408
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 59744
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000020E529501B8
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekposition = 1700
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='1 Tema SERIE ANIMADA', format=2, channels=2, frequency=48000, lengthbytes=724064, lengthpcm=3053824, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.944061.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000020D8AA19A38
+[LOG] SoundI::getSubSound                      : sound 0000020D8AA19A38.  Subsound index 0 / 1
+[LOG] SoundI::release                          : 1 Tema SERIE ANIMADA (0000020D88F83948)
+[LOG] SoundI::release                          :     1 Tema SERIE ANIMADA (0000020D897F3308)
+[LOG] SoundI::release                          :     1 Tema SERIE ANIMADA (0000020E142485D8)
+[LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 100)
+[LOG] SystemI::createSound                     : filename = D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0000020E14246FE8 : node = 0000020E2842CDB0
+[LOG] SystemI::createSound                     : add node to async list : head = 0000020E0A7A5858.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000020E14246FE8
+[LOG] SystemI::createSoundInternal             :     Create name='D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 2237408
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 59744
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000020E2842CEC8
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='helices', format=2, channels=2, frequency=48000, lengthbytes=160576, lengthpcm=945423, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.670135.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000020E14246FE8
+[LOG] SoundI::getSubSound                      : sound 0000020E14246FE8.  Subsound index 0 / 1
+[LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 100)
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 232
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 2237408
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 59744
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000A923ADEF4C
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFC2764E4B0
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFC2764E480
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFC2764E580
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFC2764E640
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0000020E1141EE48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='impacto al cuerpo 1_2', format=2, channels=2, frequency=48000, lengthbytes=6976, lengthpcm=52083, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.461904.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 232
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 2237408
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 59744
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000A923ADEF4C
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFC2764E4B0
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFC2764E480
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFC2764E580
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFC2764E640
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0000020E1141EE48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='waterballoon', format=2, channels=2, frequency=48000, lengthbytes=26176, lengthpcm=78693, pcmblocksize=0, loopstart=0, loopend=47665, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.999969.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 232
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 2237408
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 59744
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000A923ADEF4C
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFC2764E4B0
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFC2764E480
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFC2764E580
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFC2764E640
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0000020E1141EE48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='impacto al cuerpo 1', format=2, channels=2, frequency=48000, lengthbytes=3424, lengthpcm=18851, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.644905.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 232
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 2237408
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 59744
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000A923ADEF4C
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFC2764E4B0
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFC2764E480
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFC2764E580
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFC2764E640
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0000020E1141EE48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Splash globo 4', format=2, channels=2, frequency=48000, lengthbytes=22496, lengthpcm=104768, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.707397.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 232
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 2237408
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 59744
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000A923ADEF4C
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFC2764E4B0
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFC2764E480
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFC2764E580
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFC2764E640
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0000020E1141EE48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Splash globo 3', format=2, channels=2, frequency=48000, lengthbytes=27104, lengthpcm=132632, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.778858.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 232
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 2237408
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 59744
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000A923ADEF4C
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFC2764E4B0
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFC2764E480
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFC2764E580
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFC2764E640
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0000020E1141EE48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Splash globo 2', format=2, channels=2, frequency=48000, lengthbytes=26112, lengthpcm=118143, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.826429.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 232
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 2237408
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 59744
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000A923ADEF4C
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFC2764E4B0
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFC2764E480
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFC2764E580
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFC2764E640
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0000020E1141EE48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='impacto al cuerpo 1_1', format=2, channels=2, frequency=48000, lengthbytes=3424, lengthpcm=18851, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.644905.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 232
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 2237408
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 59744
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000A923ADEF4C
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFC2764E4B0
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFC2764E480
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFC2764E580
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFC2764E640
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0000020E1141EE48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Splash globo 1', format=2, channels=2, frequency=48000, lengthbytes=23584, lengthpcm=105882, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.881827.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 232
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 2237408
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 59744
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000A923ADEF4C
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFC2764E4B0
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFC2764E480
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFC2764E580
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFC2764E640
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0000020E1141EE48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Splash globo 5', format=2, channels=2, frequency=48000, lengthbytes=24384, lengthpcm=117028, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.679591.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 232
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 2237408
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 59744
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000A923ADEF4C
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFC2764E4B0
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFC2764E480
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFC2764E580
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFC2764E640
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0000020E1141EE48
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='impacto al cuerpo 1_3', format=2, channels=2, frequency=48000, lengthbytes=6976, lengthpcm=52083, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.461904.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 232
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 2237408
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 59744
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000A923ADEF4C
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFC2764E4B0
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFC2764E480
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFC2764E580
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFC2764E640
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0000020E4B2378B8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='puerta abierto', format=2, channels=2, frequency=48000, lengthbytes=20096, lengthpcm=68261, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.641846.
+[LOG] SystemI::createSound                     : filename = D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0000020E2AC83548 : node = 0000020E141E7D80
+[LOG] SystemI::createSound                     : add node to async list : head = 0000020E0A7A5858.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000020E2AC83548
+[LOG] SystemI::createSoundInternal             :     Create name='D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 2237408
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 59744
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000020E141E7E98
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='helices', format=2, channels=2, frequency=48000, lengthbytes=160576, lengthpcm=945423, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.670135.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000020E2AC83548
+[LOG] SoundI::getSubSound                      : sound 0000020E2AC83548.  Subsound index 0 / 1
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 232
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 2237408
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 59744
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000A923ADEF4C
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFC2764E4B0
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFC2764E480
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFC2764E580
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFC2764E640
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 0000020E60DF5808
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='puerta cerrado', format=2, channels=2, frequency=48000, lengthbytes=17696, lengthpcm=65321, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.988464.
+[LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 100)
+[LOG] SystemI::createSound                     : filename = D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0000020E2AC83F68 : node = 0000020E141E7840
+[LOG] SystemI::createSound                     : add node to async list : head = 0000020E0A7A5858.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000020E2AC83F68
+[LOG] SystemI::createSoundInternal             :     Create name='D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 2237408
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 59744
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000020E141E7958
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='helices', format=2, channels=2, frequency=48000, lengthbytes=160576, lengthpcm=945423, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.670135.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000020E2AC83F68
+[LOG] SoundI::getSubSound                      : sound 0000020E2AC83F68.  Subsound index 0 / 1
+[LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 100)
+[LOG] SoundI::release                          : helices (0000020E14246FE8)
+[LOG] SoundI::release                          :     helices (0000020E796FA3E8)
+[LOG] SoundI::release                          :     helices (0000020E2AC83C08)
+[LOG] SystemI::createSound                     : filename = D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0000020E2ACC5FE8 : node = 0000020E01E68F40
+[LOG] SystemI::createSound                     : add node to async list : head = 0000020E0A7A5858.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000020E2ACC5FE8
+[LOG] SystemI::createSoundInternal             :     Create name='D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 2237408
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 59744
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000020E01E69058
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='helices', format=2, channels=2, frequency=48000, lengthbytes=160576, lengthpcm=945423, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.670135.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000020E2ACC5FE8
+[LOG] SoundI::getSubSound                      : sound 0000020E2ACC5FE8.  Subsound index 0 / 1
+[LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 100)
+[LOG] SoundI::release                          : helices (0000020E2AC83548)
+[LOG] SoundI::release                          :     helices (0000020E796FA8C8)
+[LOG] SoundI::release                          :     helices (0000020E2ADD6B68)
+[LOG] SystemI::createSound                     : filename = D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0000020E72A5DAD8 : node = 0000020E106C8230
+[LOG] SystemI::createSound                     : add node to async list : head = 0000020E0A7A5858.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000020E72A5DAD8
+[LOG] SystemI::createSoundInternal             :     Create name='D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 2237408
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 59744
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000020E106C8348
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='helices', format=2, channels=2, frequency=48000, lengthbytes=160576, lengthpcm=945423, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.670135.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000020E72A5DAD8
+[LOG] SoundI::getSubSound                      : sound 0000020E72A5DAD8.  Subsound index 0 / 1
+[LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 100)
+[LOG] SystemI::createSound                     : filename = D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0000020E72A5DC88 : node = 0000020E106C8380
+[LOG] SystemI::createSound                     : add node to async list : head = 0000020E0A7A5858.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000020E72A5DC88
+[LOG] SystemI::createSoundInternal             :     Create name='D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 2237408
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 59744
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000020E106C8498
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekposition = 8275
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='1 Tema SERIE ANIMADA', format=2, channels=2, frequency=48000, lengthbytes=724064, lengthpcm=3053824, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.944061.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000020E72A5DC88
+[LOG] SoundI::getSubSound                      : sound 0000020E72A5DC88.  Subsound index 0 / 1
+[LOG] SoundI::release                          : 1 Tema SERIE ANIMADA (0000020D8AA19A38)
+[LOG] SoundI::release                          :     1 Tema SERIE ANIMADA (0000020E796FE9C8)
+[LOG] SoundI::release                          :     1 Tema SERIE ANIMADA (0000020D8AA19528)
+[LOG] SoundI::release                          : helices (0000020E2AC83F68)
+[LOG] SoundI::release                          :     helices (0000020E796FAA68)
+[LOG] SoundI::release                          :     helices (0000020E14245F08)
 [LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 100)
 [LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 100)
+[LOG] SoundI::release                          : helices (0000020E2ACC5FE8)
+[LOG] SoundI::release                          :     helices (0000020E796FE828)
+[LOG] SoundI::release                          :     helices (0000020E2ADD6D18)
 [LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 100)
-[LOG] SoundI::release                          : 1 Tema SERIE ANIMADA (0000020E141E9908)
-[LOG] SoundI::release                          :     1 Tema SERIE ANIMADA (0000020D85C25B18)
-[LOG] SoundI::release                          :     1 Tema SERIE ANIMADA (0000020E141EBE28)
-[LOG] SoundI::release                          : Ambiente (0000020E141EAD48)
-[LOG] SoundI::release                          :     Ambiente (0000020D85C25CB8)
-[LOG] SoundI::release                          :     Ambiente (0000020E141EC188)
-[LOG] SoundI::release                          : Ambiente (0000020E141EB0A8)
-[LOG] SoundI::release                          :     Ambiente (0000020D85C24E18)
-[LOG] SoundI::release                          :     Ambiente (0000020E141EB408)
-[LOG] SoundI::release                          :  (0000020DDCAAB498)
-[LOG] SoundI::release                          :     Resortera estira 4 (0000020D85C264D8)
-[LOG] SoundI::release                          :  (0000020E14137DF8)
-[LOG] SoundI::release                          :     Resortera estira 3 (0000020D85C27518)
+[LOG] SoundI::release                          : helices (0000020E72A5DAD8)
+[LOG] SoundI::release                          :     helices (0000020E796FB5C8)
+[LOG] SoundI::release                          :     helices (0000020E72A5D778)
+[LOG] SystemI::createSound                     : filename = D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0000020E27E80088 : node = 0000020E141DB950
+[LOG] SystemI::createSound                     : add node to async list : head = 0000020E0A7A5858.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000020E27E80088
+[LOG] SystemI::createSoundInternal             :     Create name='D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 2237408
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 59744
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000020E141DBA68
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='helices', format=2, channels=2, frequency=48000, lengthbytes=160576, lengthpcm=945423, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.670135.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000020E27E80088
+[LOG] SoundI::getSubSound                      : sound 0000020E27E80088.  Subsound index 0 / 1
+[LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 100)
+[LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 100)
+[LOG] SystemI::createSound                     : filename = D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0000020E14249508 : node = 0000020E2842C090
+[LOG] SystemI::createSound                     : add node to async list : head = 0000020E0A7A5858.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000020E14249508
+[LOG] SystemI::createSoundInternal             :     Create name='D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 2237408
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 59744
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000020E2842C1A8
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='helices', format=2, channels=2, frequency=48000, lengthbytes=160576, lengthpcm=945423, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.670135.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000020E14249508
+[LOG] SoundI::getSubSound                      : sound 0000020E14249508.  Subsound index 0 / 1
+[LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 100)
+[LOG] SystemI::createSound                     : filename = D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0000020E72A5D5C8 : node = 0000020E106C80E0
+[LOG] SystemI::createSound                     : add node to async list : head = 0000020E0A7A5858.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000020E72A5D5C8
+[LOG] SystemI::createSoundInternal             :     Create name='D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 2237408
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 59744
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000020E106C81F8
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekposition = 8275
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='1 Tema SERIE ANIMADA', format=2, channels=2, frequency=48000, lengthbytes=724064, lengthpcm=3053824, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.944061.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000020E72A5D5C8
+[LOG] SoundI::getSubSound                      : sound 0000020E72A5D5C8.  Subsound index 0 / 1
+[LOG] SoundI::release                          : 1 Tema SERIE ANIMADA (0000020E72A5DC88)
+[LOG] SoundI::release                          :     1 Tema SERIE ANIMADA (0000020E796FEB68)
+[LOG] SoundI::release                          :     1 Tema SERIE ANIMADA (0000020E27E803E8)
+[LOG] SoundI::release                          : helices (0000020E27E80088)
+[LOG] SoundI::release                          :     helices (0000020E796FED08)
+[LOG] SoundI::release                          :     helices (0000020E2AC838A8)
+[LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 100)
+[LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 100)
+[LOG] SoundI::release                          : helices (0000020E14249508)
+[LOG] SoundI::release                          :     helices (0000020E796FAC08)
+[LOG] SoundI::release                          :     helices (0000020E27E80238)
+[LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 100)
+[LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 100)
+[LOG] SoundI::release                          : 1 Tema SERIE ANIMADA (0000020E72A5D5C8)
+[LOG] SoundI::release                          :     1 Tema SERIE ANIMADA (0000020E796FDB28)
+[LOG] SoundI::release                          :     1 Tema SERIE ANIMADA (0000020E14249358)
+[LOG] SoundI::release                          : Ambiente (0000020D88F83798)
+[LOG] SoundI::release                          :     Ambiente (0000020D897F4828)
+[LOG] SoundI::release                          :     Ambiente (0000020E14248E48)
+[LOG] SoundI::release                          : Ambiente (0000020D88F83CA8)
+[LOG] SoundI::release                          :     Ambiente (0000020E0A7A7928)
+[LOG] SoundI::release                          :     Ambiente (0000020E14246C88)
+[LOG] SoundI::release                          :  (0000020E0197B9B8)
+[LOG] SoundI::release                          :     puerta abierto (0000020E796FCE28)
+[LOG] SoundI::release                          :  (0000020E0197EA98)
+[LOG] SoundI::release                          :     impacto al cuerpo 1 (0000020E796FDE68)
+[LOG] SoundI::release                          :  (0000020E0197D958)
+[LOG] SoundI::release                          :     impacto al cuerpo 1_1 (0000020E796F9A28)
+[LOG] SoundI::release                          :  (0000020E0197C258)
+[LOG] SoundI::release                          :     impacto al cuerpo 1_2 (0000020E796FA728)
+[LOG] SoundI::release                          :  (0000020E0197E4D8)
+[LOG] SoundI::release                          :     impacto al cuerpo 1_3 (0000020E796FD648)
+[LOG] SoundI::release                          :  (0000020E0197D7E8)
+[LOG] SoundI::release                          :     puerta cerrado (0000020E796FE1A8)
+[LOG] SoundI::release                          :  (0000020E0197B848)
+[LOG] SoundI::release                          :     waterballoon (0000020E796FDCC8)
+[LOG] SoundI::release                          :  (0000020E0197E1F8)
+[LOG] SoundI::release                          :     Splash globo 1 (0000020E796FEEA8)
+[LOG] SoundI::release                          :  (0000020E0197E7B8)
+[LOG] SoundI::release                          :     Splash globo 2 (0000020E796F9D68)
+[LOG] SoundI::release                          :  (0000020E0197E088)
+[LOG] SoundI::release                          :     Splash globo 3 (0000020E796FE688)
+[LOG] SoundI::release                          :  (0000020E0197DF18)
+[LOG] SoundI::release                          :     Splash globo 4 (0000020E796F93A8)
+[LOG] SoundI::release                          :  (0000020E0197BB28)
+[LOG] SoundI::release                          :     Splash globo 5 (0000020E796FAF48)
+[LOG] SoundI::release                          :  (0000020E5369EF68)
+[LOG] SoundI::release                          :     Resortera estira 4 (0000020E0A7A82E8)
+[LOG] SoundI::release                          :  (0000020E5369D2A8)
+[LOG] SoundI::release                          :     Resortera estira 3 (0000020E0A7A7FA8)
 [LOG] Thread::callback                         : FMOD Studio update thread finished.
 [LOG] Thread::callback                         : FMOD Studio bank load thread finished.
 [LOG] Profile::disconnectAll                   : Profiler disconnecting all clients

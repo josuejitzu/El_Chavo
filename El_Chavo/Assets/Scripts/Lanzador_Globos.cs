@@ -67,8 +67,10 @@ public class Lanzador_Globos : MonoBehaviour
 
        // CalcularFuerza();
         sigDisparo = Time.time + rateDisparo;
-       // sliderDisparo.value = 0.0f;
+        // sliderDisparo.value = 0.0f;
     }
+
+   
 
     // Update is called once per frame
     void Update()
@@ -222,8 +224,9 @@ public class Lanzador_Globos : MonoBehaviour
         sliderDisparo.value = 0.0f;
         sliderDisparo.gameObject.SetActive(true);
         this.gameObject.SetActive(true);
+       // EventDispatcher.RondaTerminada += EventDispatcher_RondaTerminada;
 
-        if(posicion_elegida != null)
+        if (posicion_elegida != null)
              StartCoroutine(posicion_elegida.Abrir());
 
         disparando = true;//este setting lo reviza el manager para saber si este personaje puede lanzar
@@ -277,6 +280,8 @@ public class Lanzador_Globos : MonoBehaviour
         //  CalcularFuerza();
         //  globo_temp.GetComponent<Rigidbody>().useGravity = true;
         sliderDisparo.gameObject.SetActive(false);
+        globo_temp.transform.position = posLanzamiento.position;
+        globo_temp.transform.rotation = posLanzamiento.rotation;
         globo_temp.GetComponent<GloboControl>().ActivarGlobo();
         globo_temp.GetComponent<GloboControl>().posFinal = objetivo.transform.position;
         globo_temp.GetComponent<GloboControl>().objetivo = objetivo.transform;
@@ -286,6 +291,8 @@ public class Lanzador_Globos : MonoBehaviour
       //  globo_temp.GetComponent<Rigidbody>().velocity = velocidadCalculada;
 
         globo_temp.GetComponent<GloboControl>().trigger.enabled = true;
+        globo_temp = null;
+
         StartCoroutine(TerminoDisparo());
     }
 
@@ -293,9 +300,8 @@ public class Lanzador_Globos : MonoBehaviour
     {
         print("Lanzador " + this.transform.name + " termino disparo...Desactivando...");
         sliderDisparo.gameObject.SetActive(false);
-        yield return new WaitForSeconds(0.5f);//tiempo de terminaicon de abanico
-        if(posicion_elegida != null)
-        StartCoroutine(posicion_elegida.Cerrar());
+        yield return new WaitForSeconds(0.7f);//tiempo de terminaicon de abanico
+       
 
         //iniciar animacion de personaje escondiendose
         if (chavo.activeInHierarchy)
@@ -305,6 +311,9 @@ public class Lanzador_Globos : MonoBehaviour
             personajeActivo.GetComponent<Animator>().SetTrigger("agacharse");
         }
         globo_temp = null;
+
+        if (posicion_elegida != null)
+            StartCoroutine(posicion_elegida.Cerrar());
         yield return new WaitForSeconds(2.0f);//lo que dure la animacion de esconido + 0.2f
         disparando = false;
         sliderDisparo.value = 0.0f;
@@ -414,22 +423,27 @@ public class Lanzador_Globos : MonoBehaviour
 
     }
 
-
+    private void EventDispatcher_RondaTerminada()
+    {
+        StartCoroutine(DesactivarLanzador());
+    }
     public IEnumerator DesactivarLanzador()//Para terminar el nivel
     {
+        EventDispatcher.RondaTerminada -= EventDispatcher_RondaTerminada;
         print("Lanzador " + this.transform.name + " Desactivando por cambio de nivel...");
         disparando = false;
         this.StopAllCoroutines();
         colider.enabled = false;
 
         DesactivarGlobo();
-        StartCoroutine(posicion_elegida.Cerrar());
+      //  StartCoroutine(posicion_elegida.Cerrar());//ATENCION:probando eventdispatcher
 
-        foreach (GameObject g in globos)
-        {
-          //  if (g.activeInHierarchy)
-                g.SetActive(false);
-        }
+        //ATENCION: Intentando el EventDispatcher.cs
+        //foreach (GameObject g in globos)
+        //{
+        //  //  if (g.activeInHierarchy)
+        //        g.SetActive(false);
+        //}
       
         sliderDisparo.value = 0.0f;
         print("Lanzador " + this.transform.name + " Desactivado...");
@@ -449,6 +463,7 @@ public class Lanzador_Globos : MonoBehaviour
         enMira = true;
         mira_ui.SetActive(true);
     }
+
     public void QuitarMira()
     {
         enMira = false;

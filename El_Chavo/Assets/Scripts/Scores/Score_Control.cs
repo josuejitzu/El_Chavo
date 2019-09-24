@@ -54,6 +54,27 @@ public class Score_Control : MonoBehaviour
     public GameObject panelNombre;
     public TMP_InputField nombre_input;
 
+    [Header("UIX Ronda")]
+    public TMP_Text ronda_text;
+    public TMP_Text siguienteRonda_text;
+    public TMP_Text rondaFinal_text;
+    public TMP_Text scoreEnRonda_text;
+    public TMP_Text scoreFinal_text;
+    public GameObject canvasJuego;
+    public GameObject canvasSiguienteRonda;
+    public GameObject canvasFinJuego;
+
+    [Header("UIX-Operador")]
+    public TMP_Text rondaOperador_txt;
+    public TMP_Text tiempoRonda_txt;
+    public Slider vidaSlider_operador;
+
+    int scoreJugador;
+    int scoreLerp;
+
+
+     MasterLevel _master;
+
     private void Awake()
     {
         _score = this;
@@ -62,7 +83,45 @@ public class Score_Control : MonoBehaviour
     void Start()
     {
         BajarScore();
+        _master = FindObjectOfType<MasterLevel>();
+
+        EventDispatcher.RondaTerminada += EventDispatcher_RondaTerminada;
     }
+    private void FixedUpdate()
+    {
+        if (canvasJuego.activeInHierarchy)
+        {
+            if (scoreLerp < scoreJugador)
+                scoreLerp += 10;
+
+
+            scoreEnRonda_text.text = scoreLerp.ToString("0000");
+        }
+    }
+    private void EventDispatcher_RondaTerminada()
+    {
+       
+    }
+
+    public void MostrarFinRonda()
+    {
+        ronda_text.text = (_master.rondaNum + 1).ToString("00");//iniciando en 0 da 
+        canvasJuego.SetActive(true);
+    }
+
+    public void MostrarRondaSiguiente()
+    {
+        siguienteRonda_text.text = (_master.rondaNum + 1).ToString("00");//si da 1 es 2
+        rondaOperador_txt.text = "Ronda: " + (_master.rondaNum + 1).ToString("00");
+        canvasSiguienteRonda.SetActive(true);
+    }
+    public void MostrarFinJuego()
+    {
+        scoreFinal_text.text = "Score: " + _master.scoreJugador.ToString("0000") + "    " + "Ronda: " + (_master.rondaNum + 1).ToString("00");
+        canvasFinJuego.SetActive(true);
+
+    }
+
     /// <summary>
     /// Llamado al final del juego para saber si necesitamos anotar un nuevo score
     /// </summary>

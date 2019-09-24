@@ -38,6 +38,7 @@ public class DonRamon_Debuff : MonoBehaviour
 
     public void ActivarDebuff()
     {
+        EventDispatcher.RondaTerminada += Reiniciar;
         randomRotacion = RandomAxis();
         EncontrarPosicion();
 
@@ -90,13 +91,12 @@ public class DonRamon_Debuff : MonoBehaviour
            this.transform.parent = padre.transform;
 
         mover = false;
+        EventDispatcher.RondaTerminada -= Reiniciar;
+
         this.gameObject.SetActive(false);
 
     }
-    public void GolpeadoPorJugador()
-    {
 
-    }
 
     Vector3 RandomAxis()
     {

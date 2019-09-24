@@ -42,12 +42,18 @@ public class PowerUp_Control : MonoBehaviour
     {
         _powerUps = this;
 
+        EventDispatcher.RondaTerminada += EventDispatcher_RondaTerminada;
 
         explosivaPU._tipoMunicion = MunicionTipo.Explosiva;
         autonomaPU._tipoMunicion = MunicionTipo.Autonoma;
         automaticaPU._tipoMunicion = MunicionTipo.Automatica;
 
 
+    }
+
+    private void EventDispatcher_RondaTerminada()
+    {
+        StartCoroutine(CancelarPowerUP());
     }
 
     // Update is called once per frame
@@ -170,7 +176,7 @@ public class PowerUp_Control : MonoBehaviour
     }
     /// <summary>
     /// Se llama con el globo de Don Ramon o Sus Debufs para quitarle
-    /// el powerUp al Jugador
+    /// el powerUp al Jugador, Tambien si termina la Ronda o se daña al jugador con un globo
     /// </summary>
     /// <returns></returns>
     public IEnumerator CancelarPowerUP()

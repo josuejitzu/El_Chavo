@@ -17,8 +17,9 @@ public class PowerUP : MonoBehaviour
     public TMP_Text tipo_text;
     [Header("SFX")]
     public StudioEventEmitter powerActivo_sfx;
-   
 
+    public ParticleSystem humo_vfx;
+    GameObject meshActiva;
     private void OnValidate()
     {
         CambiarMesh();
@@ -46,6 +47,7 @@ public class PowerUP : MonoBehaviour
         EventDispatcher.RondaTerminada += DesactivarLetrero;
         //Animacion?
         this.gameObject.SetActive(true);
+        humo_vfx.Play();
         powerActivo_sfx.Play();
         trigger.enabled = true;
         contarTiempo = true;
@@ -83,6 +85,8 @@ public class PowerUP : MonoBehaviour
         Resortera_Control._resortera.ActivarPowerUp(_tipoMunicion);
         //Animacion salida?
         StartCoroutine(PowerUp_Control._powerUps.DesactivacionPowerUP());
+        humo_vfx.Play();
+        meshActiva.SetActive(false);
         yield return new WaitForSeconds(1.5f);
         this.gameObject.SetActive(false);
 
@@ -95,6 +99,8 @@ public class PowerUP : MonoBehaviour
         contarTiempo = false;
         powerActivo_sfx.Stop();
         trigger.enabled = false;
+        humo_vfx.Play();
+        meshActiva.SetActive(false);
         yield return new WaitForSeconds(1.0f);
         PowerUp_Control._powerUps.comboLetrero.SetActive(false);
         EventDispatcher.RondaTerminada -= DesactivarLetrero;
@@ -120,12 +126,14 @@ public class PowerUP : MonoBehaviour
         {
             meshExplosivo.SetActive(true);
             tipo_text.text = "Explosivo";
+            meshActiva = meshExplosivo;
             this.transform.name = "PowerUP_Explosivo";
         }
         else if (_tipoMunicion == MunicionTipo.Automatica)
         {
             meshAutomatica.SetActive(true);
             tipo_text.text = "Automatica";
+            meshActiva = meshAutomatica;
             this.transform.name = "PowerUP_Automatica";
         }
         else if (_tipoMunicion == MunicionTipo.Autonoma)
@@ -133,6 +141,7 @@ public class PowerUP : MonoBehaviour
 
             meshAutonoma.SetActive(true);
             tipo_text.text = "Autonoma";
+            meshActiva = meshAutonoma;
             this.transform.name = "PowerUP_Autonoma";
         }
     }

@@ -5128,7 +5128,7 @@ Light:
     m_CustomResolution: -1
     m_Strength: 1
     m_Bias: 0
-    m_NormalBias: 0.33
+    m_NormalBias: 0.6
     m_NearPlane: 0.1
     m_CullingMatrixOverride:
       e00: 1
@@ -8548,6 +8548,7 @@ MonoBehaviour:
   rondaOperador_txt: {fileID: 1529233094}
   tiempoRonda_txt: {fileID: 944407118}
   vidaSlider_operador: {fileID: 1294504262}
+  scoreJugador: 0
 --- !u!1001 &522135536
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44979,6 +44980,28 @@ PrefabInstance:
       propertyPath: mano
       value: 
       objectReference: {fileID: 893318250}
+    - target: {fileID: 1620996588387103482, guid: 1e17ad83c8ea6474db7a036d17923668,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: bdde0301763943c48879adf6ce95df37,
+        type: 2}
+    - target: {fileID: 1620996588387103482, guid: 1e17ad83c8ea6474db7a036d17923668,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5681645036170368499, guid: bdde0301763943c48879adf6ce95df37,
+        type: 2}
+    - target: {fileID: 1620996588387103482, guid: 1e17ad83c8ea6474db7a036d17923668,
+        type: 3}
+      propertyPath: m_firstOverflowCharacterIndex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1620996588387103482, guid: 1e17ad83c8ea6474db7a036d17923668,
+        type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1620996588437193524, guid: 1e17ad83c8ea6474db7a036d17923668,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -45048,6 +45071,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1620996588387103483, guid: 1e17ad83c8ea6474db7a036d17923668,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.753
       objectReference: {fileID: 0}
     - target: {fileID: 1620996588575342276, guid: 1e17ad83c8ea6474db7a036d17923668,
         type: 3}
@@ -46687,9 +46715,9 @@ MeshRenderer:
   m_GameObject: {fileID: 2367719459223396683}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 0
+  m_MotionVectors: 2
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 1
@@ -49603,7 +49631,7 @@ MeshRenderer:
   m_GameObject: {fileID: 2315332620002219039}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1

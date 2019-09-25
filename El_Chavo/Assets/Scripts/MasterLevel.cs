@@ -16,8 +16,10 @@ public class MasterLevel : MonoBehaviour
     public float vidaMax = 200.0f;
     public float vidaJugador = 0.0f;
     public Slider vidaSlider;
+    public Image vidaCirculo;
     public float velocidadLlenado;
     public bool inmortal;
+    public Sprite[] circulosVida;
 
     [Header("LetreroInicio")]
     public GameObject letroInicio;
@@ -277,10 +279,18 @@ public class MasterLevel : MonoBehaviour
         vidaJugador += cantidad;
         numCombo_text.text = "x" + numCombo.ToString("00");
 
+
+        int pie = Mathf.FloorToInt((vidaJugador / vidaMax) * 10);
+
+        print(pie);
+        if (pie <= circulosVida.Length)
+            vidaCirculo.sprite = circulosVida[pie];
+
         if (vidaJugador >= vidaMax)
         {
             if (inmortal)
                 return;
+            vidaCirculo.sprite = circulosVida[10];
             StartCoroutine(FinJuego());
             return;
         }

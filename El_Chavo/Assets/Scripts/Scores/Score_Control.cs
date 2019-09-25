@@ -106,6 +106,7 @@ public class Score_Control : MonoBehaviour
     public void MostrarFinRonda()
     {
         ronda_text.text = (_master.rondaNum + 1).ToString("00");//iniciando en 0 da 
+        scoreEnRonda_text.text = _master.scoreJugador.ToString("0000");
         canvasJuego.SetActive(true);
     }
 

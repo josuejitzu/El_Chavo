@@ -88,8 +88,7 @@ public class MasterLevel : MonoBehaviour
         //masterlevel = this;  
         // musicaTitulo.Play();
         contarCombo = true;
-
-        letroInicio.SetActive(true);
+        StartCoroutine(PreJuego());
     }
 
     // Update is called once per frame
@@ -134,6 +133,16 @@ public class MasterLevel : MonoBehaviour
     //    }
     //}
 
+        /// <summary>
+        /// Donde se puede pedir cargar ciertas cosas antes de que Inicie el Juego
+        /// </summary>
+        /// <returns></returns>
+    IEnumerator PreJuego()
+    {
+        yield return new WaitForSeconds(3.0f);
+        letroInicio.SetActive(true);
+
+    }
     public void IniciarJuegoCall()
     {
         if (jugando)//evitar duplicados de inicio

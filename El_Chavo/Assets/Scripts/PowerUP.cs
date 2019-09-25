@@ -43,6 +43,7 @@ public class PowerUP : MonoBehaviour
 
     public void ActivarTablero()
     {
+        EventDispatcher.RondaTerminada += DesactivarLetrero;
         //Animacion?
         this.gameObject.SetActive(true);
         powerActivo_sfx.Play();
@@ -93,11 +94,20 @@ public class PowerUP : MonoBehaviour
         //animacion salida
         contarTiempo = false;
         powerActivo_sfx.Stop();
-
+        trigger.enabled = false;
         yield return new WaitForSeconds(1.0f);
         PowerUp_Control._powerUps.comboLetrero.SetActive(false);
+        EventDispatcher.RondaTerminada -= DesactivarLetrero;
+
         this.gameObject.SetActive(false);
         print("Tablero " + this.transform.name + " desactivado por tiempo");
+    }
+
+
+    void DesactivarLetrero()//llamado por EventDispatcher
+    {
+        StartCoroutine(ConteoDesactivacion());
+
     }
 
     void CambiarMesh()

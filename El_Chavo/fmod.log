@@ -8,7 +8,7 @@
 [LOG] Thread::initThread                       : Init FMOD stream thread. Priority: 2, Stack Size: 65536, Semaphore: No, Sleep Time: 10, Looping: Yes.
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] Thread::initThread                       : Init FMOD mixer thread. Priority: 3, Stack Size: 49152, Semaphore: No, Sleep Time: 0, Looping: Yes.
-[LOG] AsyncManager::init                       : manager 0000020D9853C4B8 isAsync 1 updatePeriod 0.02
+[LOG] AsyncManager::init                       : manager 0000025F69723348 isAsync 1 updatePeriod 0.02
 [LOG] Thread::initThread                       : Init FMOD Studio update thread. Priority: 0, Stack Size: 65536, Semaphore: No, Sleep Time: 1, Looping: No.
 [LOG] AsyncManager::init                       : done
 [LOG] PlaybackSystem::init                     : 
@@ -23,85 +23,85 @@
 [LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 6
 [LOG] SystemI::createSound                     : filename = D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank : mode 02010082
 [LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] SystemI::createSound                     : setdata soundi = 0000020E347D23F8 : node = 0000020E356A7D70
-[LOG] SystemI::createSound                     : add node to async list : head = 0000020E5982A3A8.  list count = 0
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000020E347D23F8
+[LOG] SystemI::createSound                     : setdata soundi = 0000025F04A0B6A8 : node = 0000025F15437670
+[LOG] SystemI::createSound                     : add node to async list : head = 0000025F150F89C8.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000025F04A0B6A8
 [LOG] SystemI::createSoundInternal             :     Create name='D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank', mode=0x02010082
+[LOG] SystemI::createSound                     :     filename = D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank : mode 02010082
 [LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
+[LOG] SystemI::createSound                     :     FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
 [LOG] SystemI::createSoundInternal             :     exinfo->length             = 2237408
 [LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 59744
+[LOG] SystemI::createSound                     :     setdata soundi = 0000025F04A0BA08 : node = 0000025F15437280
 [LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000020E356A7E88
+[LOG] SystemI::createSound                     :     add node to async list : head = 0000025F150F89C8.  list count = 0
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000025F15437788
 [LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
 [LOG] SystemI::createSound                     :     filename = D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank : mode 02010082
 [LOG] SystemI::createSound                     :     FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] SystemI::createSound                     :     setdata soundi = 0000020E347D25A8 : node = 0000020E356A7590
-[LOG] SystemI::createSound                     :     add node to async list : head = 0000020E5982A3A8.  list count = 0
-[LOG] SystemI::createSound                     :     filename = D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank : mode 02010082
-[LOG] SystemI::createSound                     :     FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] SystemI::createSound                     :     setdata soundi = 0000020E347D2758 : node = 0000020E356A8160
-[LOG] SystemI::createSound                     :     add node to async list : head = 0000020E5982A3A8.  list count = 1
+[LOG] SystemI::createSound                     :     setdata soundi = 0000025F04A0BF18 : node = 0000025F15436950
+[LOG] SystemI::createSound                     :     add node to async list : head = 0000025F150F89C8.  list count = 1
 [LOG] SystemI::createSoundInternal             :     Create name='', mode=0x02000202
 [LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
 [LOG] SystemI::createSoundInternal             :     exinfo->length             = 2237408
 [LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 59744
 [LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000000A923EDF1CC
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000000A407F8EFBC
 [LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             :     exinfo->useropen           = 00007FFC2764E4B0
-[LOG] SystemI::createSoundInternal             :     exinfo->userclose          = 00007FFC2764E480
-[LOG] SystemI::createSoundInternal             :     exinfo->userread           = 00007FFC2764E580
-[LOG] SystemI::createSoundInternal             :     exinfo->userseek           = 00007FFC2764E640
-[LOG] SystemI::createSoundInternal             :     exinfo->fileuserdata       = 0000020D8B311F68
+[LOG] SystemI::createSoundInternal             :     exinfo->useropen           = 00007FFC60F4E4B0
+[LOG] SystemI::createSoundInternal             :     exinfo->userclose          = 00007FFC60F4E480
+[LOG] SystemI::createSoundInternal             :     exinfo->userread           = 00007FFC60F4E580
+[LOG] SystemI::createSoundInternal             :     exinfo->userseek           = 00007FFC60F4E640
+[LOG] SystemI::createSoundInternal             :     exinfo->fileuserdata       = 0000025F03B9ED88
 [LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            :     register codec pool for pool type 5
-[LOG] SystemI::createSoundInternal             :     Sample 0/1: name='Resortera estira 3', format=2, channels=2, frequency=48000, lengthbytes=54784, lengthpcm=184501, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.049266.
 [LOG] SystemI::createSoundInternal             :     Stream 0/1: name='Ambiente', format=2, channels=2, frequency=48000, lengthbytes=225952, lengthpcm=1194492, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.240051.
+[LOG] SystemI::createSoundInternal             :     Sample 0/1: name='Resortera estira 3', format=2, channels=2, frequency=48000, lengthbytes=54784, lengthpcm=184501, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.049266.
 [LOG] SystemI::createSoundInternal             :     Create name='', mode=0x02000202
 [LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
 [LOG] SystemI::createSoundInternal             :     exinfo->length             = 2237408
 [LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 59744
 [LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000000A923EDF1CC
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000000A407F8EFBC
 [LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             :     exinfo->useropen           = 00007FFC2764E4B0
-[LOG] SystemI::createSoundInternal             :     exinfo->userclose          = 00007FFC2764E480
-[LOG] SystemI::createSoundInternal             :     exinfo->userread           = 00007FFC2764E580
-[LOG] SystemI::createSoundInternal             :     exinfo->userseek           = 00007FFC2764E640
-[LOG] SystemI::createSoundInternal             :     exinfo->fileuserdata       = 0000020D8B311F68
+[LOG] SystemI::createSoundInternal             :     exinfo->useropen           = 00007FFC60F4E4B0
+[LOG] SystemI::createSoundInternal             :     exinfo->userclose          = 00007FFC60F4E480
+[LOG] SystemI::createSoundInternal             :     exinfo->userread           = 00007FFC60F4E580
+[LOG] SystemI::createSoundInternal             :     exinfo->userseek           = 00007FFC60F4E640
+[LOG] SystemI::createSoundInternal             :     exinfo->fileuserdata       = 0000025F03B9ED88
 [LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            :     register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             :     Sample 0/1: name='Resortera estira 4', format=2, channels=2, frequency=48000, lengthbytes=21248, lengthpcm=69585, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.072899.
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000020E347D23F8
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000020E347D25A8
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000025F04A0B6A8
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000025F04A0BA08
 [LOG] SystemI::createSoundInternal             :     Create name='D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank', mode=0x02010082
 [LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
 [LOG] SystemI::createSoundInternal             :     exinfo->length             = 2237408
 [LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 59744
 [LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000020E356A76A8
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000025F15437398
 [LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             :     exinfo->initialseekposition = 5800
 [LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
 [LOG] SystemI::createSoundInternal             :     Stream 0/1: name='1 Tema SERIE ANIMADA', format=2, channels=2, frequency=48000, lengthbytes=724064, lengthpcm=3053824, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.944061.
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000020E347D25A8
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000020E347D2758
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000025F04A0BA08
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000025F04A0BF18
 [LOG] SystemI::createSoundInternal             :     Create name='D:\Dropbox\el chavo vr\Build\Desktop/Master Bank.bank', mode=0x02010082
 [LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
 [LOG] SystemI::createSoundInternal             :     exinfo->length             = 2237408
 [LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 59744
 [LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000020E356A8278
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000025F15436A68
 [LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
 [LOG] SystemI::createSoundInternal             :     Stream 0/1: name='Ambiente', format=2, channels=2, frequency=48000, lengthbytes=225952, lengthpcm=1194492, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.240051.
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000020E347D2758
-[LOG] SoundI::getSubSound                      : sound 0000020E347D23F8.  Subsound index 0 / 1
-[LOG] SoundI::getSubSound                      : sound 0000020E347D2758.  Subsound index 0 / 1
-[LOG] SoundI::getSubSound                      : sound 0000020E347D25A8.  Subsound index 0 / 1
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000025F04A0BF18
+[LOG] SoundI::getSubSound                      : sound 0000025F04A0B6A8.  Subsound index 0 / 1
+[LOG] SoundI::getSubSound                      : sound 0000025F04A0BF18.  Subsound index 0 / 1
+[LOG] SoundI::getSubSound                      : sound 0000025F04A0BA08.  Subsound index 0 / 1

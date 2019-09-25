@@ -342,7 +342,8 @@ public class GloboControl : MonoBehaviour
         }else if(other.transform.tag == "MainCamera")//Le hace daño al Jugador y Explota
         {
             MasterLevel.masterlevel.DañarJugador(dañoJugador);
-            StartCoroutine(Explotar());
+            if (gameObject.activeInHierarchy)
+                StartCoroutine(Explotar());
             print(other.transform.name);
 
         }
@@ -357,7 +358,8 @@ public class GloboControl : MonoBehaviour
         if (other.transform.tag == "MainCamera")
         {
             MasterLevel.masterlevel.DañarJugador(dañoJugador);
-            StartCoroutine(Explotar());
+            if(gameObject.activeInHierarchy)
+               StartCoroutine(Explotar());
             print(other.transform.name);
 
         }

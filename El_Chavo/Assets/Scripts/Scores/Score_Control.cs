@@ -69,7 +69,7 @@ public class Score_Control : MonoBehaviour
     public TMP_Text tiempoRonda_txt;
     public Slider vidaSlider_operador;
 
-    int scoreJugador;
+    public int scoreJugador;
     int scoreLerp;
 
 
@@ -106,7 +106,7 @@ public class Score_Control : MonoBehaviour
     public void MostrarFinRonda()
     {
         ronda_text.text = (_master.rondaNum + 1).ToString("00");//iniciando en 0 da 
-        scoreEnRonda_text.text = _master.scoreJugador.ToString("0000");
+        scoreJugador = _master.scoreJugador;
         canvasJuego.SetActive(true);
     }
 

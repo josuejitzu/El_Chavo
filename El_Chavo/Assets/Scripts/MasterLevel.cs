@@ -283,13 +283,14 @@ public class MasterLevel : MonoBehaviour
         int pie = Mathf.FloorToInt((vidaJugador / vidaMax) * 10);
 
         print(pie);
-        if (pie <= circulosVida.Length)
+        if (pie < circulosVida.Length)
             vidaCirculo.sprite = circulosVida[pie];
 
         if (vidaJugador >= vidaMax)
         {
             if (inmortal)
                 return;
+
             vidaCirculo.sprite = circulosVida[10];
             StartCoroutine(FinJuego());
             return;

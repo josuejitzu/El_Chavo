@@ -219,7 +219,7 @@ public class MasterLevel : MonoBehaviour
         Score_Control._score.canvasSiguienteRonda.SetActive(false);
 
         numCombo = 0;
-        numCombo_text.text = "x" + numCombo.ToString("00");
+        numCombo_text.text = "Combo x" + numCombo.ToString("00");
         // StartCoroutine(IniciarJuego());
 
         ///Lanza los parametros y comienza la siguiente Ronda
@@ -277,7 +277,7 @@ public class MasterLevel : MonoBehaviour
 
 
         vidaJugador += cantidad;
-        numCombo_text.text = "x" + numCombo.ToString("00");
+        numCombo_text.text = "Combo x" + numCombo.ToString("00");
 
 
         int pie = Mathf.FloorToInt((vidaJugador / vidaMax) * 10);

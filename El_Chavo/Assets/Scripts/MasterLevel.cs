@@ -17,6 +17,7 @@ public class MasterLevel : MonoBehaviour
     public float vidaJugador = 0.0f;
     public Slider vidaSlider;
     public Image vidaCirculo;
+    public Image vidaCirculo_Operador;
     public float velocidadLlenado;
     public bool inmortal;
     public Sprite[] circulosVida;
@@ -80,6 +81,8 @@ public class MasterLevel : MonoBehaviour
     public GameObject consolaPanel;
     public GameObject panelOperador;
     public GameObject botonAbrir;
+    [Range(0.0f, 3.0f)]
+    public float tiempoVelocidad = 1.0f;
 
     private void Awake()
     {
@@ -91,12 +94,14 @@ public class MasterLevel : MonoBehaviour
         // musicaTitulo.Play();
         contarCombo = true;
         StartCoroutine(PreJuego());
+
+        EventDispatcher.RondaTerminada += ResetearCombo;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        Time.timeScale = tiempoVelocidad;
         vidaSlider.value = Mathf.MoveTowards(vidaSlider.value, vidaJugador, Time.deltaTime * velocidadLlenado);
         vidaSlider_operador.value = vidaSlider.value;
 
@@ -197,7 +202,6 @@ public class MasterLevel : MonoBehaviour
 
         LanzamientosControl._lanzamientos.disparar = false;
         LanzamientosControl._lanzamientos.DesactivarLanzadores();//Se intento llamar con eventdispatcher pero la logica no funciono
-
         Score_Control._score.MostrarFinRonda();
         yield return new WaitForSeconds(3.0f);
         Score_Control._score.canvasJuego.SetActive(false);// canvasJuego.SetActive(false);
@@ -271,20 +275,27 @@ public class MasterLevel : MonoBehaviour
         jugadorGolpeado_sfx.Play();
 
         if (!inmortal)
+        {
+
             numCombo = 0;
+            numCombo_text.text = "Combo x" + numCombo.ToString("00");
+
+        }
 
         StartCoroutine(PowerUp_Control._powerUps.CancelarPowerUP());
 
 
         vidaJugador += cantidad;
-        numCombo_text.text = "Combo x" + numCombo.ToString("00");
 
 
         int pie = Mathf.FloorToInt((vidaJugador / vidaMax) * 10);
 
-        print(pie);
+       // print(pie);
         if (pie < circulosVida.Length)
+        {
             vidaCirculo.sprite = circulosVida[pie];
+            vidaCirculo_Operador.sprite = circulosVida[pie];
+        }
 
         if (vidaJugador >= vidaMax)
         {
@@ -292,6 +303,8 @@ public class MasterLevel : MonoBehaviour
                 return;
 
             vidaCirculo.sprite = circulosVida[10];
+            vidaCirculo_Operador.sprite = circulosVida[10];
+
             StartCoroutine(FinJuego());
             return;
         }
@@ -362,10 +375,16 @@ public class MasterLevel : MonoBehaviour
     }
 
 
-
+    public void ResetearCombo()
+    {
+        numCombo = 0;
+        numCombo_text.gameObject.SetActive(true);
+        numCombo_text.text = "Combo x" + numCombo.ToString("00");
+        contarCombo = true;
+    }
 
     #region Consola
-    void ToggleConsola()
+    private void ToggleConsola()
     {
         if(consolaPanel.activeInHierarchy)
         {
@@ -381,7 +400,7 @@ public class MasterLevel : MonoBehaviour
     /// <summary>
     /// Todos estos comandos solo se activan si se esta presionando ctrl + la tecla del comando
     /// </summary>
-    void ComandosConsola()
+    private void ComandosConsola()
     {
 
         if (Input.GetKeyDown(teclaIniciar))

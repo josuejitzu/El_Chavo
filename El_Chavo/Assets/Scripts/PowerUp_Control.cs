@@ -58,12 +58,7 @@ public class PowerUp_Control : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (Input.GetKeyUp(KeyCode.P))
-        //{
-        //    // ActivarPowerUp();
-        //    Resortera_Control._resortera.ActivarPowerUp(MunicionTipo.Explosiva);
-        //    StartCoroutine(DesactivacionPowerUP());
-        //}
+        
         if(conteoPowerUp)
         {
             slidePower.value = Mathf.MoveTowards(slidePower.value, 0.0f, Time.deltaTime);
@@ -98,7 +93,7 @@ public class PowerUp_Control : MonoBehaviour
       //  StartCoroutine(DesactivacionPowerUP());
     }
 
-    void SeleccionarPU()
+    private void SeleccionarPU()
     {
 
 
@@ -133,7 +128,7 @@ public class PowerUp_Control : MonoBehaviour
 
     }
 
-    int PosRand()
+    private int PosRand()
     {
         int r = Random.Range(0, posicionesPU.Length);
         while(r == posAnterior)
@@ -168,7 +163,8 @@ public class PowerUp_Control : MonoBehaviour
         conteoPowerUp = false;
         slidePower.gameObject.SetActive(false);
         Resortera_Control._resortera.ActivarPowerUp(MunicionTipo.Normal);
-        MasterLevel.masterlevel.numCombo_text.gameObject.SetActive(true);
+        MasterLevel.masterlevel.ResetearCombo();
+        
 
         print("Se pidio desactivar powerUP por Tiempo");
 

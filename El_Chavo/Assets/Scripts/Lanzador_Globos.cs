@@ -245,8 +245,8 @@ public class Lanzador_Globos : MonoBehaviour
                                     
         ActivarGlobo();
 
-        if(chavo.activeInHierarchy)
-            chavo.GetComponent<Animator>().SetTrigger("preparar");
+        //if(chavo.activeInHierarchy)
+        //    chavo.GetComponent<Animator>().SetTrigger("preparar");
 
         if(personajeActivo.GetComponent<Animator>())
         {
@@ -255,8 +255,8 @@ public class Lanzador_Globos : MonoBehaviour
 
         yield return new WaitForSeconds(tiempoEsperaDisparo);
 
-        if (chavo.activeInHierarchy)
-            chavo.GetComponent<Animator>().SetTrigger("disparar");
+        //if (chavo.activeInHierarchy)
+        //    chavo.GetComponent<Animator>().SetTrigger("disparar");
 
         if (personajeActivo.GetComponent<Animator>())
         {
@@ -304,8 +304,8 @@ public class Lanzador_Globos : MonoBehaviour
        
 
         //iniciar animacion de personaje escondiendose
-        if (chavo.activeInHierarchy)
-            chavo.GetComponent<Animator>().SetTrigger("agacharse");
+        //if (chavo.activeInHierarchy)
+        //    chavo.GetComponent<Animator>().SetTrigger("agacharse");
         if (personajeActivo.GetComponent<Animator>())
         {
             personajeActivo.GetComponent<Animator>().SetTrigger("agacharse");
@@ -321,7 +321,7 @@ public class Lanzador_Globos : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    void CambiarPersonaje(TipoPersonaje t)
+    private void CambiarPersonaje(TipoPersonaje t)
     {
         chavo.SetActive(false);
         kiko.SetActive(false);
@@ -379,6 +379,8 @@ public class Lanzador_Globos : MonoBehaviour
         }
 
         personajeActivo.SetActive(true);
+        sliderDisparo.maxValue = tiempoEsperaDisparo;
+
         this.transform.name = t.ToString();
     }
 

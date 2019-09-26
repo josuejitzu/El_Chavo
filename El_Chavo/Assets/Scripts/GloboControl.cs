@@ -350,7 +350,7 @@ public class GloboControl : MonoBehaviour
             if (gameObject.activeInHierarchy)
                 StartCoroutine(Explotar());
 
-            print(other.transform.name);
+            print(this.transform.name +" golpeo "+other.transform.name);
 
         }
         else

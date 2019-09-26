@@ -793,7 +793,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b3fe7cf45d90b146880b7c8fac25bf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tipoPersonaje: 3
+  _tipoPersonaje: 0
   rigid: {fileID: 8142929022319372898}
   colider: {fileID: 2810921329156439630}
   globo_prefab: {fileID: 6460438437991827949, guid: a6428a03d2f18bc448103a133c513c40,
@@ -808,21 +808,21 @@ MonoBehaviour:
   poppy: {fileID: 8243466799629647842}
   "do\xF1aFlorinda": {fileID: 4612863913716219294}
   donRamon: {fileID: 2546920519173479516}
-  personajeActivo: {fileID: 5262292784585663372}
+  personajeActivo: {fileID: 404344764494440732}
   globoChavoDummy: {fileID: 7055698544160584204}
   globokiko_dummy: {fileID: 484259070619944664}
   "globo\xF1o\xF1o_dummy": {fileID: 2007006834002051752}
   globopoppy_dummy: {fileID: 2605654779892835350}
   globoramon_dummy: {fileID: 7732046621148699298}
   globoflorinda_dummy: {fileID: 6838477896683040971}
-  globoDummyActivo: {fileID: 2007006834002051752}
+  globoDummyActivo: {fileID: 7055698544160584204}
   posicion_elegida: {fileID: 0}
   velocidad: 2
   objetivo: {fileID: 0}
   velocidadRotacion: 10
   velocidadCalculada: {x: 0, y: 0, z: 0}
   anguloLanzamiento: 50
-  posLanzamiento: {fileID: 8926429937157088828}
+  posLanzamiento: {fileID: 8223010286513025511}
   posLanzamiento_chavo: {fileID: 8223010286513025511}
   posLanzamientoPoppis: {fileID: 2570364139839525101}
   posLanzamientoQuico: {fileID: 3693615985778233244}
@@ -4569,7 +4569,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: cb00d54334fd8004ba80f6d5bb80645e,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: cb00d54334fd8004ba80f6d5bb80645e,
         type: 3}
@@ -11966,7 +11966,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: b2d20a50bc1ba5c4d8eab9b93aab008c,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: b2d20a50bc1ba5c4d8eab9b93aab008c,
         type: 3}

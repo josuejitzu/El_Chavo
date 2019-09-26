@@ -79,7 +79,7 @@ public class LanzamientosControl : MonoBehaviour
         {
           //  sigDisparo = Time.time + RandomRate();
             Invoke("SeleccionarLanzador", 0.5f);//Al parece aqui tenemos un problema cuando mandamos a llamar tan rapido a la misma funcion, por eso le puse un delay
-            print("No se encontro lanzador libre...buscando otro...");
+           // print("No se encontro lanzador libre...buscando otro...");
             return;
 
         }else if(lanzadores[r]._tipoPersonaje == TipoPersonaje.doñaFlorinda && conFlorinda)

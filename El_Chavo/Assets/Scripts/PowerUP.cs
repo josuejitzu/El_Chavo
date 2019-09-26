@@ -42,6 +42,9 @@ public class PowerUP : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Llamado por PowerUp_Control
+    /// </summary>
     public void ActivarTablero()
     {
         EventDispatcher.RondaTerminada += DesactivarLetrero;
@@ -104,6 +107,7 @@ public class PowerUP : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         PowerUp_Control._powerUps.comboLetrero.SetActive(false);
         EventDispatcher.RondaTerminada -= DesactivarLetrero;
+        MasterLevel.masterlevel.ResetearCombo();
 
         this.gameObject.SetActive(false);
         print("Tablero " + this.transform.name + " desactivado por tiempo");

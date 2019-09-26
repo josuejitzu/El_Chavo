@@ -25,16 +25,15 @@ public class PowerUp_Control : MonoBehaviour
     public StudioEventEmitter powerUpDesactivado_sfx;
 
 
-    private void OnDrawGizmos()
+    void OnDrawGizmos()
     {
       
-       
        Gizmos.color = new Color(1.0f,0.0f,0.0f,0.5f);
-        for (int i = 0; i < posicionesPU.Length; i++)
-        {
+       for (int i = 0; i < posicionesPU.Length; i++)
+       {
             Gizmos.DrawCube(posicionesPU[i].position, posicionesPU[i].localScale);
             posicionesPU[i].transform.name = "PosicionPU_" + i;
-        }    
+       }    
         
     }
 

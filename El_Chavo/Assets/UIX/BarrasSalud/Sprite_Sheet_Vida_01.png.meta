@@ -1,7 +1,40 @@
 fileFormatVersion: 2
 guid: ec412046a2933fd40a30a143dbd1787b
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 9114327518419077130
+    second: Sprite_Sheet_Vida_01_0
+  - first:
+      213: 661367961006851809
+    second: Sprite_Sheet_Vida_01_1
+  - first:
+      213: -2102198574901119796
+    second: Sprite_Sheet_Vida_01_2
+  - first:
+      213: 1385662570057717879
+    second: Sprite_Sheet_Vida_01_3
+  - first:
+      213: -797553520860101432
+    second: Sprite_Sheet_Vida_01_4
+  - first:
+      213: 8039696725368859229
+    second: Sprite_Sheet_Vida_01_5
+  - first:
+      213: -8056148111092867286
+    second: Sprite_Sheet_Vida_01_6
+  - first:
+      213: 6900311729437422314
+    second: Sprite_Sheet_Vida_01_7
+  - first:
+      213: -8696708120677900597
+    second: Sprite_Sheet_Vida_01_8
+  - first:
+      213: 2716788188721311628
+    second: Sprite_Sheet_Vida_01_9
+  - first:
+      213: -3372998264149091186
+    second: Sprite_Sheet_Vida_01_10
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -40,7 +73,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -80,13 +113,255 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Sprite_Sheet_Vida_01_0
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 777
+        width: 166
+        height: 238
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3537b329daf004f459a580772e913c88
+      internalID: 9114327518419077130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite_Sheet_Vida_01_1
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 777
+        width: 166
+        height: 238
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fcb3af7aa393204d8771638aaa1f32a
+      internalID: 661367961006851809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite_Sheet_Vida_01_2
+      rect:
+        serializedVersion: 2
+        x: 557
+        y: 777
+        width: 166
+        height: 238
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 946cec5996254cb4ca860d6fe509dd9c
+      internalID: -2102198574901119796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite_Sheet_Vida_01_3
+      rect:
+        serializedVersion: 2
+        x: 813
+        y: 777
+        width: 166
+        height: 238
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ce439221bd5bfb47829b3d7122e8db5
+      internalID: 1385662570057717879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite_Sheet_Vida_01_4
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 521
+        width: 166
+        height: 238
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91c59960894735647946bddec98b2f34
+      internalID: -797553520860101432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite_Sheet_Vida_01_5
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 521
+        width: 166
+        height: 238
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40137e07634cf1441b6b6230fe5f769f
+      internalID: 8039696725368859229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite_Sheet_Vida_01_6
+      rect:
+        serializedVersion: 2
+        x: 557
+        y: 521
+        width: 166
+        height: 238
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e14ba2487640f647b9fc25c10a6efaf
+      internalID: -8056148111092867286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite_Sheet_Vida_01_7
+      rect:
+        serializedVersion: 2
+        x: 813
+        y: 521
+        width: 166
+        height: 238
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d64aac755340d5e488f1856befdf92b2
+      internalID: 6900311729437422314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite_Sheet_Vida_01_8
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 265
+        width: 166
+        height: 238
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4fb449294fb169b4f8ae52c10a9318d1
+      internalID: -8696708120677900597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite_Sheet_Vida_01_9
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 265
+        width: 166
+        height: 238
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cebbd1144d4ff6241be8fc5077683adc
+      internalID: 2716788188721311628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite_Sheet_Vida_01_10
+      rect:
+        serializedVersion: 2
+        x: 557
+        y: 265
+        width: 166
+        height: 238
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e63876c0d0e1e846b4c1658b05cec6c
+      internalID: -3372998264149091186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 0666a2d6b326ea043b103cde203ec557
     internalID: 0
     vertices: []
     indices: 

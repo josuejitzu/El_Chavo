@@ -174,7 +174,7 @@ public class MasterLevel : MonoBehaviour
 
 
         numCombo = 0;
-        numCombo_text.text = "x" + numCombo.ToString("00");
+        numCombo_text.text = "Combo x" + numCombo.ToString("00");
         musicaTitulo.Stop();
         musicaJuego.Play();
         yield return new WaitForSeconds(2.0f);
@@ -314,7 +314,7 @@ public class MasterLevel : MonoBehaviour
                 numCombo_text.gameObject.SetActive(false);
                 PowerUp_Control._powerUps.ActivarPowerUp();//Activa los letreros de powerUp
             }
-            numCombo_text.text = "x" + numCombo.ToString("00");
+            numCombo_text.text = "Combo x" + numCombo.ToString("00");
 
         }
 

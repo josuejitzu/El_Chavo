@@ -15,7 +15,7 @@ public class ManoControl : MonoBehaviour
     public BoxCollider trigger;
     public Transform manoContraria;
     public float separacion;
-
+    public Animator mano_anim;
     [Space(5)]
     public SteamVR_Behaviour_Pose control;
     public SteamVR_Action_Single squeezeAction;
@@ -26,7 +26,13 @@ public class ManoControl : MonoBehaviour
     public SteamVR_Action_Vibration vibracion;
     float triggerPresion;
     public float sensibilidadTrigger;
-
+    [Space(5)]
+    [SerializeField] private float duracionVibracion = 1.0f;
+    [SerializeField] private float frequencia_hz = 150;
+    [SerializeField] private float intensidad = 0.5f;
+    [SerializeField] private float duracionVibracion_daño = 1.0f;
+    [SerializeField] private float frequencia_hz_daño = 150;
+    [SerializeField] private float intensidad_daño = 0.5f;
     [Space(10)]
     public bool sobreResortera;
     public bool conResortera;
@@ -40,13 +46,14 @@ public class ManoControl : MonoBehaviour
     public float delayDisparo = 0.7f;
     public float delayDisparoAutomatico = 0.4f;
     public bool puedeDisparar;
+    public bool puedenVibrar;
 
     void Start()
     {
 
         puedeDisparar = true;
 
-
+        EventDispatcher.JugadorGolpeado += VibrarControl;
     }
 
 
@@ -69,6 +76,12 @@ public class ManoControl : MonoBehaviour
             {
                 estirando = true;
                 manoContraria.GetComponent<ManoControl>().resortera.GetComponent<Resortera_Control>().MoverTirante(separacion * 1.3f);
+                if (puedenVibrar)
+                {
+                    vibracion.Execute(0.0f, duracionVibracion, frequencia_hz, intensidad, control.inputSource);
+                    manoContraria.GetComponent<ManoControl>().VibrarControlEstirado();
+                }
+                mano_anim.SetTrigger("municion");
 
             }
             if (conResortera)
@@ -80,8 +93,12 @@ public class ManoControl : MonoBehaviour
                     resortera.GetComponent<Resortera_Control>().Disparar();
                     puedeDisparar = false;
                     Invoke("ActivarDisparo", delayDisparoAutomatico);
+
                 }
+                //vibracion.Execute(0.0f, duracionVibracion, frequencia_hz, intensidad, control.inputSource);
+
             }
+
 
         }
 
@@ -100,6 +117,7 @@ public class ManoControl : MonoBehaviour
                 //    puedeDisparar = false;
                 //    Invoke("ActivarDisparo", delayDisparo);
                 //}
+
             }
             else if (estirando)//Si estaba estirando significa que solto la liga
             {
@@ -110,12 +128,15 @@ public class ManoControl : MonoBehaviour
                 manoContraria.GetComponent<ManoControl>().resortera.GetComponent<Resortera_Control>().estirando = false;
                 manoContraria.GetComponent<ManoControl>().resortera.GetComponent<Resortera_Control>().Disparar();
                 sobreTirante = false;
+                mano_anim.SetTrigger("abrir");
+
                 separacion = 0.0f;
                 estirando = false;
                 puedeDisparar = false;
                 Invoke("ActivarDisparo", delayDisparo);
+
             }
-               
+
         }
 
 
@@ -157,6 +178,8 @@ public class ManoControl : MonoBehaviour
         {
             if (other.GetComponent<Resortera_Control>().enMano == true)
                 return;
+
+            vibracion.Execute(0.0f, duracionVibracion, 70, intensidad, control.inputSource);
 
             sobreResortera = true;
             resortera = other.gameObject;
@@ -200,6 +223,7 @@ public class ManoControl : MonoBehaviour
 
         if (resortera.GetComponent<Resortera_Control>().enMano)
             return;
+        mano_anim.SetTrigger("resortera");
 
         resortera.GetComponent<Resortera_Control>().mano = this;
         resortera.GetComponent<Resortera_Control>().ResorteraTomada();
@@ -237,5 +261,22 @@ public class ManoControl : MonoBehaviour
         if (!sobreGlobo)
             return;
 
+    }
+
+    public void VibrarControl()
+    {
+
+        vibracion.Execute(0.0f, duracionVibracion_daño, frequencia_hz_daño, intensidad_daño, control.inputSource);
+
+    }
+    public void VibrarControlEstirado()
+    {
+        vibracion.Execute(0.0f, duracionVibracion, frequencia_hz, intensidad, control.inputSource);
+
+    }
+
+    public void VibracionActivada()
+    {
+        puedenVibrar = !puedenVibrar;
     }
 }

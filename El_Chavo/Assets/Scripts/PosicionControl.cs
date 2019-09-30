@@ -46,7 +46,7 @@ public class PosicionControl : MonoBehaviour
         ocupada = true;
         if (puertaVentana_anim == null)
         {
-            print("Esta posicion no necesita abrir Ventana o Puerta");
+          //  print("Esta posicion no necesita abrir Ventana o Puerta");
             yield break;
         }
         //animacion de apertura

@@ -84,6 +84,8 @@ public class MasterLevel : MonoBehaviour
     [Range(0.0f, 3.0f)]
     public float tiempoVelocidad = 1.0f;
 
+    [SerializeField] private GameObject camaraB_proyector;
+
     private void Awake()
     {
         masterlevel = this;
@@ -447,6 +449,10 @@ public class MasterLevel : MonoBehaviour
     {
         panelOperador.SetActive(!panelOperador.activeInHierarchy);//el contrario de su estado
         botonAbrir.SetActive(!botonAbrir.activeInHierarchy);
+    }
+    public void ToggleCamaraB()
+    {
+        camaraB_proyector.SetActive(!camaraB_proyector.activeInHierarchy);
     }
     #endregion
 }

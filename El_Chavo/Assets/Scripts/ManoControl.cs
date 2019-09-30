@@ -63,10 +63,11 @@ public class ManoControl : MonoBehaviour
 
         triggerPresion = squeezeAction.GetAxis(control.inputSource);
 
-    
-        if(triggerPresion >= sensibilidadTrigger)//Apretado
+
+        if (triggerPresion >= sensibilidadTrigger)//Apretado
         {
 
+   
             print(control.inputSource.ToString() + "presionando");
             if (sobreResortera)
             {
@@ -82,6 +83,10 @@ public class ManoControl : MonoBehaviour
                     manoContraria.GetComponent<ManoControl>().VibrarControlEstirado();
                 }
                 mano_anim.SetTrigger("municion");
+
+            }else
+            {
+                mano_anim.SetTrigger("resortera");
 
             }
             if (conResortera)
@@ -136,6 +141,12 @@ public class ManoControl : MonoBehaviour
                 Invoke("ActivarDisparo", delayDisparo);
 
             }
+            if (!conResortera)
+            {
+                mano_anim.SetTrigger("abrir");
+            }
+
+            
 
         }
 

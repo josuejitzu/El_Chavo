@@ -17,6 +17,7 @@ public class Jugador
     public TMP_Text scoreText;
     public TMP_Text rondaText;
 
+
     public Jugador(string _nombre,int _score,int _ronda)
     {
         nombre = _nombre;
@@ -63,6 +64,10 @@ public class Score_Control : MonoBehaviour
     public GameObject canvasJuego;
     public GameObject canvasSiguienteRonda;
     public GameObject canvasFinJuego;
+    public TMP_Text nuevoHighscore_text;
+
+    public TMP_Text scoreBest_text;
+    public TMP_Text nombreBest_text;
 
     [Header("UIX-Operador")]
     public TMP_Text rondaOperador_txt;
@@ -84,6 +89,7 @@ public class Score_Control : MonoBehaviour
     {
         BajarScore();
         _master = FindObjectOfType<MasterLevel>();
+        nuevoHighscore_text.gameObject.SetActive(false);
 
         EventDispatcher.RondaTerminada += EventDispatcher_RondaTerminada;
     }
@@ -119,6 +125,10 @@ public class Score_Control : MonoBehaviour
     public void MostrarFinJuego()
     {
         scoreFinal_text.text = "Score: " + _master.scoreJugador.ToString("0000") + "    " + "Ronda: " + (_master.rondaNum + 1).ToString("00");
+        //TODO: mostrar el mejor score en GAME OVER
+
+        scoreBest_text.text = "Score: " + jugadores[0].score.ToString("0000") + "    " + "Ronda: " + jugadores[0].ronda.ToString("00");
+        nombreBest_text.text = jugadores[0].nombre;
         canvasFinJuego.SetActive(true);
 
     }
@@ -142,6 +152,8 @@ public class Score_Control : MonoBehaviour
 
                     numJugadorCambio = i;
                     panelNombre.SetActive(true);
+                    //TODO: aparecer letrero de nuevo highscore
+                    nuevoHighscore_text.gameObject.SetActive(true);
                     break;
                 }
             }

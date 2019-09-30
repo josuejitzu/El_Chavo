@@ -206,7 +206,7 @@ public class MasterLevel : MonoBehaviour
         LanzamientosControl._lanzamientos.DesactivarLanzadores();//Se intento llamar con eventdispatcher pero la logica no funciono
         Score_Control._score.MostrarFinRonda();
         yield return new WaitForSeconds(3.0f);
-        Score_Control._score.canvasJuego.SetActive(false);// canvasJuego.SetActive(false);
+        Score_Control._score.canvasJuego.SetActive(false);//canvasJuego.SetActive(false);
 
         if (rondaNum < rondas.Length)
         {
@@ -275,7 +275,7 @@ public class MasterLevel : MonoBehaviour
        
         splash_anim.SetTrigger("mojar");
         jugadorGolpeado_sfx.Play();
-
+        EventDispatcher.LlamarJugadorGolpeado();
         if (!inmortal)
         {
 

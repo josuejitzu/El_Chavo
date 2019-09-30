@@ -4,8 +4,6 @@ using UnityEngine;
 using Valve.VR;
 
 
-
-
 public class ManoControl : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -16,6 +14,7 @@ public class ManoControl : MonoBehaviour
     public Transform manoContraria;
     public float separacion;
     public Animator mano_anim;
+
     [Space(5)]
     public SteamVR_Behaviour_Pose control;
     public SteamVR_Action_Single squeezeAction;
@@ -26,6 +25,7 @@ public class ManoControl : MonoBehaviour
     public SteamVR_Action_Vibration vibracion;
     float triggerPresion;
     public float sensibilidadTrigger;
+
     [Space(5)]
     [SerializeField] private float duracionVibracion = 1.0f;
     [SerializeField] private float frequencia_hz = 150;
@@ -33,14 +33,13 @@ public class ManoControl : MonoBehaviour
     [SerializeField] private float duracionVibracion_daño = 1.0f;
     [SerializeField] private float frequencia_hz_daño = 150;
     [SerializeField] private float intensidad_daño = 0.5f;
+
     [Space(10)]
     public bool sobreResortera;
     public bool conResortera;
     public bool sobreGlobo, conGlobo,sobreTirante;
     public GameObject resortera, globoTemp, globoEnMano;
     public Transform posResortera;
-
-
     public bool disparoAutomatico;
     public bool estirando;
     public float delayDisparo = 0.7f;
@@ -146,7 +145,6 @@ public class ManoControl : MonoBehaviour
                 mano_anim.SetTrigger("abrir");
             }
 
-            
 
         }
 
@@ -226,6 +224,7 @@ public class ManoControl : MonoBehaviour
     {
         puedeDisparar = true;
     }
+
     public void TomarResortera()
     {
 
@@ -248,6 +247,7 @@ public class ManoControl : MonoBehaviour
         conResortera = true;
 
     }
+
     public void SoltarResortera()
     {
         if (!conResortera)
@@ -280,6 +280,7 @@ public class ManoControl : MonoBehaviour
         vibracion.Execute(0.0f, duracionVibracion_daño, frequencia_hz_daño, intensidad_daño, control.inputSource);
 
     }
+
     public void VibrarControlEstirado()
     {
         vibracion.Execute(0.0f, duracionVibracion, frequencia_hz, intensidad, control.inputSource);

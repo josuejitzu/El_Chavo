@@ -387,7 +387,9 @@ public class Lanzador_Globos : MonoBehaviour
     public IEnumerator Lanzador_Golpeado()
     {
         print("Lanzador "+this.transform.name+" Golepado...Desactivando...");
-      //  StopCoroutine(ComenzarDisparo());
+        //  StopCoroutine(ComenzarDisparo());
+        SFX_Control.sfx_control.PersonajeGolpeado(_tipoPersonaje);
+
         sliderDisparo.gameObject.SetActive(false);
         esperandoLanzamiento = false;
         colider.enabled = false;

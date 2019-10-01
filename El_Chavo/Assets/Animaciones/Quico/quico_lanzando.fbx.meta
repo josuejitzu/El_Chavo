@@ -9,7 +9,12 @@ ModelImporter:
   - first:
       74: 7320635362687752216
     second: quico_aventando
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Kiko_Final_rig_V01_Quico_MAT
+    second: {fileID: 2100000, guid: 074061f2981ffe646b9c1729fee6e35b, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

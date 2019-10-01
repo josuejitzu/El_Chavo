@@ -113,14 +113,7 @@ public class ManoControl : MonoBehaviour
             //print(control.inputSource.ToString() + "soltado");
             if (conResortera)
             {
-                //if(disparoAutomatico && puedeDisparar)
-                //{
-                //    print("Disaparando automaticamente");
-                //    resortera.GetComponent<Resortera_Control>().multiplicadorFuerza = 2.0f;
-                //    resortera.GetComponent<Resortera_Control>().Disparar();
-                //    puedeDisparar = false;
-                //    Invoke("ActivarDisparo", delayDisparo);
-                //}
+             
 
             }
             else if (estirando)//Si estaba estirando significa que solto la liga

@@ -23,6 +23,52 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 3700
+--- !u!114 &-8892732277986757275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Voces_personajes/Golpes DE/golpe de dona florinda
+  guid: 75a695d9e7555f4eb5bfb6307db90038
+  Banks:
+  - {fileID: -974996630761565241}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 8600
+--- !u!114 &-8842692330869983915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Voces_personajes/Golpes DE/golpe de quico
+  guid: cffc9430bef1c44e88d953abf05d912a
+  Banks:
+  - {fileID: -974996630761565241}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 11400
 --- !u!114 &-8363554583695129016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,7 +183,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 1661
 --- !u!114 &-7752079569346964759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,6 +207,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 9200
+--- !u!114 &-7545093344074991235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Voces_personajes/don ramon Guion
+  guid: 7d3178e097ac754d98e0cc249af5da5b
+  Banks:
+  - {fileID: -974996630761565241}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 20273
 --- !u!114 &-7291073900446920299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,8 +244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: event:/Voces_personajes/don ramon
   guid: 7d3178e097ac754d98e0cc249af5da5b
-  Banks:
-  - {fileID: -974996630761565241}
+  Banks: []
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -299,6 +367,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 24885
+--- !u!114 &-5774003704484824601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Ambientes/Ambiente 2
+  guid: e4b88dde14aa8141bc3663962464e92d
+  Banks:
+  - {fileID: -974996630761565241}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 32679
 --- !u!114 &-5760713965387290095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,6 +413,98 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1000
+--- !u!114 &-5644392912217552672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Voces_personajes/Golpes A/golpe a nono
+  guid: 30518fa96157464181b410e4410833a1
+  Banks:
+  - {fileID: -974996630761565241}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 9600
+--- !u!114 &-5549139018288862993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Voces_personajes/Golpes DE/golpe de don ramon
+  guid: 64fa2b2631a7eb41b70a1f8101f8e761
+  Banks:
+  - {fileID: -974996630761565241}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 14400
+--- !u!114 &-4677403121079717215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Voces_personajes/UI/Inicio Oleada segundo round
+  guid: e847c4b28a64984fba5c2f2f92222196
+  Banks:
+  - {fileID: -974996630761565241}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 2000
+--- !u!114 &-4598689647303853425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Voces_personajes/Golpes DE/golpe del chavo
+  guid: 2317573e1c03af43923737daadc988a1
+  Banks:
+  - {fileID: -974996630761565241}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 10200
 --- !u!114 &-4528656511353942862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,6 +551,29 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 2030
+--- !u!114 &-3813166501343653498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Voces_personajes/Golpes A/golpe a don ramon
+  guid: ea86e0d1f536b045ba7aaed96ebb6d60
+  Banks:
+  - {fileID: -974996630761565241}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 8000
 --- !u!114 &-3558694860425836356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -391,6 +597,29 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-2955222148759564003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Voces_personajes/UI/Jugador Calaca
+  guid: 26ba43e5bcb74746a1c9d50c7dca12f6
+  Banks:
+  - {fileID: -974996630761565241}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 5600
 --- !u!114 &-2846864614505654141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -460,6 +689,52 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1000
+--- !u!114 &-1789306401024392398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Voces_personajes/UI/Jugador truena proyectil
+  guid: cd53e7463928b847942b7c389b780ea9
+  Banks:
+  - {fileID: -974996630761565241}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 3700
+--- !u!114 &-1577523941894115835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/UI/Muerte calaveras
+  guid: 9b1ceb474ac547439f4d79afba87e45d
+  Banks:
+  - {fileID: -974996630761565241}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 1780
 --- !u!114 &-1573970281865180188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -506,6 +781,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 9600
+--- !u!114 &-1536853381012395007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Voces_personajes/UI/Jugador Power Up
+  guid: f148907d8ece0c4b881a92691de74b88
+  Banks:
+  - {fileID: -974996630761565241}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 5400
 --- !u!114 &-1004619655306948414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -542,12 +840,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: D:\Dropbox\el chavo vr\Build\Desktop\Master Bank.bank
-  lastModified: 637054474100000000
+  lastModified: 637055391630000000
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 4261344
+    Value: 5479296
   Exists: 1
+--- !u!114 &-931212432338590200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Voces_personajes/Golpes A/golpe a dona florinda
+  guid: 1464f10d98940d49b8a3f664404f933c
+  Banks:
+  - {fileID: -974996630761565241}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 8800
 --- !u!114 &-133524540540900811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -584,11 +905,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: D:\Dropbox\el chavo vr\Build\Desktop\Master Bank.strings.bank
-  lastModified: 637054474100000000
+  lastModified: 637055391630000000
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 3088
+    Value: 3266
   Exists: 1
 --- !u!114 &-48469215464227447
 MonoBehaviour:
@@ -608,11 +929,11 @@ MonoBehaviour:
   - {fileID: -974996630761565241}
   IsStream: 1
   Is3D: 1
-  IsOneShot: 1
+  IsOneShot: 0
   Parameters: []
   MinDistance: 1
-  MaxDistance: 20
-  Length: 19696
+  MaxDistance: 3.8
+  Length: 26261
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -643,7 +964,6 @@ MonoBehaviour:
   - {fileID: 3215931828835495925}
   - {fileID: 7651361486179952021}
   - {fileID: -5760713965387290095}
-  - {fileID: -7291073900446920299}
   - {fileID: -5970513716823402627}
   - {fileID: -8220848045576103731}
   - {fileID: 76754930403974408}
@@ -659,10 +979,33 @@ MonoBehaviour:
   - {fileID: 2981456063279592840}
   - {fileID: 2842703150176080700}
   - {fileID: 5300562763061795423}
-  - {fileID: 4917419038389323658}
+  - {fileID: 1770930595079645738}
+  - {fileID: -931212432338590200}
+  - {fileID: -4598689647303853425}
+  - {fileID: -2955222148759564003}
+  - {fileID: -5644392912217552672}
+  - {fileID: 6828755572262001442}
+  - {fileID: -5549139018288862993}
+  - {fileID: 1181030989151810408}
+  - {fileID: -8892732277986757275}
+  - {fileID: -7545093344074991235}
+  - {fileID: -1577523941894115835}
+  - {fileID: 4589320100281835960}
+  - {fileID: 548252186823827845}
+  - {fileID: 6731006001887952660}
+  - {fileID: 2056069997299038677}
+  - {fileID: 7583102912311662930}
+  - {fileID: -1789306401024392398}
+  - {fileID: -8842692330869983915}
+  - {fileID: -5774003704484824601}
+  - {fileID: -4677403121079717215}
+  - {fileID: -3813166501343653498}
+  - {fileID: 2180024090523695597}
+  - {fileID: -1536853381012395007}
+  - {fileID: 3131191923405864091}
   MasterBankRef: {fileID: -974996630761565241}
   StringsBankRef: {fileID: -79348128472822120}
-  stringsBankWriteTime: 637054474100000000
+  stringsBankWriteTime: 637055391630000000
   cacheVersion: 2
 --- !u!114 &76754930403974408
 MonoBehaviour:
@@ -710,6 +1053,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 20273
+--- !u!114 &548252186823827845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Voces_personajes/UI/Inicio Oleada
+  guid: b2f178890b1a734abfbd94a1edad7066
+  Banks:
+  - {fileID: -974996630761565241}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 10800
 --- !u!114 &1059438569964323890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -733,6 +1099,29 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 10082
+--- !u!114 &1181030989151810408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Voces_personajes/UI/Game Over
+  guid: 7380ac39c1485d41becb2920faa52937
+  Banks:
+  - {fileID: -974996630761565241}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 4600
 --- !u!114 &1666020765355310571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -756,6 +1145,52 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 0
+--- !u!114 &1770930595079645738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/UI/Calavera salida
+  guid: 0e832e6c4fbc9f4ca62e692c1e200e2f
+  Banks:
+  - {fileID: -974996630761565241}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 1294
+--- !u!114 &2056069997299038677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Voces_personajes/Golpes DE/golpe de popis
+  guid: ba2294ed7bb471468404210c9d501a39
+  Banks:
+  - {fileID: -974996630761565241}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 9200
 --- !u!114 &2057924838588520882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -779,6 +1214,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 8280
+--- !u!114 &2180024090523695597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Voces_personajes/Golpes A/golpe a popis
+  guid: ef3f2e60226ad34f8d3ad548a4ae28b7
+  Banks:
+  - {fileID: -974996630761565241}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 5800
 --- !u!114 &2440568812197923975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -870,7 +1328,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 1360
+  Length: 50
 --- !u!114 &2822046790675269618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -910,13 +1368,13 @@ MonoBehaviour:
   guid: 1dd6976d3d3f4343a20d6cab3a96a41e
   Banks:
   - {fileID: -974996630761565241}
-  IsStream: 0
+  IsStream: 1
   Is3D: 1
   IsOneShot: 1
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 20400
 --- !u!114 &2981456063279592840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -940,6 +1398,29 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1000
+--- !u!114 &3131191923405864091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Voces_personajes/Golpes DE/golpe de nono
+  guid: f2e41ccfd0c6f04aa1303a3a8c6da589
+  Banks:
+  - {fileID: -974996630761565241}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 6600
 --- !u!114 &3169944642396719756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -962,7 +1443,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 1400
 --- !u!114 &3215931828835495925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -976,7 +1457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: event:/SFX/puerta open
-  guid: 5875a5e39305b54fa5e9a30f2b56cf6d
+  guid: 84739ca87f3044419c6e74a8facd762d
   Banks:
   - {fileID: -974996630761565241}
   IsStream: 0
@@ -985,7 +1466,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 2400
+  Length: 2706
 --- !u!114 &3819900356723728709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1032,6 +1513,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 5400
+--- !u!114 &4589320100281835960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Voces_personajes/Golpes A/golpe a quico
+  guid: 9b2f51cb71e5164fab0b1479be762471
+  Banks:
+  - {fileID: -974996630761565241}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 8400
 --- !u!114 &4917419038389323658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1046,8 +1550,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: event:/Voces_personajes/UIS
   guid: cd53e7463928b847942b7c389b780ea9
-  Banks:
-  - {fileID: -974996630761565241}
+  Banks: []
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -1147,6 +1650,52 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &6731006001887952660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Voces_personajes/UI/Fin Oleada
+  guid: b793ebee0de49e429699ded26f90a26a
+  Banks:
+  - {fileID: -974996630761565241}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 8400
+--- !u!114 &6828755572262001442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Voces_personajes/Golpes A/golpe al chavo
+  guid: 3fe3f404f752b441ad15d929a7e35d46
+  Banks:
+  - {fileID: -974996630761565241}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 5400
 --- !u!114 &6970529921603616809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1193,6 +1742,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 57821
+--- !u!114 &7583102912311662930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/UI/Game over
+  guid: be5e9826ced2c2489a6ef73131d6a8e9
+  Banks:
+  - {fileID: -974996630761565241}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 1951
 --- !u!114 &7651361486179952021
 MonoBehaviour:
   m_ObjectHideFlags: 0

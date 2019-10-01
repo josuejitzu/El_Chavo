@@ -72,6 +72,11 @@ public class MasterLevel : MonoBehaviour
     [Header("SFX")]
     public StudioEventEmitter jugadorGolpeado_sfx;
     public StudioEventEmitter musicaTitulo, musicaJuego, siguienteRonda_sfx;
+    [Space(5)]
+    public StudioEventEmitter donRamon_inicioRonda_sfx;
+    public StudioEventEmitter donRamon_finRonda_sfx;
+    public StudioEventEmitter donRamon_GameOver_sfx;
+    
     //  [FMODUnity.EventRef] public string chiflido_sfx;
     [Header("VFX")]
     public Animator splash_anim;
@@ -183,6 +188,9 @@ public class MasterLevel : MonoBehaviour
         numCombo_text.text = "Combo x" + numCombo.ToString("00");
         musicaTitulo.Stop();
         musicaJuego.Play();
+
+        donRamon_inicioRonda_sfx.Play();
+
         yield return new WaitForSeconds(2.0f);
         Score_Control._score.canvasSiguienteRonda.SetActive(false);
         ///
@@ -200,6 +208,7 @@ public class MasterLevel : MonoBehaviour
         EventDispatcher.LlamarFinDeRonda();
 
         jugando = false;
+        donRamon_finRonda_sfx.Play();
 
         LanzamientosControl._lanzamientos.disparar = false;
         LanzamientosControl._lanzamientos.DesactivarLanzadores();//Se intento llamar con eventdispatcher pero la logica no funciono
@@ -220,6 +229,8 @@ public class MasterLevel : MonoBehaviour
         Score_Control._score.MostrarRondaSiguiente();
         yield return new WaitForSeconds(2.0f);
         // siguienteRonda_sfx.Play();
+        donRamon_inicioRonda_sfx.Play();
+
 
         Score_Control._score.canvasSiguienteRonda.SetActive(false);
 
@@ -245,7 +256,7 @@ public class MasterLevel : MonoBehaviour
         contando = false;
         LanzamientosControl._lanzamientos.disparar = false;
         LanzamientosControl._lanzamientos.DesactivarLanzadores();
-
+        donRamon_GameOver_sfx.Play();
         yield return new WaitForSeconds(0.05f);
         Score_Control._score.MostrarFinJuego();
         Score_Control._score.jugadorActual = new Jugador("", scoreJugador, rondaNum + 1);
@@ -454,4 +465,14 @@ public class MasterLevel : MonoBehaviour
         camaraB_proyector.SetActive(!camaraB_proyector.activeInHierarchy);
     }
     #endregion
+
+
+    //public void DonRamonRonda_SFX(string evento)
+    //{
+    //    if (donRamon_inicioRonda_sfx.IsPlaying())
+    //        donRamon_inicioRonda_sfx.Stop();
+
+    //    donRamon_inicioRonda_sfx.Event = evento;
+    //    donRamon_inicioRonda_sfx.Play();
+    //}
 }

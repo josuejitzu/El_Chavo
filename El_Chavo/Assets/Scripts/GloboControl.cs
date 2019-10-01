@@ -347,6 +347,7 @@ public class GloboControl : MonoBehaviour
         }else if(other.transform.tag == "MainCamera")//Le hace daño al Jugador y Explota
         {
             MasterLevel.masterlevel.DañarJugador(dañoJugador);
+            SFX_Control.sfx_control.JugadorGolpeado(_tipoPersonaje);
 
             if (gameObject.activeInHierarchy)
                 StartCoroutine(Explotar());
@@ -420,6 +421,9 @@ public class GloboControl : MonoBehaviour
         //rigid.isKinematic = true;
         vidaSlider.gameObject.SetActive(false);
 
+        if (_tipoPersonaje == TipoPersonaje.kiko)
+            quico_sfx.Stop();
+
         if (sliderFlorinda != null)
             sliderFlorinda.gameObject.SetActive(false);
 
@@ -433,6 +437,7 @@ public class GloboControl : MonoBehaviour
         this.transform.LookAt(posFinal);
 
         EfectoGolpe();
+
 
        
          meshGlobo.SetActive(false);
@@ -488,7 +493,8 @@ public class GloboControl : MonoBehaviour
 
        
         meshGlobo.SetActive(false);
-
+        if (_tipoPersonaje == TipoPersonaje.kiko)
+            quico_sfx.Stop();
 
         fmod_globos.Event = explosionAgua_sfx;
         fmod_globos.Play();

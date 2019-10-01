@@ -46,6 +46,7 @@ public class GloboMini_Florinda : MonoBehaviour
     {
         CambiarMesh();
     }
+
     void Update()
     {
 
@@ -67,6 +68,7 @@ public class GloboMini_Florinda : MonoBehaviour
 
     public void Lanzando()
     {
+
         if (timer <= 1.0f)
         {
 
@@ -83,6 +85,7 @@ public class GloboMini_Florinda : MonoBehaviour
         {
             brincar = false;
         }
+
     }
 
     public void ActivarGlobo()
@@ -105,6 +108,7 @@ public class GloboMini_Florinda : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
         if (other.transform.tag == "personaje" || other.transform.tag == "globo" || other.transform.tag == "paredes")
         {
 
@@ -124,6 +128,7 @@ public class GloboMini_Florinda : MonoBehaviour
         {
             StartCoroutine(Explotar());
         }
+
     }
 
     private void OnTriggerStay(Collider other)
@@ -160,6 +165,7 @@ public class GloboMini_Florinda : MonoBehaviour
 
         this.gameObject.SetActive(false);
     }
+
     IEnumerator Destruir()//Cuando la destruye el Jugador
     {
         trigger.enabled = false;

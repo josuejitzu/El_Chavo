@@ -10,6 +10,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Kiko_Final_rig_V01_Quico_MAT
+    second: {fileID: 2100000, guid: 074061f2981ffe646b9c1729fee6e35b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Kiko_Final_rig_V01_cabeza_kiko06_defaultMat1
     second: {fileID: 2100000, guid: 074061f2981ffe646b9c1729fee6e35b, type: 2}
   - first:

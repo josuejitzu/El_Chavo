@@ -32,6 +32,16 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: Popis_Final02_Rig_V02_phong2
     second: {fileID: 2100000, guid: dd84c14be4c022f479d5192fd31bbb1c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Popis_Final02_Rig_V03_Popis_MAT
+    second: {fileID: 2100000, guid: dd84c14be4c022f479d5192fd31bbb1c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Popis_Final02_Rig_V04_Popis_MAT
+    second: {fileID: 2100000, guid: dd84c14be4c022f479d5192fd31bbb1c, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

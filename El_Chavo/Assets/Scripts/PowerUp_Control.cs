@@ -23,7 +23,8 @@ public class PowerUp_Control : MonoBehaviour
     public StudioEventEmitter powerUpActivado_sfx;
     public StudioEventEmitter powerUpCancelado_sfx;
     public StudioEventEmitter powerUpDesactivado_sfx;
-
+    public StudioEventEmitter donRamon_powerUp_sfx;
+    public StudioEventEmitter donRamon_calaca_sfx;
 
     void OnDrawGizmos()
     {
@@ -148,6 +149,7 @@ public class PowerUp_Control : MonoBehaviour
     public IEnumerator DesactivacionPowerUP()
     {
         powerUpActivado_sfx.Play();
+        donRamon_powerUp_sfx.Play();
         print("se pido activar el PowerUp");
         comboLetrero.SetActive(false);
 
@@ -169,6 +171,7 @@ public class PowerUp_Control : MonoBehaviour
         print("Se pidio desactivar powerUP por Tiempo");
 
     }
+
     /// <summary>
     /// Se llama con el globo de Don Ramon o Sus Debufs para quitarle
     /// el powerUp al Jugador, Tambien si termina la Ronda o se daña al jugador con un globo
@@ -184,7 +187,7 @@ public class PowerUp_Control : MonoBehaviour
         Resortera_Control._resortera.ActivarPowerUp(MunicionTipo.Normal);
         print("Se pidio desactivar powerUP porque Don Ramon te golpeo o porque golpeaste Debuff");
         powerUpCancelado_sfx.Play();
-
+        donRamon_calaca_sfx.Play();
         yield break;
 
     }

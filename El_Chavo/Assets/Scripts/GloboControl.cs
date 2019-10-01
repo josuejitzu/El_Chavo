@@ -94,6 +94,7 @@ public class GloboControl : MonoBehaviour
         {
             
             Lanzando();
+            vidaSlider.gameObject.transform.LookAt(objetivo.position);
         }
         if(bombardeo)
         {
@@ -140,7 +141,7 @@ public class GloboControl : MonoBehaviour
         else
         { 
 
-            this.transform.LookAt(posFinal);
+           // this.transform.LookAt(this.transform.forward);
             vidaSlider.gameObject.SetActive(true);
             vida = vidaInicial;
             vidaSlider.maxValue = vida;
@@ -270,7 +271,7 @@ public class GloboControl : MonoBehaviour
                 float altura = Mathf.Sin(Mathf.PI * timer) * alturaArco;
                 transform.position = Vector3.Lerp(posInicial, posFinal, timer) + Vector3.up * altura;
                 timer += Time.deltaTime / tiempoDeRecorrido;
-
+                this.transform.LookAt(posFinal);
                 if (_tipoPersonaje == TipoPersonaje.kiko)
                 {
                     Vector3 dist = posFinal - transform.position;

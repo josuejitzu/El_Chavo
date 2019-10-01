@@ -39,6 +39,7 @@ public class DonRamon_Debuff : MonoBehaviour
     public void ActivarDebuff()
     {
         EventDispatcher.RondaTerminada += Reiniciar;
+        EventDispatcher.DebuffActivado += Reiniciar;
         randomRotacion = RandomAxis();
         EncontrarPosicion();
 
@@ -75,6 +76,7 @@ public class DonRamon_Debuff : MonoBehaviour
             EncontrarPosicion();
         }
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.transform.tag == "paredes")

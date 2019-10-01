@@ -350,7 +350,7 @@ public class GloboControl : MonoBehaviour
             if (gameObject.activeInHierarchy)
                 StartCoroutine(Explotar());
 
-            print(other.transform.name);
+            print(this.transform.name +" golpeo "+other.transform.name);
 
         }
         else
@@ -408,11 +408,11 @@ public class GloboControl : MonoBehaviour
     /// poderes secundarios si el TipoGlobo los tiene ej:(Poppy,DoñaFlorinda,DonRamon)
     /// </summary>
     /// <returns></returns>
-
     IEnumerator Destruir()
     {
         EventDispatcher.RondaTerminada -= DesactivarGlobo;
 
+        CancelInvoke("ComenzarBombardeo");
         trigger.enabled = false;
         brincar = false;
         kamikaze = false;
@@ -451,16 +451,17 @@ public class GloboControl : MonoBehaviour
         {
             ActivarDebuffDonRamon();
         }
-          golpeGlobo_sfx.Play();
+        golpeGlobo_sfx.Play();
 
         yield return new WaitForSeconds(1.5f);
+
         puntos_text.gameObject.SetActive(false);
-        if (_tipoPersonaje == TipoPersonaje.miniFlorinda)
-        {
-            this.transform.position = mini_posInicial.position;
-            this.transform.parent = globoPadre;
+        //if (_tipoPersonaje == TipoPersonaje.miniFlorinda)
+        //{
+        //    this.transform.position = mini_posInicial.position;
+        //    this.transform.parent = globoPadre;
             
-        }
+        //}
 
         if(_tipoPersonaje == TipoPersonaje.doñaFlorinda)
         {

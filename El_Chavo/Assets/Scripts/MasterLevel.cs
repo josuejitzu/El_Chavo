@@ -17,6 +17,7 @@ public class MasterLevel : MonoBehaviour
     public float vidaJugador = 0.0f;
     public Slider vidaSlider;
     public Image vidaCirculo;
+    public Image vidaCirculo_Operador;
     public float velocidadLlenado;
     public bool inmortal;
     public Sprite[] circulosVida;
@@ -80,6 +81,10 @@ public class MasterLevel : MonoBehaviour
     public GameObject consolaPanel;
     public GameObject panelOperador;
     public GameObject botonAbrir;
+    [Range(0.0f, 3.0f)]
+    public float tiempoVelocidad = 1.0f;
+
+    [SerializeField] private GameObject camaraB_proyector;
 
     private void Awake()
     {
@@ -91,16 +96,17 @@ public class MasterLevel : MonoBehaviour
         // musicaTitulo.Play();
         contarCombo = true;
         StartCoroutine(PreJuego());
+
+        EventDispatcher.RondaTerminada += ResetearCombo;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        Time.timeScale = tiempoVelocidad;
         vidaSlider.value = Mathf.MoveTowards(vidaSlider.value, vidaJugador, Time.deltaTime * velocidadLlenado);
         vidaSlider_operador.value = vidaSlider.value;
-
-        
+       
 
         if (contando)
         {
@@ -135,13 +141,13 @@ public class MasterLevel : MonoBehaviour
     //    }
     //}
 
-        /// <summary>
-        /// Donde se puede pedir cargar ciertas cosas antes de que Inicie el Juego
-        /// </summary>
-        /// <returns></returns>
+    /// <summary>
+    /// Donde se puede pedir cargar ciertas cosas antes de que Inicie el Juego
+    /// </summary>
+    /// <returns></returns>
     IEnumerator PreJuego()
     {
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(1.0f);
         letroInicio.SetActive(true);
 
     }
@@ -174,7 +180,7 @@ public class MasterLevel : MonoBehaviour
 
 
         numCombo = 0;
-        numCombo_text.text = "x" + numCombo.ToString("00");
+        numCombo_text.text = "Combo x" + numCombo.ToString("00");
         musicaTitulo.Stop();
         musicaJuego.Play();
         yield return new WaitForSeconds(2.0f);
@@ -197,10 +203,9 @@ public class MasterLevel : MonoBehaviour
 
         LanzamientosControl._lanzamientos.disparar = false;
         LanzamientosControl._lanzamientos.DesactivarLanzadores();//Se intento llamar con eventdispatcher pero la logica no funciono
-
         Score_Control._score.MostrarFinRonda();
         yield return new WaitForSeconds(3.0f);
-        Score_Control._score.canvasJuego.SetActive(false);// canvasJuego.SetActive(false);
+        Score_Control._score.canvasJuego.SetActive(false);//canvasJuego.SetActive(false);
 
         if (rondaNum < rondas.Length)
         {
@@ -269,22 +274,29 @@ public class MasterLevel : MonoBehaviour
        
         splash_anim.SetTrigger("mojar");
         jugadorGolpeado_sfx.Play();
-
+        EventDispatcher.LlamarJugadorGolpeado();
         if (!inmortal)
+        {
+
             numCombo = 0;
+            numCombo_text.text = "Combo x" + numCombo.ToString("00");
+
+        }
 
         StartCoroutine(PowerUp_Control._powerUps.CancelarPowerUP());
 
 
         vidaJugador += cantidad;
-        numCombo_text.text = "Combo x" + numCombo.ToString("00");
 
 
         int pie = Mathf.FloorToInt((vidaJugador / vidaMax) * 10);
 
-        print(pie);
+       // print(pie);
         if (pie < circulosVida.Length)
+        {
             vidaCirculo.sprite = circulosVida[pie];
+            vidaCirculo_Operador.sprite = circulosVida[pie];
+        }
 
         if (vidaJugador >= vidaMax)
         {
@@ -292,6 +304,8 @@ public class MasterLevel : MonoBehaviour
                 return;
 
             vidaCirculo.sprite = circulosVida[10];
+            vidaCirculo_Operador.sprite = circulosVida[10];
+
             StartCoroutine(FinJuego());
             return;
         }
@@ -314,7 +328,7 @@ public class MasterLevel : MonoBehaviour
                 numCombo_text.gameObject.SetActive(false);
                 PowerUp_Control._powerUps.ActivarPowerUp();//Activa los letreros de powerUp
             }
-            numCombo_text.text = "x" + numCombo.ToString("00");
+            numCombo_text.text = "Combo x" + numCombo.ToString("00");
 
         }
 
@@ -362,10 +376,16 @@ public class MasterLevel : MonoBehaviour
     }
 
 
-
+    public void ResetearCombo()
+    {
+        numCombo = 0;
+        numCombo_text.gameObject.SetActive(true);
+        numCombo_text.text = "Combo x" + numCombo.ToString("00");
+        contarCombo = true;
+    }
 
     #region Consola
-    void ToggleConsola()
+    private void ToggleConsola()
     {
         if(consolaPanel.activeInHierarchy)
         {
@@ -381,7 +401,7 @@ public class MasterLevel : MonoBehaviour
     /// <summary>
     /// Todos estos comandos solo se activan si se esta presionando ctrl + la tecla del comando
     /// </summary>
-    void ComandosConsola()
+    private void ComandosConsola()
     {
 
         if (Input.GetKeyDown(teclaIniciar))
@@ -428,6 +448,10 @@ public class MasterLevel : MonoBehaviour
     {
         panelOperador.SetActive(!panelOperador.activeInHierarchy);//el contrario de su estado
         botonAbrir.SetActive(!botonAbrir.activeInHierarchy);
+    }
+    public void ToggleCamaraB()
+    {
+        camaraB_proyector.SetActive(!camaraB_proyector.activeInHierarchy);
     }
     #endregion
 }

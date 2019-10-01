@@ -12,7 +12,7 @@ public class AnimacionDispatcher : MonoBehaviour
     }
     public void Disparar()
     {
-        print(this.transform.name + " mando orden de disparo desde animacion");
+       // print(this.transform.name + " mando orden de disparo desde animacion");
         lanzador.Disparar();
     }
 }

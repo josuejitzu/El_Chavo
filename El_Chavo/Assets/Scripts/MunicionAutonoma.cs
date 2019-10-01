@@ -26,11 +26,12 @@ public class MunicionAutonoma : MonoBehaviour
     [Header("SFX")]
     public StudioEventEmitter sfxEmitter;
     [FMODUnity.EventRef] public string chiflido_sfx;
-  
+    public LineRenderer laser_fx;
+
+    [SerializeField] private bool buscarPersonajes;
 
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -42,12 +43,15 @@ public class MunicionAutonoma : MonoBehaviour
             //{
             //    EscanearZona();
             //}
-           // EscanearZona();
+            // EscanearZona();
+            //laser_fx.enabled = false;
         }
         else if(conObjetivo)
         {
             Vector3 objetivoDist = objetivo.transform.position - this.transform.position;
             Debug.DrawRay(this.transform.position, objetivoDist,Color.red);
+            laser_fx.SetPosition(0, _padre.position);
+            laser_fx.SetPosition(1, objetivo.transform.position);
             transform.LookAt(objetivo.position);
         }
 
@@ -165,9 +169,11 @@ public class MunicionAutonoma : MonoBehaviour
             conObjetivo = true;
             zonaBusqueda.enabled = false;
             trigger.enabled = true;
+            LineaLaser(true);
+
 
         }
-        else if( other.transform.tag == "personaje")
+        else if (other.transform.tag == "personaje" && buscarPersonajes)
         {
             if (other.GetComponent<Lanzador_Globos>().enMira)
                 return;
@@ -178,6 +184,8 @@ public class MunicionAutonoma : MonoBehaviour
             conObjetivo = true;
             zonaBusqueda.enabled = false;
             trigger.enabled = true;
+            LineaLaser(true);
+
         }
     }
     IEnumerator Explotar()
@@ -193,7 +201,6 @@ public class MunicionAutonoma : MonoBehaviour
         objetivo = null;
         disparar = false;
         conObjetivo = false;
-    
         yield return new WaitForSeconds(1.0f);
         this.transform.position = _padre.transform.position;
         this.transform.parent = _padre.transform;
@@ -214,7 +221,7 @@ public class MunicionAutonoma : MonoBehaviour
 
         QuitarMira();
 
-      //  yield return new WaitForSeconds(1.0f);
+        //  yield return new WaitForSeconds(1.0f);
         this.transform.position = _padre.transform.position;
         this.transform.parent = _padre.transform;
         this.gameObject.SetActive(false);
@@ -243,9 +250,15 @@ public class MunicionAutonoma : MonoBehaviour
             if(objetivo.GetComponent<Lanzador_Globos>())
                 objetivo.GetComponent<Lanzador_Globos>().QuitarMira();
 
+            LineaLaser(false);
 
         }
 
 
+    }
+
+    private void LineaLaser(bool b)
+    {
+        laser_fx.enabled = b;
     }
 }

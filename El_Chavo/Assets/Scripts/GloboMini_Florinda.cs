@@ -73,8 +73,10 @@ public class GloboMini_Florinda : MonoBehaviour
             float altura = Mathf.Sin(Mathf.PI * timer) * alturaArco;
             transform.position = Vector3.Lerp(posInicial.position, posFinal, timer) + Vector3.up * altura;
             timer += Time.deltaTime / tiempoDeRecorrido;
-          //  meshActiva.transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(posFinal), Time.deltaTime * 5.0f);
-
+            this.transform.LookAt(posFinal);
+            vidaSlider.transform.LookAt(posFinal);
+            //  meshActiva.transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(posFinal), Time.deltaTime * 5.0f);
+            this.transform.LookAt(posFinal);
 
         }
         else if (timer >= 1.0f)

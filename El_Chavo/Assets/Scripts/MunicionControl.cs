@@ -57,6 +57,7 @@ public class MunicionControl : MonoBehaviour
         else if(other.transform.tag == "posicionDebuff")//Si le da a los debuffs de donRamon
         {
             StartCoroutine(PowerUp_Control._powerUps.CancelarPowerUP());
+            StartCoroutine(Explotar());
             EventDispatcher.ReiniciarDebuffs();
         }
         else if (other.transform.tag == "personaje")
@@ -169,4 +170,6 @@ public class MunicionControl : MonoBehaviour
             explosiva.trail.enabled = estado;
         }
     }
+
+
 }

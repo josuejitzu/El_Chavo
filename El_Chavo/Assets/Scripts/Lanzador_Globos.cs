@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEngine.UI;
+using TMPro;
 
 public class Lanzador_Globos : MonoBehaviour
 {
@@ -11,7 +12,10 @@ public class Lanzador_Globos : MonoBehaviour
 
     public Rigidbody rigid;
     public BoxCollider colider;
-  
+    [SerializeField]private TMP_Text puntosPersonaje_text;
+    public int valorPersonaje = 100;
+   
+
     [Header("Globos")]
     public GameObject globo_prefab;
     public int cantidad;
@@ -380,7 +384,7 @@ public class Lanzador_Globos : MonoBehaviour
 
         personajeActivo.SetActive(true);
         sliderDisparo.maxValue = tiempoEsperaDisparo;
-
+        puntosPersonaje_text.text = "+" + valorPersonaje;
         this.transform.name = t.ToString();
     }
 
@@ -389,7 +393,7 @@ public class Lanzador_Globos : MonoBehaviour
         print("Lanzador "+this.transform.name+" Golepado...Desactivando...");
         //  StopCoroutine(ComenzarDisparo());
         SFX_Control.sfx_control.PersonajeGolpeado(_tipoPersonaje);
-
+        puntosPersonaje_text.gameObject.SetActive(true);
         sliderDisparo.gameObject.SetActive(false);
         esperandoLanzamiento = false;
         colider.enabled = false;
@@ -401,7 +405,7 @@ public class Lanzador_Globos : MonoBehaviour
         }
         DesactivarGlobo();
        
-        MasterLevel.masterlevel.ScoreJugador(10);
+        MasterLevel.masterlevel.ScoreJugador(valorPersonaje);
         golpe_vfx.Play();
         if(posicion_elegida != null)
              StartCoroutine(posicion_elegida.Cerrar());
@@ -419,6 +423,7 @@ public class Lanzador_Globos : MonoBehaviour
         print("Lanzador " + this.transform.name + " Termino animacon de agachado...");
 
         yield return new WaitForSeconds(1.5f);
+        puntosPersonaje_text.gameObject.SetActive(false);
 
         disparando = false;
         print("Lanzador "+this.transform.name + " Desactivado...");
@@ -431,6 +436,7 @@ public class Lanzador_Globos : MonoBehaviour
     {
         StartCoroutine(DesactivarLanzador());
     }
+
     public IEnumerator DesactivarLanzador()//Para terminar el nivel
     {
         EventDispatcher.RondaTerminada -= EventDispatcher_RondaTerminada;
@@ -438,7 +444,7 @@ public class Lanzador_Globos : MonoBehaviour
         disparando = false;
         this.StopAllCoroutines();
         colider.enabled = false;
-
+        puntosPersonaje_text.gameObject.SetActive(false);
         DesactivarGlobo();
       //  StartCoroutine(posicion_elegida.Cerrar());//ATENCION:probando eventdispatcher
 
@@ -475,5 +481,7 @@ public class Lanzador_Globos : MonoBehaviour
     }
     
     //public void 
+
+   
 }
 //https://vilbeyli.github.io/Projectile-Motion-Tutorial-for-Arrows-and-Missiles-in-Unity3D/

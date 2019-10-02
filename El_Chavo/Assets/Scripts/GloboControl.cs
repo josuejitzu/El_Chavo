@@ -631,8 +631,12 @@ public class GloboControl : MonoBehaviour
 
     void ActivarDebuffDonRamon()
     {
+
         if (globosRamon.Length <= 0)
+        {
+            print("Don Ramon no tiene Debuffs, no se activaron...");
             return;
+        }
 
          foreach(GameObject gr in globosRamon)
          {

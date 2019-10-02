@@ -1260,7 +1260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Event: 
+  Event: event:/SFX/chiflido proyectil
   PlayEvent: 0
   StopEvent: 0
   CollisionTag: 
@@ -1269,8 +1269,8 @@ MonoBehaviour:
   Preload: 0
   Params: []
   OverrideAttenuation: 0
-  OverrideMinDistance: -1
-  OverrideMaxDistance: -1
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!114 &3365542352226886466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2196,6 +2196,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1393807312034666142, guid: e97b1fdb34a6563498d8eb944d9f49d5,
+        type: 3}
+      propertyPath: padre
+      value: 
+      objectReference: {fileID: 3637368095342252486}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e97b1fdb34a6563498d8eb944d9f49d5, type: 3}
 --- !u!1 &1737878755202518169 stripped
@@ -2568,6 +2573,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1393807312034666142, guid: e97b1fdb34a6563498d8eb944d9f49d5,
+        type: 3}
+      propertyPath: padre
+      value: 
+      objectReference: {fileID: 3637368095342252486}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e97b1fdb34a6563498d8eb944d9f49d5, type: 3}
 --- !u!4 &3476787223625723321 stripped
@@ -3854,6 +3864,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1393807312034666142, guid: e97b1fdb34a6563498d8eb944d9f49d5,
+        type: 3}
+      propertyPath: padre
+      value: 
+      objectReference: {fileID: 3637368095342252486}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e97b1fdb34a6563498d8eb944d9f49d5, type: 3}
 --- !u!4 &8479450579732913540 stripped
@@ -3960,6 +3975,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1393807312034666142, guid: e97b1fdb34a6563498d8eb944d9f49d5,
+        type: 3}
+      propertyPath: padre
+      value: 
+      objectReference: {fileID: 3637368095342252486}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e97b1fdb34a6563498d8eb944d9f49d5, type: 3}
 --- !u!1 &9145493774239435332 stripped

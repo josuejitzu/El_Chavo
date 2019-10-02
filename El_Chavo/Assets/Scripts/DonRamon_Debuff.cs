@@ -7,6 +7,7 @@ public class DonRamon_Debuff : MonoBehaviour
     //public float rangoX, rangoY, rangoZ;
     //public float rangoMinX, rangoMinY, rangoMinZ;
     //public Vector3 posZero;
+    public SphereCollider trigger;
     public Vector3 posFinal;
     public float tiempoMovimiento;
     public float velocidad;
@@ -15,7 +16,7 @@ public class DonRamon_Debuff : MonoBehaviour
     public float tiempoVida;
 
     public GameObject meshCalavera;
-
+    [SerializeField]private ParticleSystem explosion_vfx;
     Vector3 randomRotacion;
     public float velocidadRotacion = 2.0f;
 
@@ -38,12 +39,27 @@ public class DonRamon_Debuff : MonoBehaviour
 
     public void ActivarDebuff()
     {
+        meshCalavera.SetActive(true);
+
         EventDispatcher.RondaTerminada += Reiniciar;
         EventDispatcher.DebuffActivado += Reiniciar;
         randomRotacion = RandomAxis();
         EncontrarPosicion();
 
-        Invoke("Reiniciar", tiempoVida);
+        StartCoroutine(ActivarTrigger());
+        
+    }
+    /// <summary>
+    /// Se activa el trigger un segundo despues para que el jugador no desactive 
+    /// inmediatamente el PowerUP debido a que se comparte el Tag
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator ActivarTrigger()
+    {
+        yield return new WaitForSeconds(1.0f);
+        trigger.enabled = true;
+        yield return new WaitForSeconds(tiempoVida);
+        Reiniciar();
     }
     public void EncontrarPosicion()
     {
@@ -89,14 +105,27 @@ public class DonRamon_Debuff : MonoBehaviour
 
     public void Reiniciar()
     {
-        if(padre != null)
-           this.transform.parent = padre.transform;
+        
 
+        
         mover = false;
         EventDispatcher.RondaTerminada -= Reiniciar;
+        trigger.enabled = false;
+        StartCoroutine(SecuenciaReinicio());
+       
+
+    }
+
+    IEnumerator SecuenciaReinicio()
+    {
+        meshCalavera.SetActive(false);
+        explosion_vfx.Play();
+
+        yield return new WaitForSeconds(1.0f);
+        if (padre != null)
+            this.transform.parent = padre.transform;
 
         this.gameObject.SetActive(false);
-
     }
 
 

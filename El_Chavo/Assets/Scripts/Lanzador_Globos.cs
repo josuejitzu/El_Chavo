@@ -4,7 +4,7 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.UI;
 using TMPro;
-
+using FMODUnity;
 public class Lanzador_Globos : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -54,6 +54,7 @@ public class Lanzador_Globos : MonoBehaviour
     [Space(10)]
     [Header("VFX")]
     public ParticleSystem golpe_vfx;
+    public StudioEventEmitter barra_sfx;
 
     public bool enMira;
     public GameObject mira_ui;
@@ -256,7 +257,7 @@ public class Lanzador_Globos : MonoBehaviour
         {
             personajeActivo.GetComponent<Animator>().SetTrigger("preparar");
         }
-
+        barra_sfx.Play();
         yield return new WaitForSeconds(tiempoEsperaDisparo);
 
         //if (chavo.activeInHierarchy)
@@ -304,6 +305,7 @@ public class Lanzador_Globos : MonoBehaviour
     {
         print("Lanzador " + this.transform.name + " termino disparo...Desactivando...");
         sliderDisparo.gameObject.SetActive(false);
+        barra_sfx.Stop();
         yield return new WaitForSeconds(0.7f);//tiempo de terminaicon de abanico
        
 
@@ -404,7 +406,8 @@ public class Lanzador_Globos : MonoBehaviour
             personajeActivo.GetComponent<Animator>().SetTrigger("golpeado");
         }
         DesactivarGlobo();
-       
+        barra_sfx.Stop();
+
         MasterLevel.masterlevel.ScoreJugador(valorPersonaje);
         golpe_vfx.Play();
         if(posicion_elegida != null)
@@ -446,7 +449,9 @@ public class Lanzador_Globos : MonoBehaviour
         colider.enabled = false;
         puntosPersonaje_text.gameObject.SetActive(false);
         DesactivarGlobo();
-      //  StartCoroutine(posicion_elegida.Cerrar());//ATENCION:probando eventdispatcher
+        barra_sfx.Stop();
+
+        //  StartCoroutine(posicion_elegida.Cerrar());//ATENCION:probando eventdispatcher
 
         //ATENCION: Intentando el EventDispatcher.cs
         //foreach (GameObject g in globos)
@@ -454,7 +459,7 @@ public class Lanzador_Globos : MonoBehaviour
         //  //  if (g.activeInHierarchy)
         //        g.SetActive(false);
         //}
-      
+
         sliderDisparo.value = 0.0f;
         print("Lanzador " + this.transform.name + " Desactivado...");
 

@@ -597,6 +597,7 @@ MonoBehaviour:
   tipo_text: {fileID: 871504430039562529}
   powerActivo_sfx: {fileID: 878260032167218308}
   humo_vfx: {fileID: 3508184648071783149}
+  meshActiva: {fileID: 8859800672025750534}
 --- !u!65 &1754295411763856369
 BoxCollider:
   m_ObjectHideFlags: 0

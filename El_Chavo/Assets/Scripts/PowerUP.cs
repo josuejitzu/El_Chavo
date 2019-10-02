@@ -19,7 +19,7 @@ public class PowerUP : MonoBehaviour
     public StudioEventEmitter powerActivo_sfx;
 
     public ParticleSystem humo_vfx;
-    GameObject meshActiva;
+  [SerializeField]private   GameObject meshActiva;
     private void OnValidate()
     {
         CambiarMesh();
@@ -49,6 +49,7 @@ public class PowerUP : MonoBehaviour
     {
         EventDispatcher.RondaTerminada += DesactivarLetrero;
         //Animacion?
+        meshActiva.SetActive(true);
         this.gameObject.SetActive(true);
         humo_vfx.Play();
         powerActivo_sfx.Play();

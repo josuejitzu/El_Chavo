@@ -44,7 +44,8 @@ public class MunicionControl : MonoBehaviour
 
             StartCoroutine(Explotar());
         }
-        else if (other.transform.tag == "MainCamera" || other.transform.tag == "municion" 
+        else if (other.transform.tag == "MainCamera" 
+              || other.transform.tag == "municion" 
               || other.transform.tag == "municionAutonoma")
         {
             return;

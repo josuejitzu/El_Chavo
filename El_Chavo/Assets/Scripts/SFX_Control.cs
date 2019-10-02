@@ -12,31 +12,43 @@ public class SFX_Control : MonoBehaviour
     [Tooltip("Probabilidad de 0.0 a 1.0 de que suene la voz de DonRamon")]
     public float probabilidadReproduccion;
 
+    [SerializeField]private StudioEventEmitter golpeA_Personaje;
+    [SerializeField]private StudioEventEmitter golpeDe_Personaje;
+    [SerializeField] bool reproduciendoA;
+    [SerializeField]bool reproduciendoDE;
+    
+    [Space(10)]
     [Header("Golpes a Personajes")]
-    [SerializeField] private StudioEventEmitter golpeA_DonRamon_sfx;
-    [SerializeField] private StudioEventEmitter golpeA_chavo;
-    [SerializeField] private StudioEventEmitter golpeA_quico;
-    [SerializeField] private StudioEventEmitter golpeA_poppis;
-    [SerializeField] private StudioEventEmitter golpeA_ñoño;
-    [SerializeField] private StudioEventEmitter golpeA_DoñaFlorinda;
+    [EventRef]public string golpeA_DonRamon_sfx;
+    [EventRef] public string golpeA_chavo;
+    [EventRef] public string golpeA_quico;
+    [EventRef] public string golpeA_poppis;
+    [EventRef] public string golpeA_ñoño;
+    [EventRef] public string golpeA_DoñaFlorinda;
 
     [Space(10)]
     [Header("Golpes de Personajes")]
-    [SerializeField] private StudioEventEmitter golpeDe_DonRamon_sfx;
-    [SerializeField] private StudioEventEmitter golpeDe_chavo;
-    [SerializeField] private StudioEventEmitter golpeDe_quico;
-    [SerializeField] private StudioEventEmitter golpeDe_poppis;
-    [SerializeField] private StudioEventEmitter golpeDe_ñoño;
-    [SerializeField] private StudioEventEmitter golpeDe_DoñaFlorinda;
+    [EventRef] public string golpeDe_DonRamon_sfx;
+    [EventRef] public string golpeDe_chavo;
+    [EventRef] public string golpeDe_quico;
+    [EventRef] public string golpeDe_poppis;
+    [EventRef] public string golpeDe_ñoño;
+    [EventRef] public string golpeDe_DoñaFlorinda;
 
+     
     // Start is called before the first frame update
     void Start()
     {
         sfx_control = this;
+
+        
     }
 
     public void PersonajeGolpeado(TipoPersonaje personaje)
     {
+
+        if (reproduciendoA)
+            return;
 
         float proba = Random.Range(0.0f, 1.0f);
         //ej: si probabilidad es de 0.9 y proba es menor entonces 
@@ -44,71 +56,119 @@ public class SFX_Control : MonoBehaviour
         if (proba > probabilidadReproduccion) 
             return;
 
+        string e = "";
+
 
         if (personaje == TipoPersonaje.chavo)
         {
-            golpeA_chavo.Play();
+            e = golpeA_chavo;
         }
-        else if(personaje == TipoPersonaje.kiko)
+        else if (personaje == TipoPersonaje.kiko)
         {
-            golpeA_quico.Play();
+            e = golpeA_quico;
         }
         else if (personaje == TipoPersonaje.poppy)
         {
-            golpeA_poppis.Play();
+            e = golpeA_poppis;
 
         }
         else if (personaje == TipoPersonaje.ñoño)
         {
-            golpeA_ñoño.Play();
+            e = golpeA_ñoño;
         }
         else if (personaje == TipoPersonaje.donRamon)
         {
-            golpeA_DonRamon_sfx.Play();
+            e = golpeA_DonRamon_sfx;
         }
         else if (personaje == TipoPersonaje.doñaFlorinda)
         {
-            golpeA_DoñaFlorinda.Play();
+            e = golpeA_DoñaFlorinda;
         }
+
+
+
+        var dialogueInstance = RuntimeManager.CreateInstance(e);
+
+        dialogueInstance.start();
+        reproduciendoA = true;
+        StartCoroutine(PararAudiosPersonaje());
+      
     }
 
-    public void JugadorGolpeado(TipoPersonaje personaje)
+    public void JugadorGolpeado(TipoPersonaje personaje)//Cuando un globo golpea al Jugador
     {
+        if (reproduciendoDE)
+            return;
+
         float proba = Random.Range(0.0f, 1.0f);
         //ej: si probabilidad es de 0.9 y proba es menor entonces 
         //hay un chance muy grande de que si se reproduzca
         if (proba > probabilidadReproduccion)
             return;
 
+        if(golpeDe_Personaje.IsPlaying())
+        {
+            print("Hay un personaje hablando...cancelando");
+            return;
+        }
+        
+
+        string e = "";
+
+
         if (personaje == TipoPersonaje.chavo)
         {
-            golpeDe_chavo.Play();
+           e = golpeDe_chavo;
         }
         else if (personaje == TipoPersonaje.kiko)
         {
-            golpeDe_quico.Play();
+            e = golpeDe_quico;
         }
         else if (personaje == TipoPersonaje.poppy)
         {
-            golpeDe_poppis.Play();
+            e = golpeDe_poppis;
         }
         else if (personaje == TipoPersonaje.ñoño)
         {
-            golpeDe_ñoño.Play();
+            e = golpeDe_ñoño;
         }
         else if (personaje == TipoPersonaje.donRamon)
         {
-            golpeDe_DonRamon_sfx.Play();
+            e = golpeDe_DonRamon_sfx;
         }
         else if (personaje == TipoPersonaje.doñaFlorinda)
         {
-            golpeDe_DoñaFlorinda.Play();
+            e = golpeDe_DoñaFlorinda;
         }
+
+
+
+        var dialogueInstance = RuntimeManager.CreateInstance(e);
+        dialogueInstance.start();
+      
+        reproduciendoDE = true;
+        StartCoroutine(PararAudioJugador());
+
     }
 
-    void Probabilidad()
+
+    /// <summary>
+    /// De Personaje Golpeado()
+    /// </summary>
+    IEnumerator PararAudiosPersonaje()
     {
+        yield return new WaitForSeconds(2.0f);
 
+        reproduciendoA = false;
     }
+
+    /// <summary>
+    /// De JugadorGolpeado()
+    /// </summary>
+    IEnumerator PararAudioJugador()
+    {
+        yield return new WaitForSeconds(3.0f);
+        reproduciendoDE = false;
+    }  
     
 }

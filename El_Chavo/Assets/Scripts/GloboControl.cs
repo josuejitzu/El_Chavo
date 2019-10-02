@@ -69,6 +69,7 @@ public class GloboControl : MonoBehaviour
     public StudioEventEmitter golpeGlobo_sfx;
     public StudioEventEmitter globoPoppis_sfx;
     public StudioEventEmitter quico_sfx;
+    public StudioEventEmitter calavera_sfx;
     [FMODUnity.EventRef]
     public string golpe_sfx;
     [FMODUnity.EventRef]
@@ -455,6 +456,7 @@ public class GloboControl : MonoBehaviour
 
         if(_tipoPersonaje == TipoPersonaje.donRamon )
         {
+            calavera_sfx.Play();
             ActivarDebuffDonRamon();
         }
         golpeGlobo_sfx.Play();

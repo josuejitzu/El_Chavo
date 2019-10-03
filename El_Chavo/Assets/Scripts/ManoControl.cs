@@ -67,7 +67,7 @@ public class ManoControl : MonoBehaviour
         {
 
    
-            print(control.inputSource.ToString() + "presionando");
+           // print(control.inputSource.ToString() + "presionando");
             if (sobreResortera)
             {
                 TomarResortera();

@@ -13,13 +13,14 @@ public class PowerUP : MonoBehaviour
     public GameObject meshExplosivo, meshAutonoma, meshAutomatica;
     public float tiempoDesactivacion = 5.0f;
     public Slider slideTiempo;
-   public bool contarTiempo;
+    public bool contarTiempo;
     public TMP_Text tipo_text;
     [Header("SFX")]
     public StudioEventEmitter powerActivo_sfx;
 
     public ParticleSystem humo_vfx;
-  [SerializeField]private   GameObject meshActiva;
+    [SerializeField]private  GameObject meshActiva;
+
     private void OnValidate()
     {
         CambiarMesh();

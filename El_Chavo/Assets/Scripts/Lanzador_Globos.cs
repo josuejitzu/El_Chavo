@@ -399,12 +399,13 @@ public class Lanzador_Globos : MonoBehaviour
         sliderDisparo.gameObject.SetActive(false);
         esperandoLanzamiento = false;
         colider.enabled = false;
-        if (chavo.activeInHierarchy)
-            chavo.GetComponent<Animator>().SetTrigger("golpeado");
+
+      
         if (personajeActivo.GetComponent<Animator>())
         {
             personajeActivo.GetComponent<Animator>().SetTrigger("golpeado");
         }
+
         DesactivarGlobo();
         barra_sfx.Stop();
 
@@ -415,10 +416,8 @@ public class Lanzador_Globos : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        //animacion de golpe
-        if (chavo.activeInHierarchy)
-            chavo.GetComponent<Animator>().SetTrigger("agacharse");
-           if(personajeActivo.GetComponent<Animator>())
+        //animacion de golpe      
+       if(personajeActivo.GetComponent<Animator>())
         {
             personajeActivo.GetComponent<Animator>().SetTrigger("agacharse");
         }

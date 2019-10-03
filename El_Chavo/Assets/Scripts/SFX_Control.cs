@@ -40,8 +40,6 @@ public class SFX_Control : MonoBehaviour
     void Start()
     {
         sfx_control = this;
-
-        
     }
 
     public void PersonajeGolpeado(TipoPersonaje personaje)

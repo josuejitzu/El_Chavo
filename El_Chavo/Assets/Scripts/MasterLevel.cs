@@ -12,6 +12,7 @@ public class MasterLevel : MonoBehaviour
 {
     public static MasterLevel masterlevel;
     public bool jugando;
+    [SerializeField] private bool enIntro;
     [Header("Vida Jugador")]
     public float vidaMax = 200.0f;
     public float vidaJugador = 0.0f;
@@ -73,6 +74,7 @@ public class MasterLevel : MonoBehaviour
     public StudioEventEmitter jugadorGolpeado_sfx;
     public StudioEventEmitter musicaTitulo, musicaJuego, siguienteRonda_sfx;
     [Space(5)]
+    [SerializeField]private StudioEventEmitter donRamon_intro_sfx;
     public StudioEventEmitter donRamon_inicioRonda_sfx;
     public StudioEventEmitter donRamon_finRonda_sfx;
     public StudioEventEmitter donRamon_GameOver_sfx;
@@ -88,8 +90,7 @@ public class MasterLevel : MonoBehaviour
     public GameObject botonAbrir;
     [Range(0.0f, 3.0f)]
     public float tiempoVelocidad = 1.0f;
-
-    [SerializeField] private GameObject camaraB_proyector;
+   [SerializeField] private GameObject camaraB_proyector;
 
     private void Awake()
     {
@@ -101,7 +102,7 @@ public class MasterLevel : MonoBehaviour
         // musicaTitulo.Play();
         contarCombo = true;
         StartCoroutine(PreJuego());
-
+        enIntro = false;
         EventDispatcher.RondaTerminada += ResetearCombo;
     }
 
@@ -156,16 +157,47 @@ public class MasterLevel : MonoBehaviour
         letroInicio.SetActive(true);
 
     }
+
+    public void IniciarIntroCall()
+    {
+        if (enIntro)
+            return;
+        StartCoroutine(IniciarIntro());
+        enIntro = true;
+    }
     public void IniciarJuegoCall()
     {
         if (jugando)//evitar duplicados de inicio
             return;
+
+        if(enIntro)
+        {
+            donRamon_intro_sfx.Stop();
+            StopCoroutine(IniciarIntro());
+        }
+
         StartCoroutine(IniciarJuego());
+        //StartCoroutine(IniciarIntro());
     }
+
+
 
     public void ReiniciarJuegoCall()
     {
         SceneManager.LoadScene(0);
+    }
+
+    IEnumerator IniciarIntro()
+    {
+
+        //Animacion de DonRamon 
+        //Audio intro de Don Ramon
+   
+
+        donRamon_intro_sfx.Play();
+        yield return new WaitForSeconds(20.0f);
+        StartCoroutine(IniciarJuego());
+
     }
 
     public IEnumerator IniciarJuego()

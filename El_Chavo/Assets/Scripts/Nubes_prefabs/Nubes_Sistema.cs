@@ -10,12 +10,7 @@ public class Nubes_Sistema : MonoBehaviour
     int posAnterior;
     public float rateSpawn = 10.0f;
     float sigSpawn;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
+  
     // Update is called once per frame
     void Update()
     {
@@ -74,4 +69,5 @@ public class Nubes_Sistema : MonoBehaviour
         float r = Random.Range(minVel, maxVel);
         return r;
     }
+
 }

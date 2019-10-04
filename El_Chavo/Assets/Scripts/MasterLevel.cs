@@ -170,11 +170,10 @@ public class MasterLevel : MonoBehaviour
         if (jugando)//evitar duplicados de inicio
             return;
 
-        if(enIntro)
-        {
-            donRamon_intro_sfx.Stop();
-            StopCoroutine(IniciarIntro());
-        }
+      
+        donRamon_intro_sfx.Stop();
+        StopCoroutine(IniciarIntro());
+        
 
         StartCoroutine(IniciarJuego());
         //StartCoroutine(IniciarIntro());
@@ -195,7 +194,9 @@ public class MasterLevel : MonoBehaviour
    
 
         donRamon_intro_sfx.Play();
-        yield return new WaitForSeconds(20.0f);
+        yield return new WaitForSeconds(21.0f);
+        if (jugando)
+            yield break;
         StartCoroutine(IniciarJuego());
 
     }
@@ -288,7 +289,7 @@ public class MasterLevel : MonoBehaviour
         contando = false;
         LanzamientosControl._lanzamientos.disparar = false;
         LanzamientosControl._lanzamientos.DesactivarLanzadores();
-        donRamon_GameOver_sfx.Play();
+     //   donRamon_GameOver_sfx.Play();
         yield return new WaitForSeconds(0.05f);
         Score_Control._score.MostrarFinJuego();
         Score_Control._score.jugadorActual = new Jugador("", scoreJugador, rondaNum + 1);

@@ -1043,6 +1043,7 @@ MonoBehaviour:
   "do\xF1aFlorinda": {fileID: 4612863913716219294}
   donRamon: {fileID: 2546920519173479516}
   personajeActivo: {fileID: 1286422705498297083}
+  lanzador: {fileID: 0}
   globoChavoDummy: {fileID: 7055698544160584204}
   globokiko_dummy: {fileID: 484259070619944664}
   "globo\xF1o\xF1o_dummy": {fileID: 2007006834002051752}

@@ -11874,7 +11874,7 @@ MonoBehaviour:
   rondas:
   - duracion: 30
     minRate: 2
-    maxRate: 3
+    maxRate: 4
     personajes: 2
   - duracion: 30
     minRate: 2
@@ -55351,6 +55351,11 @@ PrefabInstance:
         type: 3}
       propertyPath: valorPersonaje
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6746063487013404969, guid: e09443a058be6c3458d8c84c1292f245,
+        type: 3}
+      propertyPath: lanzador
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6746063487626263220, guid: e09443a058be6c3458d8c84c1292f245,
         type: 3}

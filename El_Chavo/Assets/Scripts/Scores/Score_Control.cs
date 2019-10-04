@@ -120,6 +120,7 @@ public class Score_Control : MonoBehaviour
     {
         siguienteRonda_text.text = (_master.rondaNum + 1).ToString("00");//si da 1 es 2
         rondaOperador_txt.text = "Ronda: " + (_master.rondaNum + 1).ToString("00");
+        //rondaOperador_txt.SetText("Ronda");//otra manera de ponerle texto en TMPro
         canvasSiguienteRonda.SetActive(true);
     }
     public void MostrarFinJuego()

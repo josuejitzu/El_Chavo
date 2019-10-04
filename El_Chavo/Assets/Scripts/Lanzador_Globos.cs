@@ -26,6 +26,7 @@ public class Lanzador_Globos : MonoBehaviour
     public GameObject chavo;
     public GameObject kiko, ñoño, poppy, doñaFlorinda, donRamon;
     public GameObject personajeActivo;
+    public Lanzador_Settings lanzador;
     [Header("Globos dummy")]
     public GameObject globoChavoDummy;
     public GameObject globokiko_dummy,globoñoño_dummy,globopoppy_dummy,globoramon_dummy,globoflorinda_dummy;

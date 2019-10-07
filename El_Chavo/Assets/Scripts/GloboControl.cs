@@ -114,6 +114,7 @@ public class GloboControl : MonoBehaviour
             }
         }
     }
+
     public void ActivarGlobo()
     {
         EventDispatcher.RondaTerminada += DesactivarGlobo;
@@ -350,7 +351,7 @@ public class GloboControl : MonoBehaviour
             MasterLevel.masterlevel.DañarJugador(dañoJugador);
             SFX_Control.sfx_control.JugadorGolpeado(_tipoPersonaje);
 
-            if (gameObject.activeInHierarchy)
+            if(gameObject.activeInHierarchy)
                 StartCoroutine(Explotar());
 
             print(this.transform.name +" golpeo "+other.transform.name);
@@ -362,6 +363,7 @@ public class GloboControl : MonoBehaviour
         }
         //print(other.transform.name);
     }
+
     private void OnTriggerStay(Collider other)
     {
         if (other.transform.tag == "MainCamera")
@@ -511,6 +513,8 @@ public class GloboControl : MonoBehaviour
         if (_tipoPersonaje == TipoPersonaje.doñaFlorinda)
         {
             LanzamientosControl._lanzamientos.conFlorinda = false;
+            CancelInvoke("ComenzarBombardeo");
+
         }
         this.gameObject.SetActive(false);
 

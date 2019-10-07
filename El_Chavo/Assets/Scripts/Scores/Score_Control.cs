@@ -72,6 +72,7 @@ public class Score_Control : MonoBehaviour
     [Header("UIX-Operador")]
     public TMP_Text rondaOperador_txt;
     public TMP_Text tiempoRonda_txt;
+    public TMP_Text scoreCanvasJugador_txt;
     public Slider vidaSlider_operador;
 
     public int scoreJugador;
@@ -102,11 +103,12 @@ public class Score_Control : MonoBehaviour
 
 
             scoreEnRonda_text.text = scoreLerp.ToString("0000");
+            scoreCanvasJugador_txt.SetText(scoreEnRonda_text.text);
         }
     }
     private void EventDispatcher_RondaTerminada()
     {
-       
+        MostrarFinRonda();
     }
 
     public void MostrarFinRonda()
@@ -126,8 +128,8 @@ public class Score_Control : MonoBehaviour
     public void MostrarFinJuego()
     {
         scoreFinal_text.text = "Score: " + _master.scoreJugador.ToString("0000") + "    " + "Ronda: " + (_master.rondaNum + 1).ToString("00");
-        //TODO: mostrar el mejor score en GAME OVER
 
+        EventDispatcher.IngresarTicketsPartida(_master.scoreJugador);
         scoreBest_text.text = "Score: " + jugadores[0].score.ToString("0000") + "    " + "Ronda: " + jugadores[0].ronda.ToString("00");
         nombreBest_text.text = jugadores[0].nombre;
         canvasFinJuego.SetActive(true);
@@ -141,7 +143,7 @@ public class Score_Control : MonoBehaviour
     {
         if (jugadores.Length <= 0)//Si es = 0 entonces no hubo entrada de internet
         {
-
+            print("No hubo entrada de internet");
         }
         else
         {
@@ -270,6 +272,7 @@ public class Score_Control : MonoBehaviour
     }
 
 }
+
 /*
  NOTAS:
  -La relacion tickets puntos por el momento es 100pts = 2 tickets

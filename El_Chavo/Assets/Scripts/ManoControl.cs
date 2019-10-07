@@ -211,7 +211,6 @@ public class ManoControl : MonoBehaviour
 
     }
 
-
     public void ActivarDisparo()
 
     {
@@ -259,7 +258,6 @@ public class ManoControl : MonoBehaviour
 
     }
 
-
     void TomarGlobo()
     {
         if (!sobreGlobo)
@@ -284,4 +282,5 @@ public class ManoControl : MonoBehaviour
     {
         puedenVibrar = !puedenVibrar;
     }
+
 }

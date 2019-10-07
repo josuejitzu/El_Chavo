@@ -245,7 +245,7 @@ public class MasterLevel : MonoBehaviour
 
         LanzamientosControl._lanzamientos.disparar = false;
         LanzamientosControl._lanzamientos.DesactivarLanzadores();//Se intento llamar con eventdispatcher pero la logica no funciono
-        Score_Control._score.MostrarFinRonda();
+       // Score_Control._score.MostrarFinRonda();//Llamando por evenDispather
         yield return new WaitForSeconds(3.0f);
         Score_Control._score.canvasJuego.SetActive(false);//canvasJuego.SetActive(false);
 

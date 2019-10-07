@@ -82,6 +82,10 @@ public class PowerUp_Control : MonoBehaviour
     public void ActivarPowerUp()
     {
         SeleccionarPU();//lo regresa a puSeleccionado;
+
+        while (puSeleccionado == null)
+            SeleccionarPU();
+
         int posElegida = PosRand();
         puSeleccionado.transform.position = posicionesPU[posElegida].position;
         puSeleccionado.transform.rotation = posicionesPU[posElegida].rotation;

@@ -122,6 +122,9 @@ public class ForceAcceptAll : CertificateHandler
 
 public class Tickets_Control : MonoBehaviour
 {
+    public static Tickets_Control _tickets;
+
+
     public UsuarioLogin usuario;
     public UsuarioLoggeado usuario_logeado;
 
@@ -137,8 +140,9 @@ public class Tickets_Control : MonoBehaviour
     public string url_login;
     public string url_ticketsAgregar;
     public string url_cardBalance;
-    
-
+    [Space(10)]
+    [Header("URLS")]
+    public int tickets_Partida;
     [Space(10)]
     public string user;
     public string pass;
@@ -162,17 +166,40 @@ public class Tickets_Control : MonoBehaviour
     //private string ultJson = "{'user':'jitzu','pass':'@@jitzu','computerId': 0001 }";
     #endregion
 
+    private void Awake()
+    {
+
+        if (_tickets == null)
+        {
+            _tickets = this;
+        }
+        else if (_tickets != null)
+        {
+            Destroy(this.gameObject);
+        }
+
+        DontDestroyOnLoad(this.gameObject);
+    }
 
     void Start()
     {
        //  jsonStr = "user:" + user + "," + "pass:" + pass + "," + "computerId:" + computerID;
        // print(jsonStr);
         LoggeoSacoa();
-       
+        EventDispatcher.TotalScore += EventDispatcher_TotalScore;
     }
 
- 
+    /*
+     * TODO:
+     * Crear funcion que lea, reciba y asigne a la variable el numero de tarjeta RFID
+     * Una vez ejecutada esos 3 puntos que la funcion llame a AgregarPUntos_aJson
+     * Verificar que haya tickets que agregar para no causar un null
+     * 
+     */
+  
 
+
+    #region Loggeo a Serivdor de Sacoa (Token)
     public void LoggeoSacoa()
     {
         usuario.user = user;
@@ -237,7 +264,14 @@ public class Tickets_Control : MonoBehaviour
        
 
     }
-     //Funciona pero no esta guardando los datos donde corresponde
+    #endregion
+
+    #region Solicitar Saldo de Usuario(Actualmente no veo la necesidad de saber los tickets)
+    //Funciona pero no esta guardando los datos donde corresponde
+    /// <summary>
+    /// Llamada cuando el Loggeo fue un exito
+    /// Pero no veo la necesidad de llamarla, el usuario tendria que pasar su tarjeta para activarla
+    /// </summary>
     public void CardBalance_aJson()
     {
         print("Solicitando Balance de Tarjeta...");
@@ -298,9 +332,35 @@ public class Tickets_Control : MonoBehaviour
         }
 
     }
+    #endregion
+
+    #region Dar Tickets
 
 
+    /// <summary>
+    /// Convierte el Score del Jugador en los tickets 
+    /// que se le asignaran PERO NO DEBE AGREGARLOS A LA TARJETA, eso es otra funcion
+    /// </summary>
+    /// <param name="obj"></param>
+    private void EventDispatcher_TotalScore(int puntosJugador)
+    {
+        if(puntosJugador < 49)
+        {
+            print("El jugador no gano ningun ticket...");
+            return;
+        }
 
+        int _tickets = Mathf.FloorToInt( puntosJugador / 50);
+        tickets_Partida = _tickets;
+        //AgregarPuntos_aJson();
+
+    }
+
+    /// <summary>
+    /// Crea el formato para agregar puntos al Jugador
+    /// Se tiene que pasar la tarjeta
+    /// Actualmente llamada por PostCardBalance()
+    /// </summary>
     public void AgregarPuntos_aJson()
     {
         print("Agregando puntos a Tarjeta...");
@@ -308,7 +368,7 @@ public class Tickets_Control : MonoBehaviour
         tarjetaAgregar.empId = usuario_logeado.body.empId;
         tarjetaAgregar.cardNumber = cardNumber;
         tarjetaAgregar.token = usuario_logeado.body.token;
-        tarjetaAgregar.ticketAmount = 10;
+        tarjetaAgregar.ticketAmount = 10; // tickets_Partida
         tarjetaAgregar.extEmpId = 1;
 
         string aJson = JsonUtility.ToJson(tarjetaAgregar);
@@ -359,6 +419,10 @@ public class Tickets_Control : MonoBehaviour
             cert?.Dispose();
         }
     }
+
+    #endregion
+
+
 }
 
 

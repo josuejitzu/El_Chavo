@@ -159,19 +159,19 @@ public class ManoControl : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
+    //private void OnTriggerEnter(Collider other)
+    //{
 
-        if(other.transform.tag == "resortera")
-        {
+    //    if(other.transform.tag == "resortera")
+    //    {
             
-        }
-        if(other.transform.tag == "tirante")
-        {
+    //    }
+    //    if(other.transform.tag == "tirante")
+    //    {
             
-        }
+    //    }
 
-    }
+    //}
 
     private void OnTriggerStay(Collider other)
     {

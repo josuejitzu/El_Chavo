@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 using System.Text;
 using System.IO;
 using System;
+using EasyButtons;
 
 #region Area de Clases para Logeo
 [System.Serializable]
@@ -185,7 +186,7 @@ public class Tickets_Control : MonoBehaviour
     {
        //  jsonStr = "user:" + user + "," + "pass:" + pass + "," + "computerId:" + computerID;
        // print(jsonStr);
-        LoggeoSacoa();
+      //  LoggeoSacoa();
         EventDispatcher.TotalScore += EventDispatcher_TotalScore;
     }
 
@@ -200,6 +201,7 @@ public class Tickets_Control : MonoBehaviour
 
 
     #region Loggeo a Serivdor de Sacoa (Token)
+    [Button("Loggear a Sacoa")]
     public void LoggeoSacoa()
     {
         usuario.user = user;
@@ -272,6 +274,8 @@ public class Tickets_Control : MonoBehaviour
     /// Llamada cuando el Loggeo fue un exito
     /// Pero no veo la necesidad de llamarla, el usuario tendria que pasar su tarjeta para activarla
     /// </summary>
+    /// 
+    [Button("Obtener Saldo")]
     public void CardBalance_aJson()
     {
         print("Solicitando Balance de Tarjeta...");
@@ -361,6 +365,8 @@ public class Tickets_Control : MonoBehaviour
     /// Se tiene que pasar la tarjeta
     /// Actualmente llamada por PostCardBalance()
     /// </summary>
+    [Button("Agregar Puntos")]
+    /// 
     public void AgregarPuntos_aJson()
     {
         print("Agregando puntos a Tarjeta...");

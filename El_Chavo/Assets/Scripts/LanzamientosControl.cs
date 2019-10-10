@@ -66,6 +66,13 @@ public class LanzamientosControl : MonoBehaviour
         minRate = MasterLevel.masterlevel.rondas[MasterLevel.masterlevel.rondaNum].minRate;
         maxRate = MasterLevel.masterlevel.rondas[MasterLevel.masterlevel.rondaNum].maxRate;
         maxLanzadores = MasterLevel.masterlevel.rondas[MasterLevel.masterlevel.rondaNum].personajes;
+
+        if (maxLanzadores > 6)
+        {
+            maxLanzadores = 6;
+        }
+        else if (maxLanzadores <= 0)
+            maxLanzadores = 1;
     }
 
     public void SeleccionarLanzador()
@@ -78,7 +85,7 @@ public class LanzamientosControl : MonoBehaviour
         if (lanzadores[r].disparando || lanzadores[r].gameObject.activeInHierarchy)//Hay que checar si no conviene mejor saber si esta activo
         {
           //  sigDisparo = Time.time + RandomRate();
-            Invoke("SeleccionarLanzador", 0.5f);//Al parece aqui tenemos un problema cuando mandamos a llamar tan rapido a la misma funcion, por eso le puse un delay
+            Invoke("SeleccionarLanzador", 1.0f);//Al parece aqui tenemos un problema cuando mandamos a llamar tan rapido a la misma funcion, por eso le puse un delay
            // print("No se encontro lanzador libre...buscando otro...");
             return;
 
@@ -88,12 +95,15 @@ public class LanzamientosControl : MonoBehaviour
             return;
         }
 
+        //OJO: Cambiaste la logica de seleccion de posicion haciendo que no se repita
+        // y se nota un poco mas lento los personajes lo cual permite que quiza se aun poco mas facil
+        //checar si no es mejor que puedan ocupar 2 posiciones, no se, es cuestion de gustos
         int posSeleccionada = PosicionRandom();
         lanzadores[r].transform.position = posiciones[posSeleccionada].position;
         lanzadores[r].transform.rotation =  posiciones[posSeleccionada].rotation;
-        //Al lanzador se le asigna un
+        //Al lanzador se le asigna una posicion para poder controlar la animacion si es necesario
         lanzadores[r].GetComponent<Lanzador_Globos>().posicion_elegida = posiciones[posSeleccionada].GetComponent<PosicionControl>();
-        //lanzadores[r].gameObject.SetActive(true);
+        //Se activa asi mismo en la funcion OrdenDisparo();
         lanzadores[r].OrdenDisparo();
 
 
@@ -105,7 +115,8 @@ public class LanzamientosControl : MonoBehaviour
         //StartCoroutine(lanzadores[r].ComenzarDisparo());
 
     }
-    int PosicionRandom()
+
+    private int PosicionRandom()
     {
         
 
@@ -115,6 +126,11 @@ public class LanzamientosControl : MonoBehaviour
         {
             r = Random.Range(0, posiciones.Length);
         }
+        while(posiciones[r].GetComponent<PosicionControl>().ocupada)
+        {
+            r = Random.Range(0, posiciones.Length);
+
+        }
 
         posicionAnterior = r;
 
@@ -122,8 +138,9 @@ public class LanzamientosControl : MonoBehaviour
         return r;
     }
 
-    int RandomLanzador()
+    private int RandomLanzador()
     {
+        //ojo maxLanzadores no puede ser mayor a 6 pues de 0 a 6 , 6 queda desacartado por  la funcion Random
         int r = Random.Range(0, maxLanzadores);
 
         while (r == personajeAnterior)
@@ -153,7 +170,7 @@ public class LanzamientosControl : MonoBehaviour
         return r;
     }
 
-    float RandomRate()
+    private float RandomRate()
     {
         float r = Mathf.Floor(Random.Range(minRate, maxRate));
 
@@ -167,7 +184,7 @@ public class LanzamientosControl : MonoBehaviour
         return r;
     }
     
-    TipoPersonaje RandomPersonaje()
+    private TipoPersonaje RandomPersonaje()
     {
         int r = 0;
         if(ronda == 1)

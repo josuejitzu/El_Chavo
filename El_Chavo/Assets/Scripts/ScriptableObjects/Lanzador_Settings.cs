@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[System.Serializable]
 [CreateAssetMenu(menuName = "LanzadorPropiedades")]
 public class Lanzador_Settings : ScriptableObject
 {

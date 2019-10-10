@@ -187,64 +187,51 @@ public class GloboControl : MonoBehaviour
     /// </summary>
     public void DesactivarGlobo()
     {
-        EventDispatcher.RondaTerminada -= DesactivarGlobo;
+        if(this.gameObject.activeInHierarchy)
+        StartCoroutine(Explotar());
+        else
+            this.gameObject.SetActive(false);
 
-        //StopAllCoroutines();
+        #region Depreciado
+        //EventDispatcher.RondaTerminada -= DesactivarGlobo;
+
+        ////
         //brincar = false;
         //trigger.enabled = false;
-        //marcoVida.enabled = false;
+        ////rigid.isKinematic = true;
+        //vidaSlider.gameObject.SetActive(false);
         //kamikaze = false;
+        //CancelInvoke("ComenzarBombardeo");
 
-        ////Desactivar globos de doña florinda
-        //if (_tipoPersonaje == TipoPersonaje.doñaFlorinda)
+        //if (sliderFlorinda != null)
+        //    sliderFlorinda.gameObject.SetActive(false);
+
+        //if (_tipoPersonaje == TipoPersonaje.miniFlorinda)
         //{
-        //    foreach (GameObject gm in globosFlorinda)
-        //    {
-        //        if (gm.activeInHierarchy)
-        //        {
-        //            gm.GetComponent<GloboMini_Florinda>().DesactivarGlobo();
-        //        }
-        //    }
+        //    meshGlobo.SetActive(false);
+        //}
+        //else
+        //{
+        //    meshGlobo.SetActive(false);
         //}
 
+        //fmod_globos.Event = explosionAgua_sfx;
+        //fmod_globos.Play();
+        //marcoVida.enabled = false;
+
+        //explosion_vfx.Play();
+        //EfectoGolpe();
+
+
+
+        //if (_tipoPersonaje == TipoPersonaje.doñaFlorinda)
+        //{
+        //    LanzamientosControl._lanzamientos.conFlorinda = false;
+        //}
+        //QuitarMira();
         //this.gameObject.SetActive(false);
+        #endregion
 
-
-        //
-        brincar = false;
-        trigger.enabled = false;
-        //rigid.isKinematic = true;
-        vidaSlider.gameObject.SetActive(false);
-        kamikaze = false;
-        CancelInvoke("ComenzarBombardeo");
-
-        if (sliderFlorinda != null)
-            sliderFlorinda.gameObject.SetActive(false);
-
-        if (_tipoPersonaje == TipoPersonaje.miniFlorinda)
-        {
-            meshGlobo.SetActive(false);
-        }
-        else
-        {
-            meshGlobo.SetActive(false);
-        }
-
-        fmod_globos.Event = explosionAgua_sfx;
-        fmod_globos.Play();
-        marcoVida.enabled = false;
-
-        explosion_vfx.Play();
-        EfectoGolpe();
-
-       
-
-        if (_tipoPersonaje == TipoPersonaje.doñaFlorinda)
-        {
-            LanzamientosControl._lanzamientos.conFlorinda = false;
-        }
-        QuitarMira();
-        this.gameObject.SetActive(false);
     }
 
     void Lanzando()
@@ -348,13 +335,12 @@ public class GloboControl : MonoBehaviour
 
         }else if(other.transform.tag == "MainCamera")//Le hace daño al Jugador y Explota
         {
+            if (!gameObject.activeInHierarchy)
+                return;
             MasterLevel.masterlevel.DañarJugador(dañoJugador);
             SFX_Control.sfx_control.JugadorGolpeado(_tipoPersonaje);
-
-            if(gameObject.activeInHierarchy)
-                StartCoroutine(Explotar());
-
-            print(this.transform.name +" golpeo "+other.transform.name);
+            StartCoroutine(Explotar());
+            print(this.transform.name +" golpeo "+ other.transform.name);
 
         }
         else
@@ -368,10 +354,13 @@ public class GloboControl : MonoBehaviour
     {
         if (other.transform.tag == "MainCamera")
         {
+            if (!gameObject.activeInHierarchy)
+                return;
+
             MasterLevel.masterlevel.DañarJugador(dañoJugador);
-            if(gameObject.activeInHierarchy)
-               StartCoroutine(Explotar());
-            print(other.transform.name);
+            SFX_Control.sfx_control.JugadorGolpeado(_tipoPersonaje);
+            StartCoroutine(Explotar());
+            print(other.transform.name + "Golpeo a Jugador");
 
         }
     }
@@ -440,8 +429,6 @@ public class GloboControl : MonoBehaviour
         this.transform.LookAt(posFinal);
 
         EfectoGolpe();
-
-
        
          meshGlobo.SetActive(false);
         
@@ -466,12 +453,6 @@ public class GloboControl : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         puntos_text.gameObject.SetActive(false);
-        //if (_tipoPersonaje == TipoPersonaje.miniFlorinda)
-        //{
-        //    this.transform.position = mini_posInicial.position;
-        //    this.transform.parent = globoPadre;
-            
-        //}
 
         if(_tipoPersonaje == TipoPersonaje.doñaFlorinda)
         {
@@ -483,14 +464,20 @@ public class GloboControl : MonoBehaviour
 
     }
 
-    IEnumerator Explotar()//Cuando choca con algo, incluido el jugador pero no cuenta los puntos eso lo hace en TriggerEnter
+    /// <summary>
+    /// Cuando choca con algo, incluido el jugador pero no cuenta los puntos
+    /// eso lo hace en TriggerEnter
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator Explotar()
     {
+        EventDispatcher.RondaTerminada -= DesactivarGlobo;
+
         brincar = false;
         trigger.enabled = false;
         //rigid.isKinematic = true;
         vidaSlider.gameObject.SetActive(false);
         kamikaze = false;
-        EventDispatcher.RondaTerminada -= DesactivarGlobo;
 
         if (sliderFlorinda != null)
             sliderFlorinda.gameObject.SetActive(false);

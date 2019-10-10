@@ -25,7 +25,10 @@ public class EventDispatcher
             DebuffActivado();
         }
     }
-
+    /// <summary>
+    /// Llamado cuando el Jugador es Golpeado 
+    /// Por el momento utilizado por SFX_Control.cs para las voces
+    /// </summary>
     public static void LlamarJugadorGolpeado()
     {
         if(JugadorGolpeado != null)
@@ -33,6 +36,11 @@ public class EventDispatcher
             JugadorGolpeado();
         }
     }
+    /// <summary>
+    /// Llamado por ScoreControl para que Tickets.cs sepa
+    /// cuantos puntos hizo el jugador y haga la conversion a tickets
+    /// </summary>
+    /// <param name="puntos"></param>
     public static void IngresarTicketsPartida(int puntos)
     {
         if(TotalScore != null)

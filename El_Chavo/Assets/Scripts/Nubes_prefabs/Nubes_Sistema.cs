@@ -39,7 +39,7 @@ public class Nubes_Sistema : MonoBehaviour
         nube.SetActive(true);
     }
 
-    GameObject NubeRandom()
+    private GameObject NubeRandom()
     {
         GameObject n = null;
         for (int i = 0; i < nubes.Length; i++)
@@ -52,7 +52,7 @@ public class Nubes_Sistema : MonoBehaviour
         }
         return n;
     }
-    int PosicionRandom()
+    private int PosicionRandom()
     {
         int r = Random.Range(0, posiciones.Length);
 
@@ -64,7 +64,7 @@ public class Nubes_Sistema : MonoBehaviour
 
         return r;
     }
-    float VelocidadRandom()
+    private float VelocidadRandom()
     {
         float r = Random.Range(minVel, maxVel);
         return r;

@@ -7,7 +7,8 @@ using System.IO;
 using TMPro;
 using FMODUnity;
 using System;
-
+using EasyButtons;
+using UnityEngine.Playables;
 public class MasterLevel : MonoBehaviour
 {
     public static MasterLevel masterlevel;
@@ -25,6 +26,9 @@ public class MasterLevel : MonoBehaviour
 
     [Header("LetreroInicio")]
     public GameObject letroInicio;
+    [Space(10)]
+    [Header("AnimIntro")]
+    [SerializeField] private PlayableDirector intro_timeLine;
 
     [Space(10)]
     [Header("Rondas")]
@@ -75,6 +79,7 @@ public class MasterLevel : MonoBehaviour
     public StudioEventEmitter musicaTitulo, musicaJuego, siguienteRonda_sfx;
     [Space(5)]
     [SerializeField]private StudioEventEmitter donRamon_intro_sfx;
+    [SerializeField] private Animator donRamon_intro_anim;
     public StudioEventEmitter donRamon_inicioRonda_sfx;
     public StudioEventEmitter donRamon_finRonda_sfx;
     public StudioEventEmitter donRamon_GameOver_sfx;
@@ -158,6 +163,8 @@ public class MasterLevel : MonoBehaviour
 
     }
 
+    [Button("Intro", ButtonSpacing.Before)]
+
     public void IniciarIntroCall()
     {
         if (enIntro)
@@ -165,6 +172,8 @@ public class MasterLevel : MonoBehaviour
         StartCoroutine(IniciarIntro());
         enIntro = true;
     }
+
+    [Button("Jugar",ButtonSpacing.Before)]
     public void IniciarJuegoCall()
     {
         if (jugando)//evitar duplicados de inicio
@@ -179,8 +188,6 @@ public class MasterLevel : MonoBehaviour
         //StartCoroutine(IniciarIntro());
     }
 
-
-
     public void ReiniciarJuegoCall()
     {
         SceneManager.LoadScene(0);
@@ -191,10 +198,13 @@ public class MasterLevel : MonoBehaviour
 
         //Animacion de DonRamon 
         //Audio intro de Don Ramon
-   
 
-        donRamon_intro_sfx.Play();
-        yield return new WaitForSeconds(21.0f);
+
+        intro_timeLine.gameObject.SetActive(true);
+        if(intro_timeLine.state != PlayState.Playing)
+             intro_timeLine.Play();
+        yield return new WaitForSeconds(22.0f);
+
         if (jugando)
             yield break;
         StartCoroutine(IniciarJuego());
@@ -204,6 +214,10 @@ public class MasterLevel : MonoBehaviour
     public IEnumerator IniciarJuego()
     {
         letroInicio.GetComponent<Animator>().SetTrigger("salir");
+        //intro_timeLine.Pause();
+        if (intro_timeLine.state == PlayState.Playing)
+            intro_timeLine.time = 21.0f;
+       
         //animacion de letrero
         yield return new WaitForSeconds(2.0f);
         letroInicio.SetActive(false);
@@ -222,12 +236,14 @@ public class MasterLevel : MonoBehaviour
         musicaTitulo.Stop();
         musicaJuego.Play();
 
-        donRamon_inicioRonda_sfx.Play();
+
+       
 
         yield return new WaitForSeconds(2.0f);
         Score_Control._score.canvasSiguienteRonda.SetActive(false);
-        ///
-       // siguienteRonda_sfx.Play();
+        intro_timeLine.gameObject.SetActive(false);
+
+        // siguienteRonda_sfx.Play();
         yield return new WaitForSeconds(0.5f);
         jugando = true;
         contando = true;

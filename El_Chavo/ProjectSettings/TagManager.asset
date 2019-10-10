@@ -16,6 +16,7 @@ TagManager:
   - posicionDebuff
   - municionAutonoma
   - FinNubes
+  - 360Cam
   layers:
   - Default
   - TransparentFX

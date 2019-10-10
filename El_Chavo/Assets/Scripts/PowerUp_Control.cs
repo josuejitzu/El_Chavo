@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using FMODUnity;
-
+using EasyButtons;
 
 public class PowerUp_Control : MonoBehaviour
 {
@@ -28,14 +28,14 @@ public class PowerUp_Control : MonoBehaviour
 
     void OnDrawGizmos()
     {
-      
-       Gizmos.color = new Color(1.0f,0.0f,0.0f,0.5f);
-       for (int i = 0; i < posicionesPU.Length; i++)
-       {
+
+        Gizmos.color = new Color(1.0f, 0.0f, 0.0f, 0.5f);
+        for (int i = 0; i < posicionesPU.Length; i++)
+        {
             Gizmos.DrawCube(posicionesPU[i].position, posicionesPU[i].localScale);
             posicionesPU[i].transform.name = "PosicionPU_" + i;
-       }    
-        
+        }
+
     }
 
     void Start()
@@ -79,6 +79,9 @@ public class PowerUp_Control : MonoBehaviour
     /// Activa las tabla con un Power Up aleatorio para que el jugador pueda
     /// darle y activar ese mismo PowerUP
     /// </summary>
+    /// 
+
+    [Button("HOLAAA",ButtonSpacing.Before)]
     public void ActivarPowerUp()
     {
         SeleccionarPU();//lo regresa a puSeleccionado;

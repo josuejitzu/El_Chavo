@@ -69,7 +69,7 @@ public class MunicionControl : MonoBehaviour
 
         }else if(other.transform.name == "letreroJoint")
         {
-            MasterLevel.masterlevel.IniciarJuegoCall();
+            MasterLevel.masterlevel.IniciarIntroCall();
             StartCoroutine(Explotar());
         }
         else
@@ -79,7 +79,7 @@ public class MunicionControl : MonoBehaviour
 
         if(other.transform.name == "letreroJugar")
         {
-            MasterLevel.masterlevel.IniciarJuegoCall();
+            MasterLevel.masterlevel.IniciarIntroCall();
         }
     }
 

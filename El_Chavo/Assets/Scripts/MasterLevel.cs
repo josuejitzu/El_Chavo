@@ -201,8 +201,10 @@ public class MasterLevel : MonoBehaviour
 
 
         intro_timeLine.gameObject.SetActive(true);
+
         if(intro_timeLine.state != PlayState.Playing)
              intro_timeLine.Play();
+
         yield return new WaitForSeconds(22.0f);
 
         if (jugando)
@@ -215,7 +217,7 @@ public class MasterLevel : MonoBehaviour
     {
         letroInicio.GetComponent<Animator>().SetTrigger("salir");
         //intro_timeLine.Pause();
-        if (intro_timeLine.state == PlayState.Playing)
+        if (intro_timeLine.state == PlayState.Playing && intro_timeLine.time < 21.0f)
             intro_timeLine.time = 21.0f;
        
         //animacion de letrero

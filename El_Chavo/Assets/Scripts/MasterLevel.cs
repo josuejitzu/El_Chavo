@@ -167,7 +167,7 @@ public class MasterLevel : MonoBehaviour
 
     public void IniciarIntroCall()
     {
-        if (enIntro)
+        if (enIntro || jugando)
             return;
         StartCoroutine(IniciarIntro());
         enIntro = true;
@@ -219,7 +219,9 @@ public class MasterLevel : MonoBehaviour
         //intro_timeLine.Pause();
         if (intro_timeLine.state == PlayState.Playing && intro_timeLine.time < 21.0f)
             intro_timeLine.time = 21.0f;
-       
+
+        if (enIntro)
+            enIntro = false;
         //animacion de letrero
         yield return new WaitForSeconds(2.0f);
         letroInicio.SetActive(false);

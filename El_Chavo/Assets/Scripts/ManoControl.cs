@@ -55,8 +55,11 @@ public class ManoControl : MonoBehaviour
         EventDispatcher.JugadorGolpeado += VibrarControl;
     }
 
+    private void OnDisable()
+    {
+        EventDispatcher.JugadorGolpeado -= VibrarControl;
+    }
 
-  
     void Update()
     {
 

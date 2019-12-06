@@ -24,7 +24,7 @@ public class DonRamon_Debuff : MonoBehaviour
     {
         //EncontrarPosicion();
         //Invoke("Reiniciar", tiempoVida);
-        ActivarDebuff();
+       //ActivarDebuff();
     }
   
     // Update is called once per frame

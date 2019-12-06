@@ -94,6 +94,10 @@ public class Score_Control : MonoBehaviour
 
         EventDispatcher.RondaTerminada += EventDispatcher_RondaTerminada;
     }
+    private void OnDisable()
+    {
+        EventDispatcher.RondaTerminada -= EventDispatcher_RondaTerminada;
+    }
     private void FixedUpdate()
     {
         if (canvasJuego.activeInHierarchy)
@@ -113,6 +117,9 @@ public class Score_Control : MonoBehaviour
 
     public void MostrarFinRonda()
     {
+        if (!MasterLevel.masterlevel.jugando)
+            return;
+
         ronda_text.text = (_master.rondaNum + 1).ToString("00");//iniciando en 0 da 
         scoreJugador = _master.scoreJugador;
         canvasJuego.SetActive(true);
@@ -125,6 +132,7 @@ public class Score_Control : MonoBehaviour
         //rondaOperador_txt.SetText("Ronda");//otra manera de ponerle texto en TMPro
         canvasSiguienteRonda.SetActive(true);
     }
+
     public void MostrarFinJuego()
     {
         scoreFinal_text.text = "Score: " + _master.scoreJugador.ToString("0000") + "    " + "Ronda: " + (_master.rondaNum + 1).ToString("00");
@@ -211,7 +219,7 @@ public class Score_Control : MonoBehaviour
             print("Scores bajados con exito");
             Debug.Log(webRequest.downloadHandler.text);
             //Escribir en una hoja por si no hay datos o internet
-          //  File.WriteAllText("D:\\Proyectos\\El_Chavo\\Unity\\datosRecibidos.txt", m);
+            //File.WriteAllText("D:\\Proyectos\\El_Chavo\\Unity\\datosRecibidos.txt", m);
             FormatoWeb(webRequest.downloadHandler.text);
             ActualizarTableroJuego();
 
@@ -275,6 +283,6 @@ public class Score_Control : MonoBehaviour
 
 /*
  NOTAS:
- -La relacion tickets puntos por el momento es 100pts = 2 tickets
+ -La relacion tickets puntos por el momento es 50pts = 1 tickets
  -El score por el momento necesita internet, de lo contrario nos vamos a encontrar con un error
      */

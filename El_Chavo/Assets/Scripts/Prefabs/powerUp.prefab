@@ -1544,10 +1544,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7748486482170526496}
     m_Modifications:
-    - target: {fileID: 121774, guid: 5d24c8b5c9abd754d877d25ebd733bdf, type: 3}
-      propertyPath: m_Name
-      value: MagicZoneBlue
-      objectReference: {fileID: 0}
     - target: {fileID: 450930, guid: 5d24c8b5c9abd754d877d25ebd733bdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1604,6 +1600,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.35766882
       objectReference: {fileID: 0}
+    - target: {fileID: 121774, guid: 5d24c8b5c9abd754d877d25ebd733bdf, type: 3}
+      propertyPath: m_Name
+      value: MagicZoneBlue
+      objectReference: {fileID: 0}
     - target: {fileID: 19806880, guid: 5d24c8b5c9abd754d877d25ebd733bdf, type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
       value: 0.1490196
@@ -1659,10 +1659,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7748486482170526496}
     m_Modifications:
-    - target: {fileID: 187952, guid: c05e92eaee7a00844867e5edc8e0dde1, type: 3}
-      propertyPath: m_Name
-      value: DustDirtyPoof
-      objectReference: {fileID: 0}
     - target: {fileID: 19826678, guid: c05e92eaee7a00844867e5edc8e0dde1, type: 3}
       propertyPath: InitialModule.startSizeY.minMaxState
       value: 3
@@ -1678,6 +1674,10 @@ PrefabInstance:
     - target: {fileID: 19826678, guid: c05e92eaee7a00844867e5edc8e0dde1, type: 3}
       propertyPath: playOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 187952, guid: c05e92eaee7a00844867e5edc8e0dde1, type: 3}
+      propertyPath: m_Name
+      value: DustDirtyPoof
       objectReference: {fileID: 0}
     - target: {fileID: 424984, guid: c05e92eaee7a00844867e5edc8e0dde1, type: 3}
       propertyPath: m_LocalPosition.x

@@ -3,7 +3,7 @@
 public class EventDispatcher
 {
     public static event Action RondaTerminada;//A la que se tienen que subscribir los interesados
-    public static event Action DebuffActivado;
+    public static event Action DebuffActivado;//Llamado cuando alguno de los Debuffs fue activado
     public static event Action JugadorGolpeado;
     public static event Action<int> TotalScore;
 

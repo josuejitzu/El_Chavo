@@ -30,6 +30,11 @@ public class PowerUP : MonoBehaviour
         
     }
 
+    private void OnDisable()
+    {
+        EventDispatcher.RondaTerminada -= DesactivarLetrero;
+
+    }
     private void Update()
     {
         if (contarTiempo)
@@ -116,13 +121,13 @@ public class PowerUP : MonoBehaviour
     }
 
 
-    void DesactivarLetrero()//llamado por EventDispatcher
+    private void DesactivarLetrero()//llamado por EventDispatcher
     {
         StartCoroutine(ConteoDesactivacion());
 
     }
 
-    void CambiarMesh()
+    private void CambiarMesh()
     {
         meshExplosivo.SetActive(false);
         meshAutomatica.SetActive(false);

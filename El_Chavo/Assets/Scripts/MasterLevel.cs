@@ -9,6 +9,7 @@ using FMODUnity;
 using System;
 using EasyButtons;
 using UnityEngine.Playables;
+
 public class MasterLevel : MonoBehaviour
 {
     public static MasterLevel masterlevel;
@@ -26,6 +27,7 @@ public class MasterLevel : MonoBehaviour
 
     [Header("LetreroInicio")]
     public GameObject letroInicio;
+    public ParticleSystem particulaGolpe_letrero;
     [Space(10)]
     [Header("AnimIntro")]
     [SerializeField] private PlayableDirector intro_timeLine;
@@ -108,9 +110,13 @@ public class MasterLevel : MonoBehaviour
         contarCombo = true;
         StartCoroutine(PreJuego());
         enIntro = false;
-        EventDispatcher.RondaTerminada += ResetearCombo;
+        //EventDispatcher.RondaTerminada += ResetearCombo;
     }
 
+    private void OnDisable()
+    {
+        
+    }
     // Update is called once per frame
     void Update()
     {
@@ -171,6 +177,10 @@ public class MasterLevel : MonoBehaviour
             return;
         StartCoroutine(IniciarIntro());
         enIntro = true;
+        particulaGolpe_letrero.Play();
+        letroInicio.GetComponent<Animator>().SetTrigger("golpeado");
+
+
     }
 
     [Button("Jugar",ButtonSpacing.Before)]
@@ -190,6 +200,21 @@ public class MasterLevel : MonoBehaviour
 
     public void ReiniciarJuegoCall()
     {
+
+        StartCoroutine(ReiniciarJuego());
+    }
+    private IEnumerator ReiniciarJuego()
+    {
+        jugando = false;
+        contando = false;
+
+        EventDispatcher.LlamarFinDeRonda();
+
+
+        LanzamientosControl._lanzamientos.disparar = false;
+        LanzamientosControl._lanzamientos.DesactivarLanzadores();
+        //   donRamon_GameOver_sfx.Play();
+        yield return new WaitForSeconds(0.05f);
         SceneManager.LoadScene(0);
     }
 
@@ -201,8 +226,9 @@ public class MasterLevel : MonoBehaviour
 
 
         intro_timeLine.gameObject.SetActive(true);
+        letroInicio.GetComponent<Animator>().SetTrigger("salir");
 
-        if(intro_timeLine.state != PlayState.Playing)
+        if (intro_timeLine.state != PlayState.Playing)
              intro_timeLine.Play();
 
         yield return new WaitForSeconds(22.0f);
@@ -215,7 +241,7 @@ public class MasterLevel : MonoBehaviour
 
     public IEnumerator IniciarJuego()
     {
-        letroInicio.GetComponent<Animator>().SetTrigger("salir");
+        //letroInicio.GetComponent<Animator>().SetTrigger("salir");
         //intro_timeLine.Pause();
         if (intro_timeLine.state == PlayState.Playing && intro_timeLine.time < 21.0f)
             intro_timeLine.time = 21.0f;
@@ -262,6 +288,7 @@ public class MasterLevel : MonoBehaviour
 
         jugando = false;
         donRamon_finRonda_sfx.Play();
+        ResetearCombo();
 
         LanzamientosControl._lanzamientos.disparar = false;
         LanzamientosControl._lanzamientos.DesactivarLanzadores();//Se intento llamar con eventdispatcher pero la logica no funciono
@@ -303,10 +330,12 @@ public class MasterLevel : MonoBehaviour
 
     public IEnumerator FinJuego()
     {
-        EventDispatcher.LlamarFinDeRonda();
-
         jugando = false;
         contando = false;
+
+        EventDispatcher.LlamarFinDeRonda();
+        ResetearCombo();
+       
         LanzamientosControl._lanzamientos.disparar = false;
         LanzamientosControl._lanzamientos.DesactivarLanzadores();
      //   donRamon_GameOver_sfx.Play();

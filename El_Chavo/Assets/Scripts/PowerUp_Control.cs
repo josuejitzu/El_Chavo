@@ -55,6 +55,10 @@ public class PowerUp_Control : MonoBehaviour
     {
         StartCoroutine(CancelarPowerUP());
     }
+    private void OnDisable()
+    {
+        EventDispatcher.RondaTerminada -= EventDispatcher_RondaTerminada;
+    }
 
     // Update is called once per frame
     void Update()
@@ -81,7 +85,7 @@ public class PowerUp_Control : MonoBehaviour
     /// </summary>
     /// 
 
-    [Button("HOLAAA",ButtonSpacing.Before)]
+    [Button("ActivarPowerUp",ButtonSpacing.Before)]
     public void ActivarPowerUp()
     {
         SeleccionarPU();//lo regresa a puSeleccionado;
@@ -194,7 +198,9 @@ public class PowerUp_Control : MonoBehaviour
         Resortera_Control._resortera.ActivarPowerUp(MunicionTipo.Normal);
         print("Se pidio desactivar powerUP porque Don Ramon te golpeo o porque golpeaste Debuff");
         powerUpCancelado_sfx.Play();
-        donRamon_calaca_sfx.Play();
+        if(donRamon_calaca_sfx != null)
+            donRamon_calaca_sfx.Play();
+
         yield break;
 
     }

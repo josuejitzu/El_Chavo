@@ -6,6 +6,9 @@ using System.Text;
 using System.IO;
 using System;
 using EasyButtons;
+using TMPro;
+using System.Runtime.InteropServices;
+using Lando;
 
 #region Area de Clases para Logeo
 [System.Serializable]
@@ -125,7 +128,7 @@ public class Tickets_Control : MonoBehaviour
 {
     public static Tickets_Control _tickets;
 
-
+    
     public UsuarioLogin usuario;
     public UsuarioLoggeado usuario_logeado;
 
@@ -135,6 +138,9 @@ public class Tickets_Control : MonoBehaviour
     public TicketsAddRequest tarjetaAgregar;
     public TicketsAddResponse tarjetaVerificacion;//recibe los datos para saber si se agregaron correctamente los puntos
 
+    // private const string nfcPlugin = "ctacs";
+    [DllImport("ctacs.dll")]
+    private static extern IntPtr CT_data(short ctn, short pn);
 
     [Space(10)]
     [Header("URLS")]
@@ -156,6 +162,30 @@ public class Tickets_Control : MonoBehaviour
     //tipo de ticket
     public string jsonStr;
     // Start is called before the first frame update
+    [Space(10)]
+    [Header("UI")]
+    public TMP_InputField usuario_text;
+    public TMP_InputField pass_text;
+    public TMP_InputField computerID_text;
+    public TMP_InputField urlLogeo_text;
+
+    public TMP_InputField cardID_text;
+
+    public TMP_Text token_text;
+
+    public TMP_InputField puntos_text;
+    public TMP_InputField urlTicket_text;
+
+    [Space(10)]
+    [Header("UI Tickets")]
+    public GameObject panelTickets;
+    [Tooltip("El valor de puntos x 1 ticket ej: 50pts = 1ticket")]
+    public int valorTicket = 50;
+
+    [Header("LectorRFID")]
+    public TMP_Text tarjeta_id_text;
+    public float tarjeta_id;
+    Cardreader _cardReader;
 
     #region Ejemplo de hardcoding la liga de JSON
     //private string json = @"{
@@ -173,9 +203,13 @@ public class Tickets_Control : MonoBehaviour
         if (_tickets == null)
         {
             _tickets = this;
+            EventDispatcher.TotalScore += this.EventDispatcher_TotalScore;
+
+
         }
         else if (_tickets != null)
         {
+           
             Destroy(this.gameObject);
         }
 
@@ -184,10 +218,12 @@ public class Tickets_Control : MonoBehaviour
 
     void Start()
     {
-       //  jsonStr = "user:" + user + "," + "pass:" + pass + "," + "computerId:" + computerID;
-       // print(jsonStr);
-      //  LoggeoSacoa();
-        EventDispatcher.TotalScore += EventDispatcher_TotalScore;
+        //  jsonStr = "user:" + user + "," + "pass:" + pass + "," + "computerId:" + computerID;
+        // print(jsonStr);
+        //  LoggeoSacoa();
+        EventDispatcher.TotalScore += this.EventDispatcher_TotalScore;
+
+
     }
 
     /*
@@ -197,7 +233,7 @@ public class Tickets_Control : MonoBehaviour
      * Verificar que haya tickets que agregar para no causar un null
      * 
      */
-  
+
 
 
     #region Loggeo a Serivdor de Sacoa (Token)
@@ -242,7 +278,7 @@ public class Tickets_Control : MonoBehaviour
             File.WriteAllText("D:\\Proyectos\\El_Chavo\\Unity\\datosRecibidos.txt", m);
             usuario_logeado = JsonUtility.FromJson<UsuarioLoggeado>(m);
             print("Exito!...Inicio de sesion aceptado con token:" + usuario_logeado.body.token);
-
+            token_text.text = "Token: " + usuario_logeado.body.token;
             CardBalance_aJson();
         }
         else if(request.responseCode == 401)
@@ -354,10 +390,78 @@ public class Tickets_Control : MonoBehaviour
             return;
         }
 
-        int _tickets = Mathf.FloorToInt( puntosJugador / 50);
+        int _tickets = Mathf.FloorToInt( puntosJugador / valorTicket);
         tickets_Partida = _tickets;
+        //TODO: Aparecer panel para el controlador mostrando 
+
+        //-EL panel debe mostrar los ticket a acumular
+        panelTickets.SetActive(true);
+        //Activar el lector de Tarjetas para que comience a esperar la tarjeta
+        ActivarLectorTarjeta();
+        //Letrero que informe que debe pasar la tarjeta por el lector
+
         //AgregarPuntos_aJson();
 
+    }
+
+    [Button]
+    private void ActivarLectorTarjeta()
+    {
+        this._cardReader = new Lando.Cardreader();
+
+        if (_cardReader != null)
+            print("Se creo el Objeto _cardReader");
+
+        this._cardReader.CardConnected += CardReader_CardConnected;
+
+        this._cardReader.StartWatch();
+    }
+
+    private void CardReader_CardConnected(object sender, CardreaderEventArgs e)
+    {
+        try
+        {
+
+            string tempId = e.Card.Id.Replace("-", string.Empty);
+            long decValue = Convert.ToInt64(tempId, 16);
+
+            print("idHEX:" + tempId + " idDEC:" + decValue);
+
+           
+            tarjeta_id_text.text = decValue.ToString();
+            tarjeta_id = int.Parse(tarjeta_id_text.text);
+          //  tarjeta_id = int.Parse(decValue.ToString());
+          
+        }catch(Exception error)
+        {
+            print(error);
+        }
+
+        this._cardReader.StopWatch();
+        this._cardReader.Dispose();
+        this._cardReader.CardConnected -= CardReader_CardConnected;
+    }
+
+    //Lamado para recibir el ID de la tarjeta cuando sea leida
+    public void IngresarNumeroTarjeta()
+    {
+
+    }
+
+    /// <summary>
+    /// Cambia el valor de los puntos y de la URL si el operador lo cambio en la consola
+    /// </summary>
+    public void CambiarPuntos()
+    {
+        if(puntos_text.text != null || puntos_text.text != "")
+        {
+            valorTicket = int.Parse(puntos_text.text);
+
+        }
+        if(urlTicket_text.text != null || urlTicket_text.text != "")
+        {
+            url_ticketsAgregar = urlTicket_text.text;
+        }
     }
 
     /// <summary>
@@ -374,6 +478,7 @@ public class Tickets_Control : MonoBehaviour
         tarjetaAgregar.empId = usuario_logeado.body.empId;
         tarjetaAgregar.cardNumber = cardNumber;
         tarjetaAgregar.token = usuario_logeado.body.token;
+        //TODO:  ticketAmount  = ticketsPartida
         tarjetaAgregar.ticketAmount = 10; // tickets_Partida
         tarjetaAgregar.extEmpId = 1;
 
@@ -427,6 +532,30 @@ public class Tickets_Control : MonoBehaviour
     }
 
     #endregion
+
+
+    public void IniciarSesion_Boton()
+    {
+        if (usuario_text.text != null || usuario_text.text != "")
+        {
+            user = usuario_text.text;
+        }
+        if (pass_text.text != null || pass_text.text != "")
+        {
+            pass = pass_text.text;
+        }
+        if (computerID_text.text != null || computerID_text.text != "")
+        {
+            
+            computerID =  int.Parse(computerID_text.text);
+        }
+        if(urlLogeo_text.text != null || urlLogeo_text.text != "")
+        {
+            url_login = urlLogeo_text.text;
+        }
+
+        LoggeoSacoa();
+    }
 
 
 }

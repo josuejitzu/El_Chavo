@@ -28,10 +28,14 @@ public class PosicionControl : MonoBehaviour
     {
         EventDispatcher.RondaTerminada += EventDispatcher_RondaTerminada;
     }
-
+    private void OnDisable()
+    {
+        EventDispatcher.RondaTerminada -= EventDispatcher_RondaTerminada;
+    }
     private void EventDispatcher_RondaTerminada()
     {
-        StartCoroutine(Cerrar());
+        if(this.gameObject.activeInHierarchy)
+            StartCoroutine(Cerrar());
     }
 
 

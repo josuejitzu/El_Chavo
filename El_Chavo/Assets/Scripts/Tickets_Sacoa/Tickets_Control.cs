@@ -4,11 +4,15 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Text;
 using System.IO;
+using System.Threading.Tasks;
 using System;
 using EasyButtons;
 using TMPro;
 using System.Runtime.InteropServices;
 using Lando;
+using MiFare;
+using MiFare.Classic;
+using MiFare.PcSc;
 
 #region Area de Clases para Logeo
 [System.Serializable]
@@ -114,6 +118,8 @@ public class TicketsResponseBody
 }
 #endregion
 
+
+
 /////IMPORTANTISIMO POR EL PROTOCOLO HTTPS
 [System.Serializable]
 public class ForceAcceptAll : CertificateHandler
@@ -124,6 +130,10 @@ public class ForceAcceptAll : CertificateHandler
     }
 }
 
+
+/// <summary>
+/// MAIN
+/// </summary>
 public class Tickets_Control : MonoBehaviour
 {
     public static Tickets_Control _tickets;
@@ -138,9 +148,7 @@ public class Tickets_Control : MonoBehaviour
     public TicketsAddRequest tarjetaAgregar;
     public TicketsAddResponse tarjetaVerificacion;//recibe los datos para saber si se agregaron correctamente los puntos
 
-    // private const string nfcPlugin = "ctacs";
-    [DllImport("ctacs.dll")]
-    private static extern IntPtr CT_data(short ctn, short pn);
+
 
     [Space(10)]
     [Header("URLS")]
@@ -164,6 +172,7 @@ public class Tickets_Control : MonoBehaviour
     // Start is called before the first frame update
     [Space(10)]
     [Header("UI")]
+    public GameObject panelSacoa;
     public TMP_InputField usuario_text;
     public TMP_InputField pass_text;
     public TMP_InputField computerID_text;
@@ -181,11 +190,18 @@ public class Tickets_Control : MonoBehaviour
     public GameObject panelTickets;
     [Tooltip("El valor de puntos x 1 ticket ej: 50pts = 1ticket")]
     public int valorTicket = 50;
+    public TMP_Text tickets_jugador_text;
+    public TMP_InputField tarjeta_id_input;
+
 
     [Header("LectorRFID")]
     public TMP_Text tarjeta_id_text;
-    public float tarjeta_id;
+    public int tarjeta_id;
     Cardreader _cardReader;
+
+    [Header("LectorRFID_MiFare")]
+    private MiFare.Devices.SmartCardReader _lector;
+    private MiFareCard _tarjeta;
 
     #region Ejemplo de hardcoding la liga de JSON
     //private string json = @"{
@@ -218,12 +234,27 @@ public class Tickets_Control : MonoBehaviour
 
     void Start()
     {
+        panelSacoa.SetActive(false);
+        panelTickets.SetActive(false);
         //  jsonStr = "user:" + user + "," + "pass:" + pass + "," + "computerId:" + computerID;
         // print(jsonStr);
         //  LoggeoSacoa();
         EventDispatcher.TotalScore += this.EventDispatcher_TotalScore;
+        LoggeoSacoa();
 
+    }
 
+    private void Update()
+    {
+        if(Input.GetKey(KeyCode.LeftControl))
+        {
+           if( Input.GetKeyDown(KeyCode.C))
+            {
+
+                panelSacoa.SetActive(!panelSacoa.activeInHierarchy);
+                panelTickets.SetActive(!panelTickets.activeInHierarchy);
+            }
+        }
     }
 
     /*
@@ -279,13 +310,14 @@ public class Tickets_Control : MonoBehaviour
             usuario_logeado = JsonUtility.FromJson<UsuarioLoggeado>(m);
             print("Exito!...Inicio de sesion aceptado con token:" + usuario_logeado.body.token);
             token_text.text = "Token: " + usuario_logeado.body.token;
-            CardBalance_aJson();
+          //  CardBalance_aJson();
         }
         else if(request.responseCode == 401)
         {
             //Esto es para cuando se vence el TOKEN hay que pedir otro
             Debug.Log("Error: " + request.responseCode);
             Debug.Log("El Token vencio o no esta autorizado...Solicitando nuevo Token...");
+            token_text.text =  "El Token vencio o no esta autorizado...Solicitando nuevo Token...";
             yield return new WaitForSeconds(2.0f);//simulamos una espera
             LoggeoSacoa();
 
@@ -380,6 +412,7 @@ public class Tickets_Control : MonoBehaviour
     /// <summary>
     /// Convierte el Score del Jugador en los tickets 
     /// que se le asignaran PERO NO DEBE AGREGARLOS A LA TARJETA, eso es otra funcion
+    /// Es llamado por Un EVENT en EventDispatcher.cs
     /// </summary>
     /// <param name="obj"></param>
     private void EventDispatcher_TotalScore(int puntosJugador)
@@ -393,60 +426,19 @@ public class Tickets_Control : MonoBehaviour
         int _tickets = Mathf.FloorToInt( puntosJugador / valorTicket);
         tickets_Partida = _tickets;
         //TODO: Aparecer panel para el controlador mostrando 
-
-        //-EL panel debe mostrar los ticket a acumular
         panelTickets.SetActive(true);
+        //-EL panel debe mostrar los ticket a acumular
+        tickets_jugador_text.text = tickets_Partida.ToString();
         //Activar el lector de Tarjetas para que comience a esperar la tarjeta
         ActivarLectorTarjeta();
         //Letrero que informe que debe pasar la tarjeta por el lector
+        panelTickets.SetActive(true);
 
         //AgregarPuntos_aJson();
 
     }
 
-    [Button]
-    private void ActivarLectorTarjeta()
-    {
-        this._cardReader = new Lando.Cardreader();
-
-        if (_cardReader != null)
-            print("Se creo el Objeto _cardReader");
-
-        this._cardReader.CardConnected += CardReader_CardConnected;
-
-        this._cardReader.StartWatch();
-    }
-
-    private void CardReader_CardConnected(object sender, CardreaderEventArgs e)
-    {
-        try
-        {
-
-            string tempId = e.Card.Id.Replace("-", string.Empty);
-            long decValue = Convert.ToInt64(tempId, 16);
-
-            print("idHEX:" + tempId + " idDEC:" + decValue);
-
-           
-            tarjeta_id_text.text = decValue.ToString();
-            tarjeta_id = int.Parse(tarjeta_id_text.text);
-          //  tarjeta_id = int.Parse(decValue.ToString());
-          
-        }catch(Exception error)
-        {
-            print(error);
-        }
-
-        this._cardReader.StopWatch();
-        this._cardReader.Dispose();
-        this._cardReader.CardConnected -= CardReader_CardConnected;
-    }
-
-    //Lamado para recibir el ID de la tarjeta cuando sea leida
-    public void IngresarNumeroTarjeta()
-    {
-
-    }
+   
 
     /// <summary>
     /// Cambia el valor de los puntos y de la URL si el operador lo cambio en la consola
@@ -465,6 +457,19 @@ public class Tickets_Control : MonoBehaviour
     }
 
     /// <summary>
+    /// Llamado cuando se agrego manualmente por el operador la tarjeta desde la consola
+    /// </summary>
+    public void IngresarTarjeta()
+    {
+        if(tarjeta_id_input.text != null || tarjeta_id_input.text != "")
+        {
+            tarjeta_id_text.text = "Tarjeta #"  +  tarjeta_id_input.text;
+            cardNumber = int.Parse(tarjeta_id_text.text);
+        }
+    }
+
+
+    /// <summary>
     /// Crea el formato para agregar puntos al Jugador
     /// Se tiene que pasar la tarjeta
     /// Actualmente llamada por PostCardBalance()
@@ -479,7 +484,7 @@ public class Tickets_Control : MonoBehaviour
         tarjetaAgregar.cardNumber = cardNumber;
         tarjetaAgregar.token = usuario_logeado.body.token;
         //TODO:  ticketAmount  = ticketsPartida
-        tarjetaAgregar.ticketAmount = 10; // tickets_Partida
+        tarjetaAgregar.ticketAmount = tickets_Partida; // tickets_Partida
         tarjetaAgregar.extEmpId = 1;
 
         string aJson = JsonUtility.ToJson(tarjetaAgregar);
@@ -532,6 +537,233 @@ public class Tickets_Control : MonoBehaviour
     }
 
     #endregion
+
+
+
+
+    #region LectorTarjetas
+
+
+
+    [Button]
+    private void ActivarLectorTarjeta()
+    {
+        ///LANDO version
+        //this._cardReader = new Lando.Cardreader();
+
+        //if (_cardReader != null)
+        //    print("Se creo el Objeto _cardReader");
+
+        //this._cardReader.CardConnected += CardReader_CardConnected;
+
+        //this._cardReader.StartWatch();
+
+        ///version MiFare
+        GetDevices();
+
+
+    }
+
+    private void CardReader_CardConnected(object sender, CardreaderEventArgs e)
+    {
+        try
+        {
+
+            string tempId = e.Card.Id.Replace("-", string.Empty);
+            long decValue = Convert.ToInt64(tempId, 16);
+            print("IdDEC" + decValue);
+            //Convertimos decValue a String
+            string deValue_string = decValue.ToString();
+            //Nos quedamos con los 6 primeros numeros
+            deValue_string = deValue_string.Remove(6);
+            //Se lo asignamos a un int32
+            int decValue_int = int.Parse(deValue_string);
+
+            print("idHEX:" + tempId + " idDEC:" + decValue + " idDEC_6: " + decValue_int);
+
+
+            tarjeta_id_text.text = decValue.ToString();
+            cardNumber = decValue_int;
+            //  tarjeta_id = int.Parse(decValue.ToString());
+
+        }
+        catch (Exception error)
+        {
+            print(error);
+        }
+
+        this._cardReader.StopWatch();
+        this._cardReader.Dispose();
+        this._cardReader.CardConnected -= CardReader_CardConnected;
+    }
+
+
+    /// <summary>
+    /// Enumerates NFC reader and registers event handlers for card added/removed
+    /// </summary>
+    /// <returns>None</returns>
+    async private void GetDevices()
+    {
+        try
+        {
+            //_lector = await CardReader.FindAsync();
+            MiFare.Devices.SmartCardReader smartCardReader = await CardReader.FindAsync();
+            _lector = smartCardReader;
+
+            if (_lector == null)
+            {
+                print("No Readers Found");
+                return;
+            }
+
+            //_lector.TarjetaAgregada += TarjetaAgregada;
+            //_lector.CardRemoved += CardRemoved;
+
+
+            // this._lector.CardAdded += TarjetaAgregada;
+            _lector.CardAdded += _lector_CardAdded;
+
+            //_lector.StartWatch();
+            //_lector.
+
+        }
+        catch (Exception e)
+        {
+            print("Exception: " + e.Message);
+        }
+    }
+    private async void _lector_CardAdded(object sender, MiFare.Devices.CardAddedEventArgs args)
+    {
+        try
+        {
+            print("Leyendo tarjeta");
+            await HandleCard(args);
+        }
+        catch (Exception e)
+        {
+            print("TarjetaAgregada Exception: " + e.Message);
+        }
+
+        // throw new NotImplementedException();
+    }
+    /// <summary>
+    /// Sample code to hande a couple of different cards based on the identification process
+    /// </summary>
+    /// <returns>None</returns>
+    private async Task HandleCard(MiFare.Devices.CardAddedEventArgs args)
+    {
+        try
+        {
+            _tarjeta?.Dispose();
+            _tarjeta = args.SmartCard.CreateMiFareCard();
+
+
+
+            var cardIdentification = await _tarjeta.GetCardInfo();
+
+
+            print("Connected to card\r\nPC/SC device class: " + cardIdentification.PcscDeviceClass.ToString() + "\r\nCard name: " + cardIdentification.PcscCardName.ToString());
+
+            if (cardIdentification.PcscDeviceClass == MiFare.PcSc.DeviceClass.StorageClass
+                 && (cardIdentification.PcscCardName == CardName.MifareStandard1K || cardIdentification.PcscCardName == CardName.MifareStandard4K))
+            {
+                // Handle MIFARE Standard/Classic
+                print("MIFARE Standard/Classic card detected");
+
+
+                var uid = await _tarjeta.GetUid();
+                print("UID:  " + BitConverter.ToString(uid));
+
+
+
+
+                // 16 sectors, print out each one
+                for (var sector = 0; sector < 2; sector++)
+                {
+                    try
+                    {
+                        var data = await _tarjeta.GetData(sector, 0, 48);
+
+                        string hexString = "";
+                        for (int i = 0; i < data.Length; i++)
+                        {
+                            hexString += data[i].ToString("X2");
+                        }
+
+                        print(string.Format("Sector '{0}':{1}", sector, hexString));
+
+
+                        
+                        if (sector == 1)
+                        {
+                            //Sutraemos el valor Hexadecimal que buscamos, es la pos5 pero no nos lo da asi, 
+                            //asi que lo buscamo por posicion
+                            string hexTarjeta = hexString.Substring(32, 14);
+                            print("Sacoa Hex: " + hexTarjeta);
+                            //despues convertimos hexTarjeta a un valor ascii en string
+                            string ascii = ConvertHex(hexTarjeta.ToString());
+                            //le quitamos el ultimo numero pues deben ser 6 digitos y nos da 7
+                            string tarjeta_num = ascii.Remove(6);
+                            print("Sacoa Tarjeta:" + tarjeta_num);
+                            //TODO: asignar tarjeta_num a un int, puede ser directamente a cardNumber
+                            tarjeta_id_text.SetText("Tarjeta #"+tarjeta_num);
+                            cardNumber = int.Parse(tarjeta_num);
+                            
+                            //TODO: agregar una condicion donde si tarjeta_num es correcto se automatice enviar la info a la API
+                            ag
+                        }
+
+                    }
+                    catch (Exception)
+                    {
+                        print("Failed to load sector: " + sector);
+                    }
+                }
+
+
+
+            }
+        }
+        catch (Exception e)
+        {
+            print("HandleCard Exception: " + e.Message);
+        }
+    }
+
+    /// <summary>
+    /// Convertidor de string hexadecimal a ASCII
+    /// </summary>
+    /// <param name="hexString"></param>
+    /// <returns></returns>
+    public static string ConvertHex(string hexString)
+    {
+        try
+        {
+            string ascii = string.Empty;
+
+            for (int i = 0; i < hexString.Length; i += 2)
+            {
+                string hs = string.Empty;
+
+                hs = hexString.Substring(i, 2);
+                ulong decval = Convert.ToUInt64(hs, 16);
+                long deccc = Convert.ToInt64(hs, 16);
+                char character = Convert.ToChar(deccc);
+                ascii += character;
+
+            }
+
+            return ascii;
+        }
+        catch (Exception ex) { Console.WriteLine(ex.Message); }
+
+        return string.Empty;
+    }
+
+
+
+    #endregion
+
 
 
     public void IniciarSesion_Boton()

@@ -1898,6 +1898,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3772836652072939413}
     m_Modifications:
+    - target: {fileID: 130626, guid: e7208592fcd84db46be48b5bce0525a5, type: 3}
+      propertyPath: m_Name
+      value: BulletFatExplosionBlue (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 427612, guid: e7208592fcd84db46be48b5bce0525a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1941,10 +1945,6 @@ PrefabInstance:
     - target: {fileID: 427612, guid: e7208592fcd84db46be48b5bce0525a5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 130626, guid: e7208592fcd84db46be48b5bce0525a5, type: 3}
-      propertyPath: m_Name
-      value: BulletFatExplosionBlue (1)
       objectReference: {fileID: 0}
     - target: {fileID: 19853476, guid: e7208592fcd84db46be48b5bce0525a5, type: 3}
       propertyPath: playOnAwake

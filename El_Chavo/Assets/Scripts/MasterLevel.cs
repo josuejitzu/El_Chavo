@@ -302,7 +302,7 @@ public class MasterLevel : MonoBehaviour
         }
         else
         {
-            print("Error: NO HAY MAS RONDAS");
+            Debug.Log("Error: NO HAY MAS RONDAS");
             yield break;
         }
 

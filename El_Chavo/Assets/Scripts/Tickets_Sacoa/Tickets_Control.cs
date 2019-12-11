@@ -119,6 +119,26 @@ public class TicketsResponseBody
 #endregion
 
 
+[Serializable]
+public class TarjetaDecode
+{
+    public int posId;
+    public int empId;
+    public string cardNumber;
+    public string token;
+    public int extEmpId;
+}
+[Serializable]
+public class TarjetaDecodResponse
+{
+    public CardNumberBody body;
+}
+
+public class CardNumberBody
+{
+    public string cardNumber;
+}
+
 
 /////IMPORTANTISIMO POR EL PROTOCOLO HTTPS
 [System.Serializable]
@@ -138,7 +158,7 @@ public class Tickets_Control : MonoBehaviour
 {
     public static Tickets_Control _tickets;
 
-    
+
     public UsuarioLogin usuario;
     public UsuarioLoggeado usuario_logeado;
 
@@ -148,16 +168,20 @@ public class Tickets_Control : MonoBehaviour
     public TicketsAddRequest tarjetaAgregar;
     public TicketsAddResponse tarjetaVerificacion;//recibe los datos para saber si se agregaron correctamente los puntos
 
-
+    public TarjetaDecode tarjetaDecode;
+    public TarjetaDecodResponse tarjetaDecode_response;
 
     [Space(10)]
     [Header("URLS")]
     public string url_login;
     public string url_ticketsAgregar;
     public string url_cardBalance;
+    public string url_tarjetaDecode;
+
     [Space(10)]
     [Header("URLS")]
     public int tickets_Partida;
+
     [Space(10)]
     public string user;
     public string pass;
@@ -165,6 +189,7 @@ public class Tickets_Control : MonoBehaviour
     public string posID;
     public string empID;
     public int cardNumber;
+    public string cardNumber_ascii;
     public string token;//pedir cada 8 horas
     public string extEmpID;
     //tipo de ticket
@@ -193,6 +218,8 @@ public class Tickets_Control : MonoBehaviour
     public TMP_Text tickets_jugador_text;
     public TMP_InputField tarjeta_id_input;
 
+    public GameObject acumular_btn;
+    public GameObject letrero_puntosAcumulados;
 
     [Header("LectorRFID")]
     public TMP_Text tarjeta_id_text;
@@ -225,7 +252,7 @@ public class Tickets_Control : MonoBehaviour
         }
         else if (_tickets != null)
         {
-           
+
             Destroy(this.gameObject);
         }
 
@@ -246,16 +273,22 @@ public class Tickets_Control : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKey(KeyCode.LeftControl))
+        if (Input.GetKey(KeyCode.LeftControl))
         {
-           if( Input.GetKeyDown(KeyCode.C))
+            if (Input.GetKeyDown(KeyCode.C))
             {
 
                 panelSacoa.SetActive(!panelSacoa.activeInHierarchy);
                 panelTickets.SetActive(!panelTickets.activeInHierarchy);
             }
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                ActivarLectorTarjeta();
+            }
         }
     }
+
+
 
     /*
      * TODO:
@@ -280,16 +313,47 @@ public class Tickets_Control : MonoBehaviour
         File.WriteAllText("D:\\Proyectos\\El_Chavo\\Unity\\datosenviados.txt", jsonString); //https://www.youtube.com/watch?v=ngX7-6jKIr8
 
         StartCoroutine(Post(url_login, jsonString));
-       
+
 
     }
+
+
+
+    /// <summary>
+    /// Cuando se cambian los valores desde la consola de operacion para el inicio de sesion de sacoa
+    /// y despues termina llamando a LoggeoSacoa();
+    /// </summary>
+    /// 
+    public void IniciarSesion_Boton()
+    {
+        if (usuario_text.text != null || usuario_text.text != "")
+        {
+            user = usuario_text.text;
+        }
+        if (pass_text.text != null || pass_text.text != "")
+        {
+            pass = pass_text.text;
+        }
+        if (computerID_text.text != null || computerID_text.text != "")
+        {
+
+            computerID = int.Parse(computerID_text.text);
+        }
+        if (urlLogeo_text.text != null || urlLogeo_text.text != "")
+        {
+            url_login = urlLogeo_text.text;
+        }
+
+        LoggeoSacoa();
+    }
+
 
     //https://forum.unity.com/threads/unitywebrequest-post-url-jsondata-sending-broken-json.414708/
     IEnumerator Post(string url, string bodyJsonString)
     {
         var request = new UnityWebRequest(url, "POST");//url a enviar y metodo en este caso solo dejan POST
         byte[] bodyRaw = Encoding.UTF8.GetBytes(bodyJsonString);
-      //  print(bodyRaw.ToString());//Esto solo se establece
+        //  print(bodyRaw.ToString());//Esto solo se establece
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
@@ -302,22 +366,22 @@ public class Tickets_Control : MonoBehaviour
         {
 
             Debug.Log("Status Code: " + request.responseCode);
-          //  Debug.Log("Errorc Code: " + request.error);
+            //  Debug.Log("Errorc Code: " + request.error);
             cert?.Dispose();
             string m = System.Text.Encoding.UTF8.GetString(request.downloadHandler.data);
             Debug.Log("Mensaje Reicibido: " + m);
             File.WriteAllText("D:\\Proyectos\\El_Chavo\\Unity\\datosRecibidos.txt", m);
             usuario_logeado = JsonUtility.FromJson<UsuarioLoggeado>(m);
-            print("Exito!...Inicio de sesion aceptado con token:" + usuario_logeado.body.token);
+            Debug.Log("Exito!...Inicio de sesion aceptado con token:" + usuario_logeado.body.token);
             token_text.text = "Token: " + usuario_logeado.body.token;
-          //  CardBalance_aJson();
+            //  CardBalance_aJson();
         }
-        else if(request.responseCode == 401)
+        else if (request.responseCode == 401)
         {
             //Esto es para cuando se vence el TOKEN hay que pedir otro
             Debug.Log("Error: " + request.responseCode);
             Debug.Log("El Token vencio o no esta autorizado...Solicitando nuevo Token...");
-            token_text.text =  "El Token vencio o no esta autorizado...Solicitando nuevo Token...";
+            token_text.text = "El Token vencio o no esta autorizado...Solicitando nuevo Token...";
             yield return new WaitForSeconds(2.0f);//simulamos una espera
             LoggeoSacoa();
 
@@ -331,7 +395,7 @@ public class Tickets_Control : MonoBehaviour
         }
 
 
-       
+
 
     }
     #endregion
@@ -346,7 +410,7 @@ public class Tickets_Control : MonoBehaviour
     [Button("Obtener Saldo")]
     public void CardBalance_aJson()
     {
-        print("Solicitando Balance de Tarjeta...");
+        Debug.Log("Solicitando Balance de Tarjeta...");
         tarjeta_balance.posId = int.Parse(posID);
         tarjeta_balance.empId = usuario_logeado.body.empId;
         tarjeta_balance.cardNumber = cardNumber;
@@ -354,16 +418,16 @@ public class Tickets_Control : MonoBehaviour
         tarjeta_balance.extEmpId = int.Parse(extEmpID);
 
         string aJson = JsonUtility.ToJson(tarjeta_balance) ?? "";
-        print("Tarjeta convertida a: " + aJson);
+        Debug.Log("Tarjeta convertida a: " + aJson);
 
         StartCoroutine(PostCardBalance(url_cardBalance, aJson));
 
     }
-    IEnumerator PostCardBalance(string url,string bodyJsonString)
+    IEnumerator PostCardBalance(string url, string bodyJsonString)
     {
         var request = new UnityWebRequest(url, "POST");//url a enviar y metodo en este caso solo dejan POST
         byte[] bodyRaw = Encoding.UTF8.GetBytes(bodyJsonString);
-      //  print(bodyRaw.ToString());//Esto solo se establece
+        //  print(bodyRaw.ToString());//Esto solo se establece
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
@@ -376,13 +440,13 @@ public class Tickets_Control : MonoBehaviour
         {
 
             Debug.Log("Status Code: " + request.responseCode);
-          //  Debug.Log("Errorc Code: " + request.error);
+            //  Debug.Log("Errorc Code: " + request.error);
             cert?.Dispose();
             string m = System.Text.Encoding.UTF8.GetString(request.downloadHandler.data);
             Debug.Log("Mensaje Reicibido: " + m);
-          //  File.WriteAllText("D:\\Proyectos\\El_Chavo\\Unity\\datosRecibidos.txt", m);
+            //  File.WriteAllText("D:\\Proyectos\\El_Chavo\\Unity\\datosRecibidos.txt", m);
             tarjeta_datos = JsonUtility.FromJson<CardBalanceResponse>(m);
-            print("Exito!... Balance de Tarjeta:" + tarjeta_datos.body.card+"| Credito: "+tarjeta_datos.body.credits+"|Tickets: "+tarjeta_datos.body.tickets);
+            Debug.Log("Exito!... Balance de Tarjeta:" + tarjeta_datos.body.card + "| Credito: " + tarjeta_datos.body.credits + "|Tickets: " + tarjeta_datos.body.tickets);
 
             AgregarPuntos_aJson();
         }
@@ -417,13 +481,13 @@ public class Tickets_Control : MonoBehaviour
     /// <param name="obj"></param>
     private void EventDispatcher_TotalScore(int puntosJugador)
     {
-        if(puntosJugador < 49)
+        if (puntosJugador < 49)
         {
-            print("El jugador no gano ningun ticket...");
+            Debug.Log("El jugador no gano ningun ticket...");
             return;
         }
 
-        int _tickets = Mathf.FloorToInt( puntosJugador / valorTicket);
+        int _tickets = Mathf.FloorToInt(puntosJugador / valorTicket);
         tickets_Partida = _tickets;
         //TODO: Aparecer panel para el controlador mostrando 
         panelTickets.SetActive(true);
@@ -433,24 +497,26 @@ public class Tickets_Control : MonoBehaviour
         ActivarLectorTarjeta();
         //Letrero que informe que debe pasar la tarjeta por el lector
         panelTickets.SetActive(true);
+        acumular_btn.SetActive(true);
+        letrero_puntosAcumulados.SetActive(false);
 
         //AgregarPuntos_aJson();
 
     }
 
-   
+
 
     /// <summary>
     /// Cambia el valor de los puntos y de la URL si el operador lo cambio en la consola
     /// </summary>
     public void CambiarPuntos()
     {
-        if(puntos_text.text != null || puntos_text.text != "")
+        if (puntos_text.text != null || puntos_text.text != "")
         {
             valorTicket = int.Parse(puntos_text.text);
 
         }
-        if(urlTicket_text.text != null || urlTicket_text.text != "")
+        if (urlTicket_text.text != null || urlTicket_text.text != "")
         {
             url_ticketsAgregar = urlTicket_text.text;
         }
@@ -461,24 +527,23 @@ public class Tickets_Control : MonoBehaviour
     /// </summary>
     public void IngresarTarjeta()
     {
-        if(tarjeta_id_input.text != null || tarjeta_id_input.text != "")
+        if (tarjeta_id_input.text != null || tarjeta_id_input.text != "")
         {
-            tarjeta_id_text.text = "Tarjeta #"  +  tarjeta_id_input.text;
-            cardNumber = int.Parse(tarjeta_id_text.text);
+            tarjeta_id_text.text = "Tarjeta #" + tarjeta_id_input.text;
+            cardNumber = int.Parse(tarjeta_id_input.text);
         }
     }
 
 
     /// <summary>
     /// Crea el formato para agregar puntos al Jugador
-    /// Se tiene que pasar la tarjeta
-    /// Actualmente llamada por PostCardBalance()
+    /// Se tiene que pasar la tarjeta o apretar el boton "Acumular" en consolar
+    /// 
     /// </summary>
     [Button("Agregar Puntos")]
-    /// 
     public void AgregarPuntos_aJson()
     {
-        print("Agregando puntos a Tarjeta...");
+        Debug.Log("Agregando puntos a Tarjeta...");
         tarjetaAgregar.posId = 1;
         tarjetaAgregar.empId = usuario_logeado.body.empId;
         tarjetaAgregar.cardNumber = cardNumber;
@@ -488,14 +553,16 @@ public class Tickets_Control : MonoBehaviour
         tarjetaAgregar.extEmpId = 1;
 
         string aJson = JsonUtility.ToJson(tarjetaAgregar);
-        print("Enviando puntos a: " + aJson);
+        Debug.Log("Enviando puntos a: " + aJson);
         StartCoroutine(PostTickets(url_ticketsAgregar, aJson));
+
+      //  DoOnMainThread.ExecuteOnMainThread.Enqueue(() => { StartCoroutine(WaitAlertView4()); });
     }
-    IEnumerator PostTickets(string url,string bodyJsonString)
+    IEnumerator PostTickets(string url, string bodyJsonString)
     {
         var request = new UnityWebRequest(url, "POST");//url a enviar y metodo en este caso solo dejan POST
         byte[] bodyRaw = Encoding.UTF8.GetBytes(bodyJsonString);
-       // print(bodyRaw.ToString());//Esto solo se establece
+        // print(bodyRaw.ToString());//Esto solo se establece
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
@@ -508,15 +575,25 @@ public class Tickets_Control : MonoBehaviour
         {
 
             Debug.Log("Status Code: " + request.responseCode);
-          //  Debug.Log("Errorc Code: " + request.error);
+            //  Debug.Log("Errorc Code: " + request.error);
             cert?.Dispose();
             string m = System.Text.Encoding.UTF8.GetString(request.downloadHandler.data);
             Debug.Log("Mensaje Reicibido: " + m);
             //  File.WriteAllText("D:\\Proyectos\\El_Chavo\\Unity\\datosRecibidos.txt", m);
             tarjetaVerificacion = JsonUtility.FromJson<TicketsAddResponse>(m);
-            print("Exito!...Tickets en Tarjeta:" + tarjetaVerificacion.body.tickets);
 
-          //  AgregarPuntos_aJson();
+            if (tarjetaVerificacion.statusCode == 200)
+            {
+                acumular_btn.SetActive(false);
+                letrero_puntosAcumulados.SetActive(true);
+                Debug.Log("Exito!...Tickets en Tarjeta:" + tarjetaVerificacion.body.tickets);
+            }
+
+
+
+            //if (!panelSacoa.activeInHierarchy)
+            //    panelTickets.SetActive(false);
+            //  AgregarPuntos_aJson();
         }
         else if (request.responseCode == 401)
         {
@@ -538,13 +615,15 @@ public class Tickets_Control : MonoBehaviour
 
     #endregion
 
-
-
+    //TODO
+    //Se podria refactorizar esta area de LectorTarjetas a una clase
 
     #region LectorTarjetas
 
 
-
+    /// <summary>
+    /// Activa el Lector de Tarjetas NFC
+    /// </summary>
     [Button]
     private void ActivarLectorTarjeta()
     {
@@ -559,47 +638,54 @@ public class Tickets_Control : MonoBehaviour
         //this._cardReader.StartWatch();
 
         ///version MiFare
+        
         GetDevices();
-
+        Debug.Log("Activando lector de tarjetas");
 
     }
+    ///// <summary>
+    ///// Usado por Lando
+    ///// </summary>
+    ///// <param name="sender"></param>
+    ///// <param name="e"></param>
+    //private void CardReader_CardConnected(object sender, CardreaderEventArgs e)
+    //{
+    //    try
+    //    {
 
-    private void CardReader_CardConnected(object sender, CardreaderEventArgs e)
-    {
-        try
-        {
+    //        string tempId = e.Card.Id.Replace("-", string.Empty);
+    //        long decValue = Convert.ToInt64(tempId, 16);
+    //        Debug.Log("IdDEC" + decValue);
+    //        //Convertimos decValue a String
+    //        string deValue_string = decValue.ToString();
+    //        //Nos quedamos con los 6 primeros numeros
+    //        deValue_string = deValue_string.Remove(6);
+    //        //Se lo asignamos a un int32
+    //        int decValue_int = int.Parse(deValue_string);
 
-            string tempId = e.Card.Id.Replace("-", string.Empty);
-            long decValue = Convert.ToInt64(tempId, 16);
-            print("IdDEC" + decValue);
-            //Convertimos decValue a String
-            string deValue_string = decValue.ToString();
-            //Nos quedamos con los 6 primeros numeros
-            deValue_string = deValue_string.Remove(6);
-            //Se lo asignamos a un int32
-            int decValue_int = int.Parse(deValue_string);
-
-            print("idHEX:" + tempId + " idDEC:" + decValue + " idDEC_6: " + decValue_int);
+    //        Debug.Log("idHEX:" + tempId + " idDEC:" + decValue + " idDEC_6: " + decValue_int);
 
 
-            tarjeta_id_text.text = decValue.ToString();
-            cardNumber = decValue_int;
-            //  tarjeta_id = int.Parse(decValue.ToString());
+    //        tarjeta_id_text.text = decValue.ToString();
+    //        cardNumber = decValue_int;
+    //        //  tarjeta_id = int.Parse(decValue.ToString());
 
-        }
-        catch (Exception error)
-        {
-            print(error);
-        }
+    //    }
+    //    catch (Exception error)
+    //    {
+    //        Debug.Log(error);
+    //    }
 
-        this._cardReader.StopWatch();
-        this._cardReader.Dispose();
-        this._cardReader.CardConnected -= CardReader_CardConnected;
-    }
+    //    this._cardReader.StopWatch();
+    //    this._cardReader.Dispose();
+    //    this._cardReader.CardConnected -= CardReader_CardConnected;
+    //}
 
 
     /// <summary>
-    /// Enumerates NFC reader and registers event handlers for card added/removed
+    /// Revisa los lectores NFC conectados y crea un objeto SmartCardReader y lo suscribe a
+    /// eventos de CardAdded y CardRemoved
+    /// Preocurar solo tener conectado 1 lector
     /// </summary>
     /// <returns>None</returns>
     async private void GetDevices()
@@ -608,11 +694,12 @@ public class Tickets_Control : MonoBehaviour
         {
             //_lector = await CardReader.FindAsync();
             MiFare.Devices.SmartCardReader smartCardReader = await CardReader.FindAsync();
+
             _lector = smartCardReader;
 
             if (_lector == null)
             {
-                print("No Readers Found");
+                Debug.Log("Lectores no encontrados, trata de que sea solo 1");
                 return;
             }
 
@@ -622,26 +709,33 @@ public class Tickets_Control : MonoBehaviour
 
             // this._lector.CardAdded += TarjetaAgregada;
             _lector.CardAdded += _lector_CardAdded;
+            _lector.CardRemoved += _lector_CardRemoved;
 
-            //_lector.StartWatch();
-            //_lector.
 
         }
         catch (Exception e)
         {
-            print("Exception: " + e.Message);
+            Debug.Log("Exception: " + e.Message);
+            _lector.Dispose();
+
         }
     }
+
+    private void _lector_CardRemoved(object sender, MiFare.Devices.CardRemovedEventArgs e)
+    {
+        _tarjeta?.Dispose();
+    }
+
     private async void _lector_CardAdded(object sender, MiFare.Devices.CardAddedEventArgs args)
     {
         try
         {
-            print("Leyendo tarjeta");
+            Debug.Log("Leyendo tarjeta");
             await HandleCard(args);
         }
         catch (Exception e)
         {
-            print("TarjetaAgregada Exception: " + e.Message);
+            Debug.Log("TarjetaAgregada Exception: " + e.Message);
         }
 
         // throw new NotImplementedException();
@@ -662,17 +756,17 @@ public class Tickets_Control : MonoBehaviour
             var cardIdentification = await _tarjeta.GetCardInfo();
 
 
-            print("Connected to card\r\nPC/SC device class: " + cardIdentification.PcscDeviceClass.ToString() + "\r\nCard name: " + cardIdentification.PcscCardName.ToString());
+            Debug.Log("Connected to card\r\nPC/SC device class: " + cardIdentification.PcscDeviceClass.ToString() + "\r\nCard name: " + cardIdentification.PcscCardName.ToString());
 
             if (cardIdentification.PcscDeviceClass == MiFare.PcSc.DeviceClass.StorageClass
                  && (cardIdentification.PcscCardName == CardName.MifareStandard1K || cardIdentification.PcscCardName == CardName.MifareStandard4K))
             {
                 // Handle MIFARE Standard/Classic
-                print("MIFARE Standard/Classic card detected");
+                Debug.Log("MIFARE Standard/Classic card detected");
 
 
                 var uid = await _tarjeta.GetUid();
-                print("UID:  " + BitConverter.ToString(uid));
+                Debug.Log("UID:  " + BitConverter.ToString(uid));
 
 
 
@@ -680,44 +774,55 @@ public class Tickets_Control : MonoBehaviour
                 // 16 sectors, print out each one
                 for (var sector = 0; sector < 2; sector++)
                 {
-                    try
+                    //try
+                    //{
+                    var data = await _tarjeta.GetData(sector, 0, 48);
+
+                    string hexString = "";
+                    for (int i = 0; i < data.Length; i++)
                     {
-                        var data = await _tarjeta.GetData(sector, 0, 48);
+                        hexString += data[i].ToString("X2");
+                    }
 
-                        string hexString = "";
-                        for (int i = 0; i < data.Length; i++)
-                        {
-                            hexString += data[i].ToString("X2");
-                        }
-
-                        print(string.Format("Sector '{0}':{1}", sector, hexString));
+                    Debug.Log(string.Format("Sector '{0}':{1}", sector, hexString));
 
 
-                        
-                        if (sector == 1)
+
+                    if (sector == 1)
+                    {
+                        if (hexString != null || hexString != "")
                         {
                             //Sutraemos el valor Hexadecimal que buscamos, es la pos5 pero no nos lo da asi, 
                             //asi que lo buscamo por posicion
                             string hexTarjeta = hexString.Substring(32, 14);
-                            print("Sacoa Hex: " + hexTarjeta);
+                            Debug.Log("Sacoa Hex: " + hexTarjeta);
                             //despues convertimos hexTarjeta a un valor ascii en string
                             string ascii = ConvertHex(hexTarjeta.ToString());
                             //le quitamos el ultimo numero pues deben ser 6 digitos y nos da 7
                             string tarjeta_num = ascii.Remove(6);
-                            print("Sacoa Tarjeta:" + tarjeta_num);
-                            //TODO: asignar tarjeta_num a un int, puede ser directamente a cardNumber
-                            tarjeta_id_text.SetText("Tarjeta #"+tarjeta_num);
-                            cardNumber = int.Parse(tarjeta_num);
-                            
-                            //TODO: agregar una condicion donde si tarjeta_num es correcto se automatice enviar la info a la API
-                            ag
-                        }
 
+
+
+                            Debug.Log("Sacoa Tarjeta:" + tarjeta_num);
+                            TarjetaEscaneada(tarjeta_num);
+
+                            //tarjeta_id_text.SetText("Tarjeta #" + tarjeta_num);
+                            //cardNumber = int.Parse(tarjeta_num);
+                            //TODO: asignar tarjeta_num a un int, puede ser directamente a cardNumber
+                            _tarjeta?.Dispose();
+                            return;
+                            //TODO: agregar una condicion donde si tarjeta_num es correcto se automatice enviar la info a la API
+                        }
                     }
-                    catch (Exception)
-                    {
-                        print("Failed to load sector: " + sector);
-                    }
+
+                    //}
+                    //catch (Exception e)
+                    //{
+                    //    print("Failed to load sector: " + sector);
+                    //    print("Failed to load sector error: " + e);
+                    //    _tarjeta?.Dispose();
+
+                    //}
                 }
 
 
@@ -726,8 +831,42 @@ public class Tickets_Control : MonoBehaviour
         }
         catch (Exception e)
         {
-            print("HandleCard Exception: " + e.Message);
+            Debug.Log("HandleCard Exception: " + e.Message);
+            Debug.Log("Es probable que el lector no este activado");
+            _tarjeta?.Dispose();
         }
+    }
+
+    /// <summary>
+    /// Llamado desde HandleCard, recibe el numero de la tarjeta y se lo asigna a la UI 
+    /// y la variable de cardNumber para su futuro envio a la funcion de  AgregarPuntos_aJson();
+    /// </summary>
+    /// <param name="num"></param>
+    private void TarjetaEscaneada(string num)
+    {
+        Debug.Log("Se escaneo la tarjeta");
+        if (num.Length >= 6)
+        {
+            tarjeta_id_text.SetText("Tarjeta #" + num);
+            cardNumber = int.Parse(num);
+            Debug.Log("Numero de tarjeta correcto");
+           
+
+            _lector.CardAdded -= _lector_CardAdded;
+            _lector.CardRemoved -= _lector_CardRemoved;
+            _lector?.Dispose();
+            if (_lector != null)
+            {
+                //En teoria esto deberia desactivar el lector
+                _lector = null;
+            }
+
+            _tarjeta?.Dispose();
+           
+            AgregarPuntos_aJson();
+
+        }
+
     }
 
     /// <summary>
@@ -764,30 +903,80 @@ public class Tickets_Control : MonoBehaviour
 
     #endregion
 
+   
 
+    #region DecodificarTarjeta
 
-    public void IniciarSesion_Boton()
+    [Button]
+    public void DecodeTarjeta()
     {
-        if (usuario_text.text != null || usuario_text.text != "")
+        
+        if(cardNumber_ascii =="")
         {
-            user = usuario_text.text;
+            Debug.Log("Atencion: agregar un numero ascii");
+            return;
         }
-        if (pass_text.text != null || pass_text.text != "")
-        {
-            pass = pass_text.text;
-        }
-        if (computerID_text.text != null || computerID_text.text != "")
-        {
-            
-            computerID =  int.Parse(computerID_text.text);
-        }
-        if(urlLogeo_text.text != null || urlLogeo_text.text != "")
-        {
-            url_login = urlLogeo_text.text;
-        }
+        Debug.Log("Decodificando Tarjeta...");
+        tarjetaDecode.posId = 1;
+        tarjetaDecode.empId = usuario_logeado.body.empId;
+        tarjetaDecode.cardNumber = cardNumber_ascii;//tiene que ser el asscii
+        tarjetaDecode.token = usuario_logeado.body.token;
+        //TODO:  ticketAmount  = ticketsPartida
+       // tarjetaAgregar.ticketAmount = tickets_Partida; // tickets_Partida
+        tarjetaDecode.extEmpId = 1;
 
-        LoggeoSacoa();
+        string aJson = JsonUtility.ToJson(tarjetaDecode);
+        Debug.Log("Enviando puntos a: " + aJson);
+        StartCoroutine(Enviar_DecodeTarjeta(url_tarjetaDecode, aJson));
+
     }
+    IEnumerator Enviar_DecodeTarjeta(string url, string bodyJsonString)
+    {
+        var request = new UnityWebRequest(url, "POST");//url a enviar y metodo en este caso solo dejan POST
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(bodyJsonString);
+        // print(bodyRaw.ToString());//Esto solo se establece
+        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+        var cert = new ForceAcceptAll();////SUPER IMPORTANTE para los certificados HTTPS
+        request.certificateHandler = cert;
+
+        yield return request.SendWebRequest();
+
+        if (request.responseCode == 200)
+        {
+
+            Debug.Log("Status Code: " + request.responseCode);
+            //  Debug.Log("Errorc Code: " + request.error);
+            cert?.Dispose();
+            string m = System.Text.Encoding.UTF8.GetString(request.downloadHandler.data);
+            Debug.Log("Mensaje Reicibido: " + m);
+            //  File.WriteAllText("D:\\Proyectos\\El_Chavo\\Unity\\datosRecibidos.txt", m);
+            tarjetaDecode_response = JsonUtility.FromJson<TarjetaDecodResponse>(m);
+            Debug.Log("Exito!...Tarjeta numero:" + tarjetaDecode_response.body.cardNumber);
+
+           
+           
+        }
+        else if (request.responseCode == 401)
+        {
+            //Esto es para cuando se vence el TOKEN hay que pedir otro
+            Debug.Log("Error: " + request.responseCode);
+            Debug.Log("El Token vencio o no esta autorizado...Solicitando nuevo Token...");
+            yield return new WaitForSeconds(2.0f);//simulamos una espera
+            LoggeoSacoa();
+
+        }
+        else
+        {
+            Debug.Log("Error...algo salio mal en la conexion");
+            Debug.Log("Status Code: " + request.responseCode);
+            Debug.Log("Errorc Code: " + request.error);
+            cert?.Dispose();
+        }
+    }
+
+    #endregion
 
 
 }

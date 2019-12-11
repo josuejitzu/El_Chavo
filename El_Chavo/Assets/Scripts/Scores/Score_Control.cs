@@ -151,7 +151,7 @@ public class Score_Control : MonoBehaviour
     {
         if (jugadores.Length <= 0)//Si es = 0 entonces no hubo entrada de internet
         {
-            print("No hubo entrada de internet");
+            Debug.Log("No hubo entrada de internet");
         }
         else
         {
@@ -159,7 +159,7 @@ public class Score_Control : MonoBehaviour
             {
                 if(jugadorActual.score > jugadores[i].score)
                 {
-                    print("Nuevo HighScore...");
+                    Debug.Log("Nuevo HighScore...");
 
                     numJugadorCambio = i;
                     panelNombre.SetActive(true);
@@ -216,7 +216,7 @@ public class Score_Control : MonoBehaviour
 
         if(string.IsNullOrEmpty(webRequest.error))
         {
-            print("Scores bajados con exito");
+            Debug.Log("Scores bajados con exito");
             Debug.Log(webRequest.downloadHandler.text);
             //Escribir en una hoja por si no hay datos o internet
             //File.WriteAllText("D:\\Proyectos\\El_Chavo\\Unity\\datosRecibidos.txt", m);
@@ -226,7 +226,7 @@ public class Score_Control : MonoBehaviour
 
         }else
         {
-            print("Error:" + webRequest.error);
+            Debug.Log("Error:" + webRequest.error);
         }
 
        
@@ -237,7 +237,7 @@ public class Score_Control : MonoBehaviour
     {
         if (string.IsNullOrEmpty(nombre_input.text))
         {
-            print("Ingrese nombre para continuar");
+            Debug.Log("Ingrese nombre para continuar");
             return;
         }
 

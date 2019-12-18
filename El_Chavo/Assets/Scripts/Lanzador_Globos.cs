@@ -135,6 +135,9 @@ public class Lanzador_Globos : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Llena el pool del personaje con globos
+    /// </summary>
     public void SpawnGlobo()
     {
 
@@ -154,6 +157,11 @@ public class Lanzador_Globos : MonoBehaviour
 
     }
 
+
+    /// <summary>
+    /// Activa un globo que no este activado en la Hierarchy
+    /// Llamado por la corutina ComenzarDisparo()
+    /// </summary>
     public void ActivarGlobo()
     {
         foreach(GameObject g in globos)
@@ -183,6 +191,10 @@ public class Lanzador_Globos : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Se llama para saber si tiene un globo activo en la mano, de tenerlo se desactiva
+    /// </summary>
     public void DesactivarGlobo()
     {
 
@@ -233,6 +245,8 @@ public class Lanzador_Globos : MonoBehaviour
         this.gameObject.SetActive(true);
        // EventDispatcher.RondaTerminada += EventDispatcher_RondaTerminada;
 
+
+        //Si tiene asignada una puerta o ventana
         if (posicion_elegida != null)
              StartCoroutine(posicion_elegida.Abrir());
 
@@ -329,6 +343,11 @@ public class Lanzador_Globos : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
+
+    /// <summary>
+    /// Llamado durante Edicion por OnEnable, asi podemos asignar personajes y caracteristicas en Edit Mode
+    /// </summary>
+    /// <param name="t"></param>
     private void CambiarPersonaje(TipoPersonaje t)
     {
         chavo.SetActive(false);
@@ -436,11 +455,22 @@ public class Lanzador_Globos : MonoBehaviour
 
     }
 
+
+    /// <summary>
+    /// Subscripcion a EventDispatcher para saber que hacer cuando la ronda se termina y 
+    /// el personaje sigue activo
+    /// </summary>
     private void EventDispatcher_RondaTerminada()
     {
         StartCoroutine(DesactivarLanzador());
     }
 
+
+    /// <summary>
+    /// Llamado por EventDispatcher_RondaTerminada para la secuencia de desactivacion del personaje 
+    /// en caso de estar activo
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator DesactivarLanzador()//Para terminar el nivel
     {
         EventDispatcher.RondaTerminada -= EventDispatcher_RondaTerminada;
@@ -474,12 +504,16 @@ public class Lanzador_Globos : MonoBehaviour
 
     }
 
+
+    ///Si el personaje puede ser targeteado por el PowerUp de Misil Automatico
+    ///entonces esto se encarga de Activar el Gizmo de mira
     public void ActivarMira()
     {
         enMira = true;
         mira_ui.SetActive(true);
     }
-
+    ///Si el personaje puede ser targeteado por el PowerUp de Misil Automatico
+    ///entonces esto se encarga de Desactivar el Gizmo de mira
     public void QuitarMira()
     {
         enMira = false;

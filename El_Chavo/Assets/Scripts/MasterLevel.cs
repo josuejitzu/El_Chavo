@@ -170,7 +170,6 @@ public class MasterLevel : MonoBehaviour
     }
 
     [Button("Intro", ButtonSpacing.Before)]
-
     public void IniciarIntroCall()
     {
         if (enIntro || jugando)

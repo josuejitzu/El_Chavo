@@ -1,20 +1,15 @@
 fileFormatVersion: 2
-guid: 390c59efae2c0b8469f296f06ba7b017
+guid: 3670072a59d090241b85eacd19d2fc2b
 ModelImporter:
   serializedVersion: 25
   internalIDToNameTable:
   - first:
-      74: -4475726569030518814
-    second: quico_lanzando
+      74: 5435563142291203326
+    second: quico_lanzando_v1
   - first:
-      74: 7320635362687752216
-    second: quico_aventando
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Kiko_Final_rig_V01_Quico_MAT
-    second: {fileID: 2100000, guid: 074061f2981ffe646b9c1729fee6e35b, type: 2}
+      74: -8975436467173293439
+    second: quico_aventando_v1
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
@@ -43,9 +38,9 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: quico_lanzando
-      takeName: quico_lanzando
-      internalID: -4475726569030518814
+      name: quico_lanzando_v1
+      takeName: quico_lanzando_v1
+      internalID: 5435563142291203326
       firstFrame: 1
       lastFrame: 41
       wrapMode: 0
@@ -72,9 +67,9 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: quico_aventando
-      takeName: quico_lanzando
-      internalID: 7320635362687752216
+      name: quico_aventando_v1
+      takeName: quico_lanzando_v1
+      internalID: -8975436467173293439
       firstFrame: 42
       lastFrame: 80
       wrapMode: 0

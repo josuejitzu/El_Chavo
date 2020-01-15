@@ -67,9 +67,13 @@ public class MunicionControl : MonoBehaviour
             //StartCoroutine(other.GetComponent<Lanzador_Globos>().Lanzador_Golpeado());
             StartCoroutine(Explotar());
 
-        }else if(other.transform.name == "letreroJoint")
+        }else if(other.transform.name == "letreroJoint" || other.transform.name == "Don_Ramon_Rig_V04:Don_Ramon_weightSpine_c_jnt")
         {
-            MasterLevel.masterlevel.IniciarIntroCall();
+            //DEPECRATED: No quieren que se reproduzca el intro pero no hay manera de contar por el momento
+            // si es un nuevo usuario o no, entonces que llame directamente a Juego
+           MasterLevel.masterlevel.IniciarIntroCall();
+           // MasterLevel.masterlevel.IniciarJuegoCall();
+
             StartCoroutine(Explotar());
         }
         else

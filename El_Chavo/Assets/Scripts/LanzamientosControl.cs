@@ -10,6 +10,7 @@ public class LanzamientosControl : MonoBehaviour
     public Transform[] posiciones;
     public int posicionAnterior;
     public bool conFlorinda;//sabemos si hay un globo de doña Florinda en escena, pues solo debe haber uno
+
     [Space(10)]
     [Header("Tiempos")]
     public float rateDisparo;
@@ -17,9 +18,6 @@ public class LanzamientosControl : MonoBehaviour
     public int maxLanzadores;
     float sigDisparo;
     public bool disparar;
-
-
-
     int personajeAnterior;
     public int ronda;
 
@@ -95,7 +93,7 @@ public class LanzamientosControl : MonoBehaviour
             return;
         }
 
-        //OJO: Cambiaste la logica de seleccion de posicion haciendo que no se repita
+        //OJO: Las siguientes lineas cambian la logica de seleccion de posicion haciendo que no se repita
         // y se nota un poco mas lento los personajes lo cual permite que quiza se aun poco mas facil
         //checar si no es mejor que puedan ocupar 2 posiciones, no se, es cuestion de gustos
         int posSeleccionada = PosicionRandom();
@@ -143,9 +141,19 @@ public class LanzamientosControl : MonoBehaviour
         //ojo maxLanzadores no puede ser mayor a 6 pues de 0 a 6 , 6 queda desacartado por  la funcion Random
         int r = Random.Range(0, maxLanzadores);
 
-        while (r == personajeAnterior)
+        try
         {
-            r = Random.Range(0, maxLanzadores);
+
+            if (maxLanzadores > 1)
+            {
+                while (r == personajeAnterior)
+                {
+                    r = Random.Range(0, maxLanzadores);
+                }
+            }
+        }catch
+        {
+            Debug.Log(this.name + "Hubo en error en la seleccion de personaje lanzador");
         }
 
 

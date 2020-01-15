@@ -172,8 +172,14 @@ public class MasterLevel : MonoBehaviour
     [Button("Intro", ButtonSpacing.Before)]
     public void IniciarIntroCall()
     {
-        if (enIntro || jugando)
+        if (jugando)
             return;
+
+        if (enIntro)//Logica para que el jugador salte el intro
+        {
+            IniciarJuegoCall();
+        }
+       
         StartCoroutine(IniciarIntro());
         enIntro = true;
         particulaGolpe_letrero.Play();
@@ -225,7 +231,7 @@ public class MasterLevel : MonoBehaviour
 
 
         intro_timeLine.gameObject.SetActive(true);
-        letroInicio.GetComponent<Animator>().SetTrigger("salir");
+      //  letroInicio.GetComponent<Animator>().SetTrigger("salir");
 
         if (intro_timeLine.state != PlayState.Playing)
              intro_timeLine.Play();
@@ -240,7 +246,7 @@ public class MasterLevel : MonoBehaviour
 
     public IEnumerator IniciarJuego()
     {
-        //letroInicio.GetComponent<Animator>().SetTrigger("salir");
+        letroInicio.GetComponent<Animator>().SetTrigger("salir");
         //intro_timeLine.Pause();
         if (intro_timeLine.state == PlayState.Playing && intro_timeLine.time < 21.0f)
             intro_timeLine.time = 21.0f;

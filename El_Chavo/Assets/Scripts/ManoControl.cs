@@ -47,6 +47,9 @@ public class ManoControl : MonoBehaviour
     public bool puedeDisparar;
     public bool puedenVibrar;
 
+
+   
+
     void Start()
     {
 

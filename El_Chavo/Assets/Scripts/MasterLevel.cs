@@ -251,10 +251,13 @@ public class MasterLevel : MonoBehaviour
         if (intro_timeLine.state == PlayState.Playing && intro_timeLine.time < 21.0f)
             intro_timeLine.time = 21.0f;
 
+        yield return new WaitForSeconds(1.5f);
+        intro_timeLine.gameObject.SetActive(false);
+
         if (enIntro)
             enIntro = false;
         //animacion de letrero
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
         letroInicio.SetActive(false);
         LanzamientosControl._lanzamientos.PrepararRound();
         tiempoJuego = rondas[rondaNum].duracion;

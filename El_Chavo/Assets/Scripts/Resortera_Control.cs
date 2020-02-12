@@ -41,8 +41,12 @@ public class Resortera_Control : MonoBehaviour
     
     public  StudioEventEmitter estirandose_sfx;
     public  StudioEventEmitter soltada_sfx;
-   
 
+    public Transform rotacionMira;
+    public float rotacionFinal = 0.0f;
+    public float rotacionInicial = 90.0f;
+
+    public ProjectileArc arco;
     void Start()
     {
         _resortera = this;
@@ -58,13 +62,19 @@ public class Resortera_Control : MonoBehaviour
            // multiplicadorFuerza = mano.separacion * 2;//busca la separacion en ManoControl.cs de la mano que tiene agarrado esta resortera
             //fuerzaTotal = fuerza * multiplicadorFuerza;
         }
-         if(!estirando)
-         {
+        if(!estirando)
+        {
             MoverTirante(0);
-         }
-    
-  
+        }
 
+        if(mano!=null)
+        {
+            multiplicadorFuerza = mano.separacion;
+            fuerzaTotal = fuerza * multiplicadorFuerza;
+            arco.velocidad = fuerzaTotal;
+        }
+
+       
     }
 
     void CrearMunicion()
@@ -163,6 +173,12 @@ public class Resortera_Control : MonoBehaviour
         soltada_sfx.Play();
         posMunicion.transform.position = posInicialTirante.position;
         fuerzaTotal = 0f;
+        // rotacionMira.gameObject.SetActive(false);
+
+        //arco.gameObject.SetActive(false);
+        arco.activar = false;
+
+
         //ligaResortera_blendShape.SetBlendShapeWeight(0, 0);
         municionTemp = null;
       
@@ -206,7 +222,21 @@ public class Resortera_Control : MonoBehaviour
         posMunicion.transform.position = Vector3.Lerp(posInicialTirante.position,posFinalTirante.position, dist);
       //ligaResortera_blendShape.SetBlendShapeWeight(0,  Mathf.Clamp((dist * 99),0,100));
         resortera_anim.SetFloat("jale", dist * 100.0f);
-        if(!estirandose_sfx.IsPlaying())
+
+        if (enMano && dist > 0)
+        {
+            //arco.gameObject.SetActive(true);
+
+            arco.activar = true;
+        }
+       // rotacionMira.gameObject.SetActive(true);
+       // Quaternion rotFinal = Quaternion.Euler(Vector3.Lerp(new Vector3(rotacionInicial, 0.0f, 0.0f), new Vector3(rotacionFinal, 0.0f, 0.0f), dist * 1.20f));
+       // rotacionMira.localRotation = rotFinal;
+
+
+
+
+        if (!estirandose_sfx.IsPlaying())
         {
            // estirandose_sfx.Stop();
             estirandose_sfx.Play();
